@@ -49,10 +49,9 @@ void Shoe::reinitialize() {
     shuffle();
 }
 
-
 //Dealing
 void Shoe::dealToPlayer(Player* player) {
-    //player->addCardToHand( getFaceCard() );
+    player->addCardToHand( getFaceCard() );
     position++;
 }
 

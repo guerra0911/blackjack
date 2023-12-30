@@ -25,7 +25,7 @@ class Player {
 
     //Bet
     int getBet();
-    int placeBet(int amount);
+    void placeBet(int amount);
 
     //Hand
     void addCardToHand(Card* card);
@@ -37,6 +37,10 @@ class Player {
 
     //Table
     int getTablePos();
+
+    //Actions
+    bool isBust();
+    bool isBlackJack();
 
     
     private:

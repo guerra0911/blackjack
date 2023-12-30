@@ -43,3 +43,19 @@ void Dealer::payOut(Player* player) {
 void Dealer::collectBet(Player* player) {
     player->decreaseBalance(player->getBet());
 }
+
+
+//Actions
+bool Dealer::isBust() {
+    if(getHandValue() > 21) {
+        return true;
+    } 
+    return false;
+}
+
+bool Dealer::isBlackJack() {
+    if(getHandValue() == 21) {
+        return true;
+    } 
+    return false;
+}

@@ -24,9 +24,8 @@ int Player::getBet() {
     return bet;
 }
 
-int Player::placeBet(int amount) {
+void Player::placeBet(int amount) {
     bet = amount;
-    return bet;
 }
 
 //Hand
@@ -60,6 +59,21 @@ Player::Decision Player::makeDecision() {
 //Table
 int Player::getTablePos() {
     return tablePos;
+}
+
+//Actions
+bool Player::isBust() {
+    if(getHandValue() > 21) {
+        return true;
+    } 
+    return false;
+}
+
+bool Player::isBlackJack() {
+    if(getHandValue() == 21) {
+        return true;
+    } 
+    return false;
 }
 
 

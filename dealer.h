@@ -32,6 +32,9 @@ class Dealer {
     void payOut(Player* player);
     void collectBet(Player* player);
 
+    //Actions
+    bool isBust();
+    bool isBlackJack();
 
     private:
     vector<Card*> hand;  //Copies of Card b/c hand is small
