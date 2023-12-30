@@ -6,7 +6,7 @@ using namespace std;
 using std::string;
 
 //Constructors
-Player::Player(int initialBalance) : balance(initialBalance) {}
+Player::Player(int initialBalance, int initialBet) : balance(initialBalance), bet(initialBet) {}
 
 Player::~Player() {}
 

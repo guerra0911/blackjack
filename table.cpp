@@ -115,19 +115,29 @@ void Table::playRound(Shoe* shoe) {
 
 void Table::collectionsAndPayOuts() {
     for(auto& pair : players) {
-        //If Player Bust or Less Than Dealer = LOSE
-        if((pair.second)->isBust() || (pair.second)->getHandValue() < dealer->getHandValue()) {
-            (pair.second)->decreaseBalance((pair.second)->getBet());
-            cout << "Player " << (pair.second)->getTablePos() << " Loses!" << endl; 
+        Player* player = pair.second;
 
-        //If Player Greater Than Dealer = WIN
-        } else if((pair.second)->getHandValue() > dealer->getHandValue()) {
-            (pair.second)->increaseBalance((pair.second)->getBet());
-            cout << "Player " << (pair.second)->getTablePos() << " Wins!" << endl;
+        // Player busts or has less points than dealer (who didn't bust)
+        if(player->isBust() || (player->getHandValue() < dealer->getHandValue() && !dealer->isBust())) {
+            player->decreaseBalance(player->getBet());
+            cout << "Player " << player->getTablePos() << " Loses! New Balance = " << player->getBalance() << endl; 
 
-        //If Player Hand = Dealer Hand = DRAW (Nothing Happens)
+        // Player has more points than dealer
+        } else if(player->getHandValue() > dealer->getHandValue()) {
+
+            // Player has a blackjack
+            if(player->isBlackJack()) {
+                player->increaseBalance(1.5 * player->getBet());  
+
+            // Player wins but doesn't have a blackjack
+            } else {
+                player->increaseBalance(player->getBet());        
+            }
+            cout << "Player " << player->getTablePos() << " Wins! New Balance = " << player->getBalance() << endl;
+
+        // Player and dealer have the same points
         } else {
-            cout << "Player " << (pair.second)->getTablePos() << " Draws." << endl;
+            cout << "Player " << player->getTablePos() << " Draws." << endl;
         }
     }
 }

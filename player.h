@@ -15,7 +15,7 @@ class Player {
     };
 
     //Constructors
-    Player(int initialBalance);
+    Player(int initialBalance, int initialBet);
     ~Player();
 
     //Balance

@@ -46,7 +46,14 @@ void Shoe::shuffle() {
 
 void Shoe::reinitialize() {
     position = 0;
-    shuffle();
+}
+
+int Shoe::cardsLeft() {
+    return numDecks*52 - position;
+}
+
+void Shoe::burnCard() {
+    position++;
 }
 
 //Dealing

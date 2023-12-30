@@ -21,6 +21,8 @@ class Shoe {
     //Actions
     void shuffle();             //Shuffles current cards in Shoe
     void reinitialize();        //Adds all cards back to shoe, reshuffles
+    int cardsLeft();            //Checks How many Cards Left in Shoe
+    void burnCard();            //Burns Top Card
 
     //Dealing
     void dealToPlayer(Player* player);    //Deal Card to Player & Remove from Shoe
