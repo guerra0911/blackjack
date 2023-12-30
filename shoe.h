@@ -16,7 +16,7 @@ class Shoe {
     ~Shoe();
 
     //Getters
-    Card* getFaceCard();         //Get FaceCard
+    Card* getTopCard();         //Get FaceCard
     
     //Actions
     void shuffle();             //Shuffles current cards in Shoe

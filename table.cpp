@@ -113,13 +113,6 @@ void Table::playRound(Shoe* shoe) {
     }
 }
 
-void Table::clearAllHands() {
-    dealer->clearHand();
-    for(auto& pair : players) {         
-        (pair.second)->clearHand();
-    }
-}
-
 void Table::collectionsAndPayOuts() {
     for(auto& pair : players) {
         //If Player Bust or Less Than Dealer = LOSE
@@ -136,5 +129,12 @@ void Table::collectionsAndPayOuts() {
         } else {
             cout << "Player " << (pair.second)->getTablePos() << " Draws." << endl;
         }
+    }
+}
+
+void Table::clearAllHands() {
+    dealer->clearHand();
+    for(auto& pair : players) {         
+        (pair.second)->clearHand();
     }
 }

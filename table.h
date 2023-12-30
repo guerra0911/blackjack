@@ -32,8 +32,8 @@ class Table {
 
     //Play
     void playRound(Shoe* shoe);
-    void clearAllHands();
     void collectionsAndPayOuts(); 
+    void clearAllHands();
 
 
     private:

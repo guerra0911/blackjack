@@ -32,7 +32,7 @@ Shoe::~Shoe() {
 
 
 //Getters
-Card* Shoe::getFaceCard() {
+Card* Shoe::getTopCard() {
     return shoe[position];                      //Return card at current dealing position
 }
 
@@ -51,12 +51,12 @@ void Shoe::reinitialize() {
 
 //Dealing
 void Shoe::dealToPlayer(Player* player) {
-    player->addCardToHand( getFaceCard() );
+    player->addCardToHand( getTopCard() );
     position++;
 }
 
 void Shoe::dealToDealer(Dealer* dealer) {
-    dealer->addCardToHand( getFaceCard() );
+    dealer->addCardToHand( getTopCard() );
     position++;
 }
 
