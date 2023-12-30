@@ -46,9 +46,19 @@ void Player::clearHand() {
 
 int Player::getHandValue() {
     int handValue = 0;
+    bool hasAce = false;        //Initially Assume No Ace
 
     for(Card* card : hand) {
+        if(card->getRank() == card->ACE) {
+            hasAce = true;
+        }
         handValue += card->getFaceValue();
+    }
+
+    //If Ace is Present, and Counting Ace as 11 will not cause bust, count as 11 by adding 10 to intial 1 added above
+    //If there is more than 1 ace, only one can be considered as 11 without causing bust, so this works for any # of aces
+    if(hasAce && handValue <= 11) {
+        handValue += 10;
     }
 
     return handValue;

@@ -22,9 +22,11 @@ int main() {
 
     Dealer dealer;
     Player player1(100);
+    Player player2(200);
 
     table1.setDealer(&dealer);
     table1.addPlayer(&player1, 1);
+    table1.addPlayer(&player2, 2);
     
     table1.playRound(shoe);
     table1.collectionsAndPayOuts();
