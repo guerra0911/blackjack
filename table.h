@@ -1,3 +1,6 @@
+#ifndef TABLE_H
+#define TABLE_H
+
 #include "player.h"
 #include "dealer.h"
 #include <vector>
@@ -30,3 +33,5 @@ class Table {
     map<int, Player*> players;      //Map Table position to specific player
     Dealer* dealer;
 };
+
+#endif //TABLE_H

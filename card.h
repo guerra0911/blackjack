@@ -1,3 +1,6 @@
+#ifndef CARD_H
+#define CARD_H
+
 class Card {
     public:
     
@@ -38,3 +41,5 @@ class Card {
     Rank rank;
     Suit suit;
 };
+
+#endif //CARD_H

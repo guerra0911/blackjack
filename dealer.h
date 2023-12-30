@@ -1,3 +1,6 @@
+#ifndef DEALER_H
+#define DEALER_H
+
 #include "card.h"
 #include "player.h"
 
@@ -34,3 +37,5 @@ class Dealer {
     vector<Card*> hand;  //Copies of Card b/c hand is small
 
 };
+
+#endif //DEALER_H

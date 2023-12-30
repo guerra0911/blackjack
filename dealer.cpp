@@ -18,8 +18,6 @@ void Dealer::clearHand() {
 int Dealer::getHandValue() {
     int handValue = 0;
 
-    int handValue = 0;
-
     for(Card* card : hand) {
         handValue += card->getFaceValue();
     }

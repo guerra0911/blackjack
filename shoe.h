@@ -1,3 +1,6 @@
+#ifndef SHOE_H
+#define SHOE_H
+
 #include "card.h"
 #include "player.h"
 #include "dealer.h"
@@ -29,3 +32,5 @@ class Shoe {
     int position;               //Current Position in Deck to Deal
     int numDecks;               //Number of decks to make shoe with
 };
+
+#endif //SHOE_H

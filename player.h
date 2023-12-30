@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "card.h"
 #include <vector>
 
@@ -42,3 +45,5 @@ class Player {
     int tablePos;
     vector<Card*> hand;
 };
+
+#endif //PLAYER_H
