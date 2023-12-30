@@ -4,7 +4,7 @@
 using namespace std;
 
 //Constructors
-Table::Table() {}
+Table::Table(int numSeats) : numSeats(numSeats) {}
 
 Table::~Table() {}
 
@@ -42,6 +42,8 @@ void Table::addPlayer(Player* player, int position) {
     }
 
     players[position] = player;     //Assign specific player to specific position in table map
+
+    player->setTablePos(position);
     
 }
 
@@ -53,6 +55,7 @@ void Table::removePlayer(int position) {
 Player* Table::playerAtPos(int position) {
     return players[position];
 }
+
 
 //Play
 void Table::playRound(Shoe* shoe) {
@@ -68,30 +71,52 @@ void Table::playRound(Shoe* shoe) {
     //Deal 2nd Card to Each Player
     for(auto& pair : players) {
         shoe->dealToPlayer(pair.second);
+        (pair.second)->printHand();
+
     }
 
     //Deal 2nd Card (VISIBLE) to Dealer
     shoe->dealToDealer(dealer);
+    dealer->printVisibleCard();
 
     //For Each Player, Deal Until Bust, BlackJack or Stand
     for(auto& pair : players) {         
 
-        if((pair.second)->isBust()) {
-            continue;                           
-        }
-
-        if((pair.second)->isBlackJack()) {                     
-            continue;                       
-        }
-
-        while(!((pair.second)->isBust()) || !((pair.second)->isBlackJack()) || !((pair.second)->makeDecision() == (pair.second)->STAND)) {
+        while(!((pair.second)->isBust()) && !((pair.second)->isBlackJack()) && !((pair.second)->makeDecision() == (pair.second)->STAND)) {
             shoe->dealToPlayer((pair.second));
+            (pair.second)->printHand();
+        }
+
+        if((pair.second)->isBust()) {
+            cout << "Player " << (pair.second)->getTablePos() << " Busts!" << endl;                           
+        }
+
+        if((pair.second)->isBlackJack()) {  
+            cout << "Player " << (pair.second)->getTablePos() << " has BlackJack!" << endl;                                          
         }
     }
 
+    
     //Deal the Dealer Until Bust, BlackJack or Stand
-    while(!(dealer->isBust()) || !(dealer->isBlackJack()) || !(dealer->makeDecision() == dealer->STAND)) {
+    dealer->printHand();
+    while(!(dealer->isBust()) && !(dealer->isBlackJack()) && !(dealer->makeDecision() == dealer->STAND)) {
         shoe->dealToDealer(dealer);
+        dealer->printHand();
+    }
+
+    if(dealer->isBust()) {
+        cout << "Dealer Busts!" << endl;                           
+    }
+
+    if(dealer->isBlackJack()) {  
+        cout << "Dealer has BlackJack!" << endl;                                          
+    }
+}
+
+void Table::clearAllHands() {
+    dealer->clearHand();
+    for(auto& pair : players) {         
+        (pair.second)->clearHand();
     }
 }
 
@@ -100,12 +125,16 @@ void Table::collectionsAndPayOuts() {
         //If Player Bust or Less Than Dealer = LOSE
         if((pair.second)->isBust() || (pair.second)->getHandValue() < dealer->getHandValue()) {
             (pair.second)->decreaseBalance((pair.second)->getBet());
+            cout << "Player " << (pair.second)->getTablePos() << " Loses!" << endl; 
 
         //If Player Greater Than Dealer = WIN
         } else if((pair.second)->getHandValue() > dealer->getHandValue()) {
             (pair.second)->increaseBalance((pair.second)->getBet());
-        }
+            cout << "Player " << (pair.second)->getTablePos() << " Wins!" << endl;
 
         //If Player Hand = Dealer Hand = DRAW (Nothing Happens)
+        } else {
+            cout << "Player " << (pair.second)->getTablePos() << " Draws." << endl;
+        }
     }
 }

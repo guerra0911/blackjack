@@ -36,6 +36,10 @@ class Dealer {
     bool isBust();
     bool isBlackJack();
 
+    //Print
+    void printVisibleCard();
+    void printHand();
+
     private:
     vector<Card*> hand;  //Copies of Card b/c hand is small
 

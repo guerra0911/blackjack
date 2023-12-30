@@ -1,4 +1,9 @@
 #include "player.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+using std::string;
 
 //Constructors
 Player::Player(int initialBalance) : balance(initialBalance) {}
@@ -19,6 +24,7 @@ void Player::decreaseBalance(int amount) {
     balance -= amount;
 }
 
+
 //Bet
 int Player::getBet() {
     return bet;
@@ -27,6 +33,7 @@ int Player::getBet() {
 void Player::placeBet(int amount) {
     bet = amount;
 }
+
 
 //Hand
 void Player::addCardToHand(Card* card) {
@@ -47,6 +54,7 @@ int Player::getHandValue() {
     return handValue;
 }
 
+
 //Decision
 Player::Decision Player::makeDecision() {
     if(getHandValue() >= 16) {
@@ -56,9 +64,14 @@ Player::Decision Player::makeDecision() {
     }
 }
 
+
 //Table
 int Player::getTablePos() {
     return tablePos;
+}
+
+void Player::setTablePos(int position) {
+    tablePos = position;
 }
 
 //Actions
@@ -77,10 +90,14 @@ bool Player::isBlackJack() {
 }
 
 
-
-
-
-
-
-
-
+//Print
+void Player::printHand() {
+    cout << "Player " << to_string(getTablePos()) << ": ";
+    for(size_t i = 0; i < hand.size(); ++i) {
+        cout << hand[i]->toString();
+        if(i != hand.size() - 1) {      // If it's not the last card
+            cout << ", ";
+        }
+    }
+    cout << " = " << getHandValue() << endl;
+}

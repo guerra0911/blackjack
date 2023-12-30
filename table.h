@@ -14,7 +14,7 @@ class Table {
     public:
     
     //Constructors
-    Table();
+    Table(int numSeats);
     ~Table();
 
     //Seats
@@ -32,12 +32,13 @@ class Table {
 
     //Play
     void playRound(Shoe* shoe);
+    void clearAllHands();
     void collectionsAndPayOuts(); 
 
 
     private:
     int numSeats;                   //Seats at the table
-    map<int, Player*> players;      //Map Table position to specific player
+    map<int, Player*> players;      //.first = Position, .second = Player
     Dealer* dealer;
 };
 

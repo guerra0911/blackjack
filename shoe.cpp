@@ -39,9 +39,9 @@ Card* Shoe::getFaceCard() {
 
 //Actions
 void Shoe::shuffle() {
-    std::random_device rd;                      //Random Device Object
-    std::mt19937 g(rd());                       //Mersenne Twister Random Generator
-    std::shuffle(shoe.begin(), shoe.end(), g);  //Shuffle Vector Algorithm
+    auto seed = std::chrono::system_clock::now().time_since_epoch().count();    //Use current time as a seed for the random generator
+    std::mt19937 g(seed);                                                       //Mersenne Twister Random Generator
+    std::shuffle(shoe.begin(), shoe.end(), g);                                  //Shuffle Vector Algorithm
 }
 
 void Shoe::reinitialize() {

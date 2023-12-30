@@ -1,4 +1,9 @@
 #include "dealer.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+using std::string;
 
 //Constructors
 Dealer::Dealer() {}
@@ -58,4 +63,24 @@ bool Dealer::isBlackJack() {
         return true;
     } 
     return false;
+}
+
+
+//Print
+void Dealer::printVisibleCard() {
+    cout << "Dealer's Hand: ";
+
+    cout << " ???, ";
+    cout << hand[1]->toString() << endl;
+}
+
+void Dealer::printHand() {
+    cout << "Dealer's Hand:" << endl;
+    for(size_t i = 0; i < hand.size(); ++i) {
+        cout << hand[i]->toString();
+        if(i != hand.size() - 1) {      // If it's not the last card
+            cout << ", ";
+        }
+    }
+    cout << " = " << getHandValue() << endl;
 }

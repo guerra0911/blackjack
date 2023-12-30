@@ -37,10 +37,14 @@ class Player {
 
     //Table
     int getTablePos();
+    void setTablePos(int position);
 
     //Actions
     bool isBust();
     bool isBlackJack();
+
+    //Print
+    void printHand();
 
     
     private:

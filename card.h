@@ -1,15 +1,11 @@
 #ifndef CARD_H
 #define CARD_H
 
+#include <string>
+using std::string;
+
 class Card {
     public:
-    
-    enum Suit {
-        SPADES,
-        HEARTS,
-        DIAMONDS,
-        CLUBS
-    };
 
     enum Rank {
         ACE = 1,
@@ -27,6 +23,13 @@ class Card {
         KING = 10
     };
 
+    enum Suit {
+        SPADES,
+        HEARTS,
+        DIAMONDS,
+        CLUBS
+    };
+
     //Constructors
     Card(Rank rank, Suit suit);    
     ~Card();                        
@@ -36,6 +39,8 @@ class Card {
     Card::Suit getSuit();           //Rank Setter
     int getFaceValue();             //Rank to Int Value
 
+    //To String
+    string toString();
 
     private:
     Rank rank;

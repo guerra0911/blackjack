@@ -13,12 +13,9 @@ using namespace std;
 using std::vector;
 using std::map;
 
-void playRound(Table* table, Shoe* shoe) {
-    
-}
 
 int main() {
-    Table table1;
+    Table table1(5);
 
     Shoe* shoe = new Shoe(3);
     shoe->shuffle();
@@ -31,6 +28,7 @@ int main() {
     
     table1.playRound(shoe);
     table1.collectionsAndPayOuts();
+    table1.clearAllHands();
 
     delete shoe;
 
