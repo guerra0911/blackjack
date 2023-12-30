@@ -1,4 +1,6 @@
 #include "card.h"
+#include "player.h"
+#include "dealer.h"
 #include <vector>
 
 using std::vector;
@@ -6,20 +8,24 @@ using std::vector;
 class Shoe {
     public:
 
+    //Constructors
     Shoe(int numDeck);          //Initializes a shoe with # of decks
-
     ~Shoe();
 
-    Card getFaceCard();         //Get facecard to be dealt
+    //Getters
+    Card* getFaceCard();         //Get FaceCard
     
-    void dealCardToPlayer();
-
+    //Actions
     void shuffle();             //Shuffles current cards in Shoe
+    void reinitialize();        //Adds all cards back to shoe, reshuffles
 
-    void reinitializeShoe();    //Adds all discarded cards back and shuffles shoe
+    //Dealing
+    void dealToPlayer(Player* player);    //Deal Card to Player & Remove from Shoe
+    void dealToDealer(Dealer* dealer);
+
 
     private:
-    vector<Card> shoe;
-    vector<Card> garbage;
-    int numDecks;
+    vector<Card*> shoe;         //All cards in shoe
+    int position;               //Current Position in Deck to Deal
+    int numDecks;               //Number of decks to make shoe with
 };

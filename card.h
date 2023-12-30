@@ -24,14 +24,15 @@ class Card {
         KING = 10
     };
 
-    Card(Rank rank, Suit suit);     //Constructor
+    //Constructors
+    Card(Rank rank, Suit suit);    
+    ~Card();                        
 
-    ~Card();                        //Deconstructor
-
+    //Getters
     Card::Rank getRank();           //Rank Getter
     Card::Suit getSuit();           //Rank Setter
-
     int getFaceValue();             //Rank to Int Value
+
 
     private:
     Rank rank;
