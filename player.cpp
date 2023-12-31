@@ -2,9 +2,11 @@
 #include "hand.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 using std::string;
+using std::vector;
 
 //Constructors
 Player::Player(int initialBalance, int initialBet) : balance(initialBalance), bet(initialBet) {
@@ -60,6 +62,15 @@ void Player::clearAllHands() {
 
     //Add a new Hand object to the vector so it is not empty for future operations/accessing
     hands.push_back(new Hand());
+}
+
+void Player::split(int handIndex) {
+    Hand* splitHand = new Hand();
+    hands.insert(hands.begin() + handIndex + 1, splitHand);
+
+    (getHand(handIndex + 1))->addCardToHand((getHand(handIndex))->getCard(1));      //Move 2nd card in first hand to 1st card in 2nd split hand
+    (getHand(handIndex))->removeCardFromHand(1);                                //Remove 2nd card in first hand
+
 }
 
 

@@ -35,8 +35,7 @@ class Dealer {
     void printVisibleCard();
     
 
-    private:
-    //vector<Card*> hand;  
+    private: 
     Hand* hand;     //Dealer only ever has one hand, can't split
 };
 

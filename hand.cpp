@@ -20,6 +20,15 @@ void Hand::addCardToHand(Card* card) {
     hand.push_back(card);
 }
 
+void Hand::removeCardFromHand(int cardIndex) {
+    if (cardIndex < hand.size() && cardIndex >= 0) {
+        hand.erase(hand.begin() + cardIndex);
+    }
+    else {
+        cout << "Card Index is Out of Range, Card cannot be Removed" << endl;
+    }
+}
+
 void Hand::clearHand() {
     hand.clear();               //Do not delete cards as they need to exist in shoe
 }
@@ -44,9 +53,10 @@ int Hand::getHandValue() {
     return handValue;
 }
 
-Card* Hand::getCard(int handIndex) {
-    return hand[handIndex];
+Card* Hand::getCard(int cardIndex) {
+    return hand[cardIndex];
 }
+
 
 
 //Actions
@@ -62,6 +72,14 @@ bool Hand::isBlackJack() {
         return true;
     } 
     return false;
+}
+
+bool Hand::isPairAces() {
+    if((getCard(0))->getRank() == Card::ACE && (getCard(1))->getRank() == Card::ACE) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 

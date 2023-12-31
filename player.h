@@ -35,6 +35,8 @@ class Player {
     Hand* getHand(int handIndex);
     vector<Hand*> getHands();
     void clearAllHands();
+    void split(int handIndex);
+    
     
     //Decision
     Player::Decision makeDecision(Hand* hand);

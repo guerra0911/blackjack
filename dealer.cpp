@@ -21,6 +21,7 @@ Hand* Dealer::getHand() {
 }
 
 
+
 //Decision
 Dealer::Decision Dealer::makeDecision() {
     if(hand->getHandValue() >= 16) {

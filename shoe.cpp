@@ -6,6 +6,8 @@
 #include <chrono>
 #include <random>
 
+using namespace std;
+
 //Constructors
 Shoe::Shoe(int numDecks) : numDecks(numDecks), position(0) {
     shoe.reserve(52*numDecks);

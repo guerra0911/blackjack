@@ -17,20 +17,21 @@ using std::map;
 #define SHUFFLEPOINT 104
 
 int main() {
-    Table table1(5);
+    Dealer dealer;
 
     Shoe* shoe = new Shoe(8);
     shoe->shuffle();
     shoe->burnCard();
+    
+    Table table1(5, shoe, &dealer);
 
-    Dealer dealer;
+    
     Player player1(100, MINBET);
 
-    table1.setDealer(&dealer);
     table1.addPlayer(&player1, 1);
     
     while(player1.getBalance() > MINBET) {
-        table1.playRound(shoe);
+        table1.playRound();
         table1.collectionsAndPayOuts();
         table1.clearAllHands();
 

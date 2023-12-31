@@ -5,7 +5,6 @@
 #include "dealer.h"
 #include "shoe.h"
 #include "hand.h"
-//#include "card.h"
 #include <vector>
 #include <map>
 
@@ -16,7 +15,7 @@ class Table {
     public:
     
     //Constructors
-    Table(int numSeats);
+    Table(int numSeats, Shoe* shoe, Dealer* dealer);
     ~Table();
 
     //Seats
@@ -33,7 +32,8 @@ class Table {
     Player* playerAtPos(int position);
 
     //Play
-    void playRound(Shoe* shoe);
+    void eval(Player* player, int handIndex);
+    void playRound();
     void collectionsAndPayOuts(); 
     void clearAllHands();
 
@@ -42,6 +42,7 @@ class Table {
     int numSeats;                   //Seats at the table
     map<int, Player*> players;      //.first = Position, .second = Player
     Dealer* dealer;
+    Shoe* shoe;     
 };
 
 #endif //TABLE_H

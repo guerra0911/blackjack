@@ -14,13 +14,16 @@ class Hand {
 
     //Hand
     void addCardToHand(Card* card);
+    void removeCardFromHand(int cardIndex);
     void clearHand();
     int getHandValue();
-    Card* getCard(int handIndex);
+    Card* getCard(int cardIndex);
+    
 
     //Actions
     bool isBust();
     bool isBlackJack();
+    bool isPairAces();
 
     //Print
     void printHand();

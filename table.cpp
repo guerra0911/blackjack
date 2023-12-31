@@ -6,7 +6,7 @@
 using namespace std;
 
 //Constructors
-Table::Table(int numSeats) : numSeats(numSeats) {}
+Table::Table(int numSeats, Shoe* shoe, Dealer* dealer) : numSeats(numSeats), shoe(shoe), dealer(dealer) {}
 
 Table::~Table() {}
 
@@ -60,8 +60,40 @@ Player* Table::playerAtPos(int position) {
 
 
 //Play
-void Table::playRound(Shoe* shoe) {
+void Table::eval(Player* player, int handIndex) {
+    Hand* playerHand = player->getHand(handIndex);
 
+    //While Player hasnt Busted, Hasn't Hit BlackJack, Hasn't Decided to Stand, Hasn't gone over 21, keep asking to play
+    while(!playerHand->isBust() && !playerHand->isBlackJack() && !(player->makeDecision(playerHand) == player->STAND) && playerHand->getHandValue() < 22) {
+        
+        //HIT
+        if(player->makeDecision(playerHand) == player->HIT) {
+            shoe->dealToPlayer(player, handIndex);
+            playerHand->printHand();
+
+        //DOUBLE
+        } else if(player->makeDecision(playerHand) == player->DOUBLE) {
+            shoe->dealToPlayer(player, handIndex);
+            playerHand->printHand();
+            break;
+        
+        //SURRENDER
+        } else if(player->makeDecision(playerHand) == player->SURRENDER) {
+            cout << "Player " << player->getTablePos() << " Surrenders!" << endl;       
+            break;
+        }
+    }
+
+    if(playerHand->isBust()) {
+        cout << "Player " << player->getTablePos() << " Busts!" << endl;                           
+    }
+
+    if(playerHand->isBlackJack()) {  
+        cout << "Player " << player->getTablePos() << " has BlackJack!" << endl;                                          
+    }
+}
+
+void Table::playRound() {
     //Deal 1st Card to Each Player
     for(auto& pair : players) {
         shoe->dealToPlayer(pair.second,0);      //Index 0 = First Initial Hand
@@ -86,38 +118,67 @@ void Table::playRound(Shoe* shoe) {
     for(auto& pair : players) {  
         Player* player = pair.second;  
         int handIndex = 0;
+        int splits = 0;
 
-        //For Each Hand   in player object, vector<vector<Card*>>
-        /*      */
-        //Retrieve Decision() (Hit, Stand, Split, Double, Surrender) Based ON OPTIMAL TABLE IMPLEMENTATION, this just returns which enumeration based on OPTIMAL TABLE, no functionality
+        //If Player Decided to Split
+        if(player->makeDecision(player->getHand(handIndex)) == player->SPLIT) {
+            
+            //Split there First Hand    < H1 >  ->  < H11, H12>
+            player->split(handIndex);
+            splits++;
 
-        //The actual functionality is below, based on if statements = to which enumeration, the carry out the following, until players turn is done
-        //if HIT -> hit()
-        //if STAND -> stand()
-        //if SURRENDER -> surrender()
-        //if DOUBLE -> double()
-        //if SPLIT -> split()
-        for(auto& playerHand : player->getHands()) {
+            //Deal Next Card to First Split Hand, H11
+            shoe->dealToPlayer(player, handIndex);
 
-            while(!playerHand->isBust() && !playerHand->isBlackJack() && !(player->makeDecision(playerHand) == player->STAND)) {
-                shoe->dealToPlayer(player, handIndex);
-                playerHand->printHand();
+            //If Player Decides to Split H11, and doesn't have a pair of Aces
+            if(player->makeDecision(player->getHand(handIndex)) == player->SPLIT && !((player->getHand(handIndex))->isPairAces())) {
+                
+                //Split there first Hand, H11 again      < H11, H12 >  ->   < H111, H112, H12 >       
+                player->split(handIndex);
+                splits++;
             }
 
-            if(playerHand->isBust()) {
-                cout << "Player " << player->getTablePos() << " Busts!" << endl;                           
+            if(splits > 1) {
+                eval(player, handIndex);   //Eval H111
+                handIndex++;
+                eval(player, handIndex);   //Eval H112
+                handIndex++;
+            } else {
+                eval(player, handIndex);   //Eval H11
+                handIndex++;
+            }
+            
+
+            //Evaluate Second/Third Split Hand, H12
+            shoe->dealToPlayer(player, handIndex);
+
+            //If Player Decides to Split H12, and doesn't have a pair of Aces
+            if(player->makeDecision(player->getHand(handIndex)) == player->SPLIT && !((player->getHand(handIndex))->isPairAces())) {
+                
+                //Split there Second Hand, H12 again      < H111, H112, H12 >  ->   < H111, H112, H121, H122 >
+                player->split(handIndex);
+                splits++;
             }
 
-            if(playerHand->isBlackJack()) {  
-                cout << "Player " << player->getTablePos() << " has BlackJack!" << endl;                                          
+            if(splits > 2) {
+                eval(player, handIndex);   //Eval H121
+                handIndex++;
+                eval(player, handIndex);   //Eval H122
+            } else {
+                eval(player, handIndex);   //Eval H12
             }
 
-            ++handIndex;
+        } else {
+
+            //If No Split, Proceed Normally by Evaluating Initial & Only Hand
+            eval(player, handIndex);
+
         }
     }
 
-    Hand* dealerHand = dealer->getHand();
+
     //Deal the Dealer Until Bust, BlackJack or Stand
+    Hand* dealerHand = dealer->getHand();
     dealerHand->printHand();
     while(!(dealerHand->isBust()) && !(dealerHand->isBlackJack()) && !(dealer->makeDecision() == dealer->STAND)) {
         shoe->dealToDealer(dealer);
@@ -139,6 +200,7 @@ void Table::collectionsAndPayOuts() {
         Hand* dealerHand = dealer->getHand();
 
         for(auto& playerHand : player->getHands()) {  //For Each Hand Player Has
+
             // Player busts or has less points than dealer (who didn't bust)
             if(playerHand->isBust() || (playerHand->getHandValue() < dealerHand->getHandValue() && !dealerHand->isBust())) {
                 player->decreaseBalance(player->getBet());
