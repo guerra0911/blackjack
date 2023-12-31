@@ -57,6 +57,7 @@ void Shoe::burnCard() {
     position++;
 }
 
+
 //Dealing
 void Shoe::dealToPlayer(Player* player, int handIndex) {
     (player->getHand(handIndex))->addCardToHand(getTopCard());      //Add card to hand at specified index of player's hands vector.

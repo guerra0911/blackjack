@@ -32,10 +32,10 @@ class Player {
     void placeBet(int amount);
 
     //Hand
-    //void addCardToHand(Card* card);
-    //void clearHand();
-    //int getHandValue();
-
+    Hand* getHand(int handIndex);
+    vector<Hand*> getHands();
+    void clearAllHands();
+    
     //Decision
     Player::Decision makeDecision(Hand* hand);
 
@@ -43,17 +43,7 @@ class Player {
     int getTablePos();
     void setTablePos(int position);
 
-    //Hand
-    Hand* getHand(int handIndex);
-    vector<Hand*> getHands();
-    void clearAllHands();
-
-    //Actions
-    //bool isBust();
-    //bool isBlackJack();
-
-    //Print
-    //void printHand();
+    
 
     
     private:

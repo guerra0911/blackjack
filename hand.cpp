@@ -64,6 +64,7 @@ bool Hand::isBlackJack() {
     return false;
 }
 
+
 //Print
 void Hand::printHand() {
     for(size_t i = 0; i < hand.size(); ++i) {

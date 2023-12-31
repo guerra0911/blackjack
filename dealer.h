@@ -22,9 +22,6 @@ class Dealer {
     ~Dealer();
 
     //Hand
-    //void addCardToHand(Card* card);
-    //void clearHand();
-    //int getHandValue();
     Hand* getHand();
 
     //Decision
@@ -34,13 +31,9 @@ class Dealer {
     void payOut(Player* player);
     void collectBet(Player* player);
 
-    //Actions
-    //bool isBust();
-    //bool isBlackJack();
-
     //Print
     void printVisibleCard();
-    //void printHand();
+    
 
     private:
     //vector<Card*> hand;  
