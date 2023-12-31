@@ -1,7 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "card.h"
+//#include "card.h"
+#include "hand.h"
 #include <vector>
 
 using std::vector;
@@ -31,30 +32,35 @@ class Player {
     void placeBet(int amount);
 
     //Hand
-    void addCardToHand(Card* card);
-    void clearHand();
-    int getHandValue();
+    //void addCardToHand(Card* card);
+    //void clearHand();
+    //int getHandValue();
 
     //Decision
-    Player::Decision makeDecision();
+    Player::Decision makeDecision(Hand* hand);
 
     //Table
     int getTablePos();
     void setTablePos(int position);
 
+    //Hand
+    Hand* getHand(int handIndex);
+    vector<Hand*> getHands();
+    void clearAllHands();
+
     //Actions
-    bool isBust();
-    bool isBlackJack();
+    //bool isBust();
+    //bool isBlackJack();
 
     //Print
-    void printHand();
+    //void printHand();
 
     
     private:
     int balance;
     int bet;
     int tablePos;
-    vector<Card*> hand;
+    vector<Hand*> hands;
 };
 
 #endif //PLAYER_H

@@ -25,7 +25,7 @@ class Shoe {
     void burnCard();            //Burns Top Card
 
     //Dealing
-    void dealToPlayer(Player* player);    //Deal Card to Player & Remove from Shoe
+    void dealToPlayer(Player* player, int handIndex);    //Deal Card to Player's Specified Hand & Remove from Shoe
     void dealToDealer(Dealer* dealer);
 
 

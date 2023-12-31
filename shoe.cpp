@@ -1,4 +1,5 @@
 #include "shoe.h"
+#include "hand.h"
 
 #include <iostream>
 #include <algorithm>
@@ -57,8 +58,8 @@ void Shoe::burnCard() {
 }
 
 //Dealing
-void Shoe::dealToPlayer(Player* player) {
-    player->addCardToHand( getTopCard() );
+void Shoe::dealToPlayer(Player* player, int handIndex) {
+    (player->getHand(handIndex))->addCardToHand(getTopCard());      //Add card to hand at specified index of player's hands vector.
     position++;
 }
 

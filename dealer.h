@@ -2,6 +2,7 @@
 #define DEALER_H
 
 #include "card.h"
+#include "hand.h"
 #include "player.h"
 
 #include <vector>

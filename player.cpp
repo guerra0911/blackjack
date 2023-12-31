@@ -1,4 +1,5 @@
 #include "player.h"
+#include "hand.h"
 #include <iostream>
 #include <string>
 
@@ -6,7 +7,9 @@ using namespace std;
 using std::string;
 
 //Constructors
-Player::Player(int initialBalance, int initialBet) : balance(initialBalance), bet(initialBet) {}
+Player::Player(int initialBalance, int initialBet) : balance(initialBalance), bet(initialBet) {
+    hands.push_back(new Hand());        //Initialize Empty Initial Hand
+}
 
 Player::~Player() {}
 
@@ -36,6 +39,27 @@ void Player::placeBet(int amount) {
 
 
 //Hand
+Hand* Player::getHand(int handIndex) {
+    return hands[handIndex];
+}
+
+vector<Hand*> Player::getHands() {
+    return hands;
+}
+
+void Player::clearAllHands() {
+    for(auto& hand : hands) {
+        hand->clearHand();          //Empty The Hand
+        delete hand;                //Delete It
+    }
+    hands.clear();
+
+    // Add a new Hand object to the vector
+    hands.push_back(new Hand());
+}
+
+/*
+//Hand
 void Player::addCardToHand(Card* card) {
     hand.push_back(card);
 }
@@ -63,11 +87,12 @@ int Player::getHandValue() {
 
     return handValue;
 }
+*/
 
 
 //Decision
-Player::Decision Player::makeDecision() {
-    if(getHandValue() >= 16) {
+Player::Decision Player::makeDecision(Hand* hand) {
+    if(hand->getHandValue() >= 16) {
         return Player::Decision::STAND;
     } else {
         return Player::Decision::HIT;
@@ -84,6 +109,7 @@ void Player::setTablePos(int position) {
     tablePos = position;
 }
 
+/*
 //Actions
 bool Player::isBust() {
     if(getHandValue() > 21) {
@@ -111,3 +137,4 @@ void Player::printHand() {
     }
     cout << " = " << getHandValue() << endl;
 }
+*/

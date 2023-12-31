@@ -4,6 +4,8 @@
 #include "player.h"
 #include "dealer.h"
 #include "shoe.h"
+#include "hand.h"
+//#include "card.h"
 #include <vector>
 #include <map>
 

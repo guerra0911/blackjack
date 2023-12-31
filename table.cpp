@@ -1,4 +1,6 @@
 #include "table.h"
+#include "hand.h"
+#include "card.h"
 #include <iostream>
 
 using namespace std;
@@ -62,7 +64,7 @@ void Table::playRound(Shoe* shoe) {
 
     //Deal 1st Card to Each Player
     for(auto& pair : players) {
-        shoe->dealToPlayer(pair.second);
+        shoe->dealToPlayer(pair.second,0);      //Index 0 = First Initial Hand
     }
 
     //Deal 1st Card (HIDDEN) to Dealer
@@ -70,17 +72,20 @@ void Table::playRound(Shoe* shoe) {
 
     //Deal 2nd Card to Each Player
     for(auto& pair : players) {
-        shoe->dealToPlayer(pair.second);
-        (pair.second)->printHand();
-
+        shoe->dealToPlayer(pair.second,0);      //Index 0 = First Initial Hand
+        (pair.second->getHand(0))->printHand();      
     }
 
     //Deal 2nd Card (VISIBLE) to Dealer
     shoe->dealToDealer(dealer);
     dealer->printVisibleCard();
 
+
+
     //For Each Player, Deal Until Bust, BlackJack or Stand
-    for(auto& pair : players) {    
+    for(auto& pair : players) {  
+        Player* player = pair.second;  
+        int handIndex = 0;
 
         //For Each Hand   in player object, vector<vector<Card*>>
         /*      */
@@ -92,19 +97,22 @@ void Table::playRound(Shoe* shoe) {
         //if SURRENDER -> surrender()
         //if DOUBLE -> double()
         //if SPLIT -> split()
+        for(auto& hand : player->getHands()) {
 
+            while(!hand->isBust() && !hand->isBlackJack() && !(player->makeDecision(hand) == player->STAND)) {
+                shoe->dealToPlayer(player, handIndex);
+                hand->printHand();
+            }
 
-        while(!((pair.second)->isBust()) && !((pair.second)->isBlackJack()) && !((pair.second)->makeDecision() == (pair.second)->STAND)) {
-            shoe->dealToPlayer((pair.second));
-            (pair.second)->printHand();
-        }
+            if(hand->isBust()) {
+                cout << "Player " << player->getTablePos() << " Busts!" << endl;                           
+            }
 
-        if((pair.second)->isBust()) {
-            cout << "Player " << (pair.second)->getTablePos() << " Busts!" << endl;                           
-        }
+            if(hand->isBlackJack()) {  
+                cout << "Player " << player->getTablePos() << " has BlackJack!" << endl;                                          
+            }
 
-        if((pair.second)->isBlackJack()) {  
-            cout << "Player " << (pair.second)->getTablePos() << " has BlackJack!" << endl;                                          
+            ++handIndex;
         }
     }
 
@@ -126,37 +134,39 @@ void Table::playRound(Shoe* shoe) {
 }
 
 void Table::collectionsAndPayOuts() {
-    for(auto& pair : players) {
+    for(auto& pair : players) {         //For Each Player
         Player* player = pair.second;
 
-        // Player busts or has less points than dealer (who didn't bust)
-        if(player->isBust() || (player->getHandValue() < dealer->getHandValue() && !dealer->isBust())) {
-            player->decreaseBalance(player->getBet());
-            cout << "Player " << player->getTablePos() << " Loses! New Balance = " << player->getBalance() << endl; 
+        for(auto& hand : player->getHands()) {  //For Each Hand Player Has
+            // Player busts or has less points than dealer (who didn't bust)
+            if(hand->isBust() || (hand->getHandValue() < dealer->getHandValue() && !dealer->isBust())) {
+                player->decreaseBalance(player->getBet());
+                cout << "Player " << player->getTablePos() << " Loses! New Balance = " << player->getBalance() << endl; 
 
-        // Player has more points than dealer
-        } else if(player->getHandValue() > dealer->getHandValue()) {
+            // Player has more points than dealer
+            } else if((hand->getHandValue() > dealer->getHandValue()) || !hand->isBust() && dealer->isBust()) {
 
-            // Player has a blackjack
-            if(player->isBlackJack()) {
-                player->increaseBalance(1.5 * player->getBet());  
+                // Player has a blackjack
+                if(hand->isBlackJack()) {
+                    player->increaseBalance(1.5 * player->getBet());  
 
-            // Player wins but doesn't have a blackjack
+                // Player wins but doesn't have a blackjack
+                } else {
+                    player->increaseBalance(player->getBet());        
+                }
+                cout << "Player " << player->getTablePos() << " Wins! New Balance = " << player->getBalance() << endl;
+
+            // Player and dealer have the same points
             } else {
-                player->increaseBalance(player->getBet());        
+                cout << "Player " << player->getTablePos() << " Draws." << endl;
             }
-            cout << "Player " << player->getTablePos() << " Wins! New Balance = " << player->getBalance() << endl;
-
-        // Player and dealer have the same points
-        } else {
-            cout << "Player " << player->getTablePos() << " Draws." << endl;
         }
     }
 }
 
 void Table::clearAllHands() {
     dealer->clearHand();
-    for(auto& pair : players) {         
-        (pair.second)->clearHand();
+    for(auto& pair : players) {                         //For Each Player
+        (pair.second)->clearAllHands();               //Clear All their Hands
     }
 }
