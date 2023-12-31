@@ -64,7 +64,7 @@ void Shoe::dealToPlayer(Player* player, int handIndex) {
 }
 
 void Shoe::dealToDealer(Dealer* dealer) {
-    dealer->addCardToHand( getTopCard() );
+    (dealer->getHand())->addCardToHand(getTopCard());   //Deal Card to the only hand the dealer has
     position++;
 }
 

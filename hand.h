@@ -16,6 +16,7 @@ class Hand {
     void addCardToHand(Card* card);
     void clearHand();
     int getHandValue();
+    Card* getCard(int handIndex);
 
     //Actions
     bool isBust();

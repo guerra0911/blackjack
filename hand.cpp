@@ -44,6 +44,11 @@ int Hand::getHandValue() {
     return handValue;
 }
 
+Card* Hand::getCard(int handIndex) {
+    return hand[handIndex];
+}
+
+
 //Actions
 bool Hand::isBust() {
     if(getHandValue() > 21) {

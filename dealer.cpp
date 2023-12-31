@@ -6,12 +6,20 @@ using namespace std;
 using std::string;
 
 //Constructors
-Dealer::Dealer() {}
+Dealer::Dealer() {
+    hand = new Hand();
+}
 
-Dealer::~Dealer() {}
-
+Dealer::~Dealer() {
+    delete hand;
+}
 
 //Hand
+Hand* Dealer::getHand() {
+    return hand;
+}
+/*
+
 void Dealer::addCardToHand(Card* card) {
     hand.push_back(card);
 }
@@ -29,10 +37,11 @@ int Dealer::getHandValue() {
 
     return handValue;
 }
+*/
 
 //Decision
 Dealer::Decision Dealer::makeDecision() {
-    if(getHandValue() >= 16) {
+    if(hand->getHandValue() >= 16) {
         return Dealer::Decision::STAND;
     } else {
         return Dealer::Decision::HIT;
@@ -49,7 +58,7 @@ void Dealer::collectBet(Player* player) {
     player->decreaseBalance(player->getBet());
 }
 
-
+/*/
 //Actions
 bool Dealer::isBust() {
     if(getHandValue() > 21) {
@@ -65,15 +74,6 @@ bool Dealer::isBlackJack() {
     return false;
 }
 
-
-//Print
-void Dealer::printVisibleCard() {
-    cout << "Dealer's Hand: ";
-
-    cout << " ???, ";
-    cout << hand[1]->toString() << endl;
-}
-
 void Dealer::printHand() {
     cout << "Dealer's Hand:" << endl;
     for(size_t i = 0; i < hand.size(); ++i) {
@@ -84,3 +84,13 @@ void Dealer::printHand() {
     }
     cout << " = " << getHandValue() << endl;
 }
+*/
+
+//Print
+void Dealer::printVisibleCard() {
+    cout << "Dealer's Hand: ";
+
+    cout << " ???, ";
+    cout << (hand->getCard(1))->toString() << endl;     //Only show 2nd Card in Hand
+}
+

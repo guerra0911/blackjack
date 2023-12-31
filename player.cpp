@@ -11,7 +11,11 @@ Player::Player(int initialBalance, int initialBet) : balance(initialBalance), be
     hands.push_back(new Hand());        //Initialize Empty Initial Hand
 }
 
-Player::~Player() {}
+Player::~Player() {
+    for (Hand* hand : hands) {
+        delete hand;
+    }
+}
 
 
 //Balance

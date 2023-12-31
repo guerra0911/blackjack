@@ -22,9 +22,10 @@ class Dealer {
     ~Dealer();
 
     //Hand
-    void addCardToHand(Card* card);
-    void clearHand();
-    int getHandValue();
+    //void addCardToHand(Card* card);
+    //void clearHand();
+    //int getHandValue();
+    Hand* getHand();
 
     //Decision
     Dealer::Decision makeDecision();
@@ -34,16 +35,16 @@ class Dealer {
     void collectBet(Player* player);
 
     //Actions
-    bool isBust();
-    bool isBlackJack();
+    //bool isBust();
+    //bool isBlackJack();
 
     //Print
     void printVisibleCard();
-    void printHand();
+    //void printHand();
 
     private:
-    vector<Card*> hand;  //Copies of Card b/c hand is small
-
+    //vector<Card*> hand;  
+    Hand* hand;     //Dealer only ever has one hand, can't split
 };
 
 #endif //DEALER_H
