@@ -60,7 +60,7 @@ void Player::clearAllHands() {
     }
     hands.clear();
 
-    //Add a new Hand object to the vector so it is not empty for future operations/accessing
+    //Add a new REGULAR Empty Hand object to the vector so it is not empty for future operations/accessing
     hands.push_back(new Hand());
 }
 

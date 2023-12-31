@@ -70,16 +70,18 @@ void Table::eval(Player* player, int handIndex) {
         if(player->makeDecision(playerHand) == player->HIT) {
             shoe->dealToPlayer(player, handIndex);
             playerHand->printHand();
+            playerHand->setBetType(Hand::REGULAR);
 
         //DOUBLE
         } else if(player->makeDecision(playerHand) == player->DOUBLE) {
             shoe->dealToPlayer(player, handIndex);
             playerHand->printHand();
+            playerHand->setBetType(Hand::DOUBLE);      //Indicate 2x Payout
             break;
         
         //SURRENDER
         } else if(player->makeDecision(playerHand) == player->SURRENDER) {
-            cout << "Player " << player->getTablePos() << " Surrenders!" << endl;       
+            playerHand->setBetType(Hand::SURRENDER);   //Indicate 0.5x Payout      
             break;
         }
     }
@@ -198,24 +200,44 @@ void Table::collectionsAndPayOuts() {
     for(auto& pair : players) {         //For Each Player
         Player* player = pair.second;
         Hand* dealerHand = dealer->getHand();
+        bool playerSplit;
+        
+        //If More than 1 Hand, Player Has Split this Round
+        if(player->getHands().size() > 1) {
+            playerSplit = true;
+        } else {
+            playerSplit = false;
+        }
 
         for(auto& playerHand : player->getHands()) {  //For Each Hand Player Has
+            //DETERMINE BET MULTIPLIER DEPENDING ON REGULAR OR HIT OR SURRENDER
+            int betFactor = 1;  
 
-            // Player busts or has less points than dealer (who didn't bust)
-            if(playerHand->isBust() || (playerHand->getHandValue() < dealerHand->getHandValue() && !dealerHand->isBust())) {
-                player->decreaseBalance(player->getBet());
+            if(playerHand->getBetType() == Hand::SURRENDER) {       //Halve Money
+                betFactor = 0.5;
+            } else if(playerHand->getBetType() == Hand::DOUBLE) {   //Double Money
+                betFactor = 2;
+            }
+
+            //IF PLAYER SURRENDERED HAND
+            if(playerHand->getBetType() == Hand::SURRENDER) {
+                player->decreaseBalance(betFactor * player->getBet());
+
+            // Player busts or has less points than dealer (who didn't bust) = LOSE
+            } else if(playerHand->isBust() || (playerHand->getHandValue() < dealerHand->getHandValue() && !dealerHand->isBust())) {
+                player->decreaseBalance(betFactor * player->getBet());
                 cout << "Player " << player->getTablePos() << " Loses! New Balance = " << player->getBalance() << endl; 
 
-            // Player has more points than dealer
+            // Player has more points than dealer OR Player has Less Points than Dealer AND Dealer Busted
             } else if((playerHand->getHandValue() > dealerHand->getHandValue()) || !playerHand->isBust() && dealerHand->isBust()) {
 
-                // Player has a blackjack
-                if(playerHand->isBlackJack()) {
-                    player->increaseBalance(1.5 * player->getBet());  
+                // Player has a blackjack & Player hasn't Split & Player Hasn't Doubled
+                if(playerHand->isBlackJack() && !playerSplit && betFactor != 2) {
+                    player->increaseBalance(1.5 * player->getBet());        //Return 1.5x   (When Player splits or doubles, blackjack does not return 1.5, only 1x & 2x respectively)
 
                 // Player wins but doesn't have a blackjack
                 } else {
-                    player->increaseBalance(player->getBet());        
+                    player->increaseBalance(betFactor * player->getBet());        
                 }
                 cout << "Player " << player->getTablePos() << " Wins! New Balance = " << player->getBalance() << endl;
 

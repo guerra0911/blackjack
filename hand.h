@@ -8,6 +8,13 @@ using std::vector;
 
 class Hand {
     public:
+
+    enum BetType{
+        REGULAR,
+        DOUBLE,
+        SURRENDER
+    };
+
     //Constructors
     Hand();
     ~Hand();
@@ -18,7 +25,10 @@ class Hand {
     void clearHand();
     int getHandValue();
     Card* getCard(int cardIndex);
-    
+
+    //Status (Whether Hand is Split, Doubled, or Surrendered)
+    void setBetType(Hand::BetType status);
+    Hand::BetType getBetType();
 
     //Actions
     bool isBust();
@@ -30,6 +40,7 @@ class Hand {
 
 
     private:
+    BetType betType;
     vector<Card*> hand;
 };
 

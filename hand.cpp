@@ -6,7 +6,9 @@
 using namespace std;
 
 //Constructors
-Hand::Hand() {}
+Hand::Hand() {
+    betType = BetType::REGULAR;
+}
 
 Hand::~Hand() {
     for(auto& card : hand) {
@@ -57,6 +59,15 @@ Card* Hand::getCard(int cardIndex) {
     return hand[cardIndex];
 }
 
+
+//Status
+void Hand::setBetType(Hand::BetType betType) {
+    betType = betType;
+}
+
+Hand::BetType Hand::getBetType() {
+    return betType;
+}
 
 
 //Actions
