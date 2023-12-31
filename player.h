@@ -11,7 +11,10 @@ class Player {
 
     enum Decision {
         HIT,
-        STAND
+        STAND,
+        SPLIT,
+        DOUBLE,
+        SURRENDER
     };
 
     //Constructors

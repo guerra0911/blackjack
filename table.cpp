@@ -80,7 +80,19 @@ void Table::playRound(Shoe* shoe) {
     dealer->printVisibleCard();
 
     //For Each Player, Deal Until Bust, BlackJack or Stand
-    for(auto& pair : players) {         
+    for(auto& pair : players) {    
+
+        //For Each Hand   in player object, vector<vector<Card*>>
+        /*      */
+        //Retrieve Decision() (Hit, Stand, Split, Double, Surrender) Based ON OPTIMAL TABLE IMPLEMENTATION, this just returns which enumeration based on OPTIMAL TABLE, no functionality
+
+        //The actual functionality is below, based on if statements = to which enumeration, the carry out the following, until players turn is done
+        //if HIT -> hit()
+        //if STAND -> stand()
+        //if SURRENDER -> surrender()
+        //if DOUBLE -> double()
+        //if SPLIT -> split()
+
 
         while(!((pair.second)->isBust()) && !((pair.second)->isBlackJack()) && !((pair.second)->makeDecision() == (pair.second)->STAND)) {
             shoe->dealToPlayer((pair.second));
