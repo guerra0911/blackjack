@@ -39,8 +39,9 @@ class Card {
     Card::Suit getSuit();           //Rank Setter
     int getFaceValue();             //Rank to Int Value
 
-    //To String
+    //To String & Int
     string toString();
+    int rankToInt(Card::Rank rank);
 
     private:
     Rank rank;

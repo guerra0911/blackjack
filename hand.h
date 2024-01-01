@@ -12,7 +12,7 @@ class Hand {
     enum BetType{
         REGULAR,
         DOUBLE,
-        SURRENDER
+        HALF
     };
 
     //Constructors
@@ -25,6 +25,8 @@ class Hand {
     void clearHand();
     int getHandValue();
     Card* getCard(int cardIndex);
+    int getSize();
+    int cardNotAce();
 
     //Status (Whether Hand is Split, Doubled, or Surrendered)
     void setBetType(Hand::BetType status);
@@ -34,6 +36,7 @@ class Hand {
     bool isBust();
     bool isBlackJack();
     bool isPairAces();
+    bool isDoubles();
     bool hasAce();
 
     //Print

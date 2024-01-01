@@ -29,17 +29,17 @@ Dealer::Decision Dealer::makeDecision() {
 
         case HARD_17:
             if(hand->getHandValue() >= 17) {
-                return Dealer::Decision::STAND;
+                return Dealer::Decision::S;
             } else {
-                return Dealer::Decision::HIT;
+                return Dealer::Decision::H;
             }
             break;
         
         case SOFT_17:
             if(hand->getHandValue() >= 17 && !hand->hasAce()) {
-                return Dealer::Decision::STAND;
+                return Dealer::Decision::S;
             } else {
-                return Dealer::Decision::HIT;
+                return Dealer::Decision::H;
             }
             break;
     }
@@ -56,11 +56,15 @@ void Dealer::collectBet(Player* player) {
 }
 
 
-//Print
+//Visible Card
 void Dealer::printVisibleCard() {
     cout << "Dealer's Hand: ";
 
     cout << " ???, ";
     cout << (hand->getCard(1))->toString() << endl;     //Only show 2nd Card in Hand
+}
+
+Card* Dealer::getVisibleCard() {
+    return hand->getCard(1);
 }
 

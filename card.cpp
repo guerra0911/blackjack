@@ -25,7 +25,7 @@ int Card::getFaceValue() {
 }
 
 
-//To String
+//To String & Int
 string Card::toString() {
     static map<Card::Rank, string> rankMap = {
         {ACE, "ACE"},
@@ -54,4 +54,24 @@ string Card::toString() {
 
     return cardString;
 
+}
+
+int Card::rankToInt(Card::Rank rank) {
+    static map<Card::Rank, int> rankIntMap = {
+        {ACE, 1},
+        {TWO, 2},
+        {THREE, 3},
+        {FOUR, 4},
+        {FIVE, 5},
+        {SIX, 6},
+        {SEVEN, 7},
+        {EIGHT, 8},
+        {NINE, 9},
+        {TEN, 10},
+        {JACK, 10},
+        {QUEEN, 10},
+        {KING, 10}
+    };
+
+    return rankIntMap[rank];
 }

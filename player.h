@@ -4,6 +4,7 @@
 //#include "card.h"
 #include "hand.h"
 #include <vector>
+#include <string>
 
 using std::vector;
 
@@ -11,17 +12,19 @@ class Player {
     public:
 
     enum Decision {
-        HIT,
-        STAND,
-        SPLIT,
-        DOUBLE,
-        SURRENDER
+        H,  // Hit
+        S,  // Stand
+        P,  // Split
+        RH, // Surrender if allowed, otherwise hit
+        DH, // Double if allowed, otherwise hit
+        DS  // Double if allowed, otherwise stand
     };
+
 
     enum Strategy {
         SOFT_17,
-        HARD_17
-        //OPTIMAL_CHART,
+        HARD_17,
+        OPTIMAL_CHART
         //CARD_COUNT   
     };
 
@@ -46,21 +49,25 @@ class Player {
     
     
     //Decision
-    Player::Decision makeDecision(Hand* hand);
+    Player::Decision makeDecision(Hand* hand, int dealerCardVal);
 
     //Table
     int getTablePos();
     void setTablePos(int position);
 
+    //Optimal Chart
+    static vector<vector<Player::Decision>> optimalChart;  
+    Player::Decision opChart(Hand* hand, int dealerCardVal);
     
 
-    
     private:
     int balance;
     int bet;
     int tablePos;
+
     Strategy strategy;
     vector<Hand*> hands;
+
 };
 
 #endif //PLAYER_H

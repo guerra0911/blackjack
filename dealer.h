@@ -13,8 +13,8 @@ class Dealer {
     public:
 
     enum Decision {
-        HIT,
-        STAND
+        H,
+        S
     };
 
     enum Strategy {
@@ -36,8 +36,9 @@ class Dealer {
     void payOut(Player* player);
     void collectBet(Player* player);
 
-    //Print
+    //Visible Card
     void printVisibleCard();
+    Card* getVisibleCard();
     
 
     private: 

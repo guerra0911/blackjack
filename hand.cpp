@@ -86,7 +86,24 @@ bool Hand::isBlackJack() {
 }
 
 bool Hand::isPairAces() {
+    if(hand.size() > 2) {
+        cout << "HAND TOO LARGE TO CHECK FOR PAIR ACES" << endl;
+    }
+
     if((getCard(0))->getRank() == Card::ACE && (getCard(1))->getRank() == Card::ACE) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Hand::isDoubles() {
+
+    if(hand.size() > 2) {
+        cout << "HAND TOO LARGE TO CHECK FOR DOUBLES" << endl;
+    }
+
+    if((getCard(0))->getRank() == (getCard(1))->getRank()) {
         return true;
     } else {
         return false;
@@ -102,6 +119,13 @@ bool Hand::hasAce() {
     return false;
 }
 
+int Hand::getSize() {
+    return hand.size();
+}
+
+int Hand::cardNotAce() {
+    
+}
 
 //Print
 void Hand::printHand() {

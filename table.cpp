@@ -60,30 +60,53 @@ Player* Table::playerAtPos(int position) {
 
 
 //Play
-void Table::eval(Player* player, int handIndex) {
+void Table::eval(Player* player, int handIndex, Player::Decision decision) {
     Hand* playerHand = player->getHand(handIndex);
 
     //While Player hasnt Busted, Hasn't Hit BlackJack, Hasn't Decided to Stand, Hasn't gone over 21, keep asking to play
-    while(!playerHand->isBust() && !playerHand->isBlackJack() && !(player->makeDecision(playerHand) == player->STAND) && playerHand->getHandValue() < 22) {
+    while(!playerHand->isBust() && !playerHand->isBlackJack() && playerHand->getHandValue() < 22) {
+
+        //SURRENDER
+        if(decision == player->RH) {
+            playerHand->setBetType(Hand::HALF);   //Indicate 0.5x Payout      
+            break;
+        }
+
+        //STAND
+        else if (decision == player->S) {
+            playerHand->setBetType(Hand::REGULAR);
+            break;
+        }
+
+        //DOUBLE
+        else if(decision == player->DS || decision == player->DH) {
+            
+            if(playerHand->getSize() < 3) {                 //If Doubling is Allowed then Double(Only After 2 Initial Cards Dealt)
+                playerHand->setBetType(Hand::DOUBLE);       //Indicate 2x Payout
+                shoe->dealToPlayer(player, handIndex);
+                playerHand->printHand();
+                break;                                      //Only allowed one more card after doubling so break
+            }
+            
+            else if (decision == player->DS) {              //If double is not allowed, then otherwise stamd
+                playerHand->setBetType(Hand::REGULAR);
+                break;                                      //Stand
+            } 
+            
+            else {                                          //If double is not allowed, then otherwise hit
+                shoe->dealToPlayer(player, handIndex);
+                playerHand->printHand();
+                playerHand->setBetType(Hand::REGULAR);
+            }
+        }
         
         //HIT
-        if(player->makeDecision(playerHand) == player->HIT) {
+        else if(decision == player->H) {
             shoe->dealToPlayer(player, handIndex);
             playerHand->printHand();
             playerHand->setBetType(Hand::REGULAR);
-
-        //DOUBLE
-        } else if(player->makeDecision(playerHand) == player->DOUBLE) {
-            shoe->dealToPlayer(player, handIndex);
-            playerHand->printHand();
-            playerHand->setBetType(Hand::DOUBLE);      //Indicate 2x Payout
-            break;
-        
-        //SURRENDER
-        } else if(player->makeDecision(playerHand) == player->SURRENDER) {
-            playerHand->setBetType(Hand::SURRENDER);   //Indicate 0.5x Payout      
-            break;
         }
+        
     }
 
     if(playerHand->isBust()) {
@@ -112,18 +135,23 @@ void Table::playRound() {
 
     //Deal 2nd Card (VISIBLE) to Dealer
     shoe->dealToDealer(dealer);
+    Card* dealerCard = (dealer->getVisibleCard());
+    int dealerCardVal = dealerCard->getFaceValue();
     dealer->printVisibleCard();
 
 
 
     //For Each Player, Deal Until Bust, BlackJack or Stand
-    for(auto& pair : players) {  
-        Player* player = pair.second;  
+    for(auto& pair : players) { 
         int handIndex = 0;
         int splits = 0;
 
+        Player* player = pair.second;  
+        Hand* playerHand = player->getHand(handIndex);
+        Player::Decision decision = player->makeDecision(playerHand, dealerCardVal);
+
         //If Player Decided to Split
-        if(player->makeDecision(player->getHand(handIndex)) == player->SPLIT) {
+        if(decision == player->P) {
             
             //Split there First Hand    < H1 >  ->  < H11, H12>
             player->split(handIndex);
@@ -133,7 +161,7 @@ void Table::playRound() {
             shoe->dealToPlayer(player, handIndex);
 
             //If Player Decides to Split H11, and doesn't have a pair of Aces
-            if(player->makeDecision(player->getHand(handIndex)) == player->SPLIT && !((player->getHand(handIndex))->isPairAces())) {
+            if(decision == player->P && !(playerHand->isPairAces())) {
                 
                 //Split there first Hand, H11 again      < H11, H12 >  ->   < H111, H112, H12 >       
                 player->split(handIndex);
@@ -141,12 +169,12 @@ void Table::playRound() {
             }
 
             if(splits > 1) {
-                eval(player, handIndex);   //Eval H111
+                eval(player, handIndex, decision);   //Eval H111
                 handIndex++;
-                eval(player, handIndex);   //Eval H112
+                eval(player, handIndex, decision);   //Eval H112
                 handIndex++;
             } else {
-                eval(player, handIndex);   //Eval H11
+                eval(player, handIndex, decision);   //Eval H11
                 handIndex++;
             }
             
@@ -155,7 +183,7 @@ void Table::playRound() {
             shoe->dealToPlayer(player, handIndex);
 
             //If Player Decides to Split H12, and doesn't have a pair of Aces
-            if(player->makeDecision(player->getHand(handIndex)) == player->SPLIT && !((player->getHand(handIndex))->isPairAces())) {
+            if(decision == player->P && !(playerHand->isPairAces())) {
                 
                 //Split there Second Hand, H12 again      < H111, H112, H12 >  ->   < H111, H112, H121, H122 >
                 player->split(handIndex);
@@ -163,17 +191,17 @@ void Table::playRound() {
             }
 
             if(splits > 2) {
-                eval(player, handIndex);   //Eval H121
+                eval(player, handIndex, decision);   //Eval H121
                 handIndex++;
-                eval(player, handIndex);   //Eval H122
+                eval(player, handIndex, decision);   //Eval H122
             } else {
-                eval(player, handIndex);   //Eval H12
+                eval(player, handIndex, decision);   //Eval H12
             }
 
         } else {
 
             //If No Split, Proceed Normally by Evaluating Initial & Only Hand
-            eval(player, handIndex);
+            eval(player, handIndex, decision);
 
         }
     }
@@ -182,7 +210,7 @@ void Table::playRound() {
     //Deal the Dealer Until Bust, BlackJack or Stand
     Hand* dealerHand = dealer->getHand();
     dealerHand->printHand();
-    while(!(dealerHand->isBust()) && !(dealerHand->isBlackJack()) && !(dealer->makeDecision() == dealer->STAND)) {
+    while(!(dealerHand->isBust()) && !(dealerHand->isBlackJack()) && !(dealer->makeDecision() == dealer->S)) {
         shoe->dealToDealer(dealer);
         dealerHand->printHand();
     }
@@ -213,14 +241,14 @@ void Table::collectionsAndPayOuts() {
             //DETERMINE BET MULTIPLIER DEPENDING ON REGULAR OR HIT OR SURRENDER
             int betFactor = 1;  
 
-            if(playerHand->getBetType() == Hand::SURRENDER) {       //Halve Money
+            if(playerHand->getBetType() == Hand::HALF) {       //Halve Money
                 betFactor = 0.5;
             } else if(playerHand->getBetType() == Hand::DOUBLE) {   //Double Money
                 betFactor = 2;
             }
 
             //IF PLAYER SURRENDERED HAND
-            if(playerHand->getBetType() == Hand::SURRENDER) {
+            if(playerHand->getBetType() == Hand::HALF) {
                 player->decreaseBalance(betFactor * player->getBet());
 
             // Player busts or has less points than dealer (who didn't bust) = LOSE
