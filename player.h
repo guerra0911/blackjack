@@ -18,8 +18,15 @@ class Player {
         SURRENDER
     };
 
+    enum Strategy {
+        SOFT_17,
+        HARD_17
+        //OPTIMAL_CHART,
+        //CARD_COUNT   
+    };
+
     //Constructors
-    Player(int initialBalance, int initialBet);
+    Player(int initialBalance, int initialBet, Strategy strategy);
     ~Player();
 
     //Balance
@@ -52,6 +59,7 @@ class Player {
     int balance;
     int bet;
     int tablePos;
+    Strategy strategy;
     vector<Hand*> hands;
 };
 

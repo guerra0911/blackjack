@@ -6,7 +6,8 @@ using namespace std;
 using std::string;
 
 //Constructors
-Dealer::Dealer() {
+Dealer::Dealer(Strategy initialStrategy) {
+    strategy = initialStrategy;
     hand = new Hand();
 }
 
@@ -24,10 +25,23 @@ Hand* Dealer::getHand() {
 
 //Decision
 Dealer::Decision Dealer::makeDecision() {
-    if(hand->getHandValue() >= 16) {
-        return Dealer::Decision::STAND;
-    } else {
-        return Dealer::Decision::HIT;
+    switch(strategy) {
+
+        case HARD_17:
+            if(hand->getHandValue() >= 17) {
+                return Dealer::Decision::STAND;
+            } else {
+                return Dealer::Decision::HIT;
+            }
+            break;
+        
+        case SOFT_17:
+            if(hand->getHandValue() >= 17 && !hand->hasAce()) {
+                return Dealer::Decision::STAND;
+            } else {
+                return Dealer::Decision::HIT;
+            }
+            break;
     }
 }
 

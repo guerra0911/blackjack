@@ -9,8 +9,13 @@ using std::string;
 using std::vector;
 
 //Constructors
-Player::Player(int initialBalance, int initialBet) : balance(initialBalance), bet(initialBet) {
-    hands.push_back(new Hand());        //Initialize Empty Initial Hand
+Player::Player(int initialBalance, int initialBet, Strategy initialStrategy) {
+    balance = initialBalance;
+    bet = initialBet;
+    strategy = initialStrategy;
+    
+    //Initialize Empty Initial Hand
+    hands.push_back(new Hand());
 }
 
 Player::~Player() {
@@ -76,11 +81,24 @@ void Player::split(int handIndex) {
 
 //Decision
 Player::Decision Player::makeDecision(Hand* hand) {
-    if(hand->getHandValue() >= 16) {
-        return Player::Decision::STAND;
-    } else {
-        return Player::Decision::HIT;
-    }
+    switch(strategy) {
+
+        case HARD_17:
+            if(hand->getHandValue() >= 17) {
+                return Player::Decision::STAND;
+            } else {
+                return Player::Decision::HIT;
+            }
+            break;
+
+        case SOFT_17:
+            if(hand->getHandValue() >= 17 && !hand->hasAce()) {
+                return Player::Decision::STAND;
+            } else {
+                return Player::Decision::HIT;
+            }
+            break;
+    }   
 }
 
 

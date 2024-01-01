@@ -17,8 +17,13 @@ class Dealer {
         STAND
     };
 
+    enum Strategy {
+        SOFT_17,
+        HARD_17,
+    };
+
     //Constructors
-    Dealer();
+    Dealer(Strategy strategy);
     ~Dealer();
 
     //Hand
@@ -36,6 +41,7 @@ class Dealer {
     
 
     private: 
+    Strategy strategy;
     Hand* hand;     //Dealer only ever has one hand, can't split
 };
 

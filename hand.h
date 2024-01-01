@@ -34,6 +34,7 @@ class Hand {
     bool isBust();
     bool isBlackJack();
     bool isPairAces();
+    bool hasAce();
 
     //Print
     void printHand();

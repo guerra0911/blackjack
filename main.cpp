@@ -17,16 +17,15 @@ using std::map;
 #define SHUFFLEPOINT 104
 
 int main() {
-    Dealer dealer;
+    Dealer dealer(Dealer::SOFT_17);
 
     Shoe* shoe = new Shoe(8);
     shoe->shuffle();
     shoe->burnCard();
     
     Table table1(5, shoe, &dealer);
-
     
-    Player player1(100, MINBET);
+    Player player1(100, MINBET, Player::SOFT_17);
 
     table1.addPlayer(&player1, 1);
     

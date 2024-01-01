@@ -93,6 +93,15 @@ bool Hand::isPairAces() {
     }
 }
 
+bool Hand::hasAce() {
+    for(Card* card : hand) {
+        if(card->getRank() == Card::ACE) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 //Print
 void Hand::printHand() {
