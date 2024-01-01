@@ -100,7 +100,9 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             break;
 
         case SOFT_17:
-            if(hand->getHandValue() >= 17 && !hand->hasAce()) {
+            if(hand->getHandValue() > 17) {
+                return Player::Decision::S;
+            } else if(hand->getHandValue() == 17 && !hand->hasAce()) {
                 return Player::Decision::S;
             } else {
                 return Player::Decision::H;
