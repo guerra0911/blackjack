@@ -154,23 +154,35 @@ void Table::playRound() {
         if(decision == player->P) {
             
             //Split there First Hand    < H1 >  ->  < H11, H12>
+
+            cout << "Splits Hand Once" << endl;
             player->split(handIndex);
             splits++;
 
-            //Deal Next Card to First Split Hand, H11
+            //Deal Second Card to First Split Hand, H11
             shoe->dealToPlayer(player, handIndex);
+            playerHand->printHand();
+            decision = player->makeDecision(playerHand, dealerCardVal);     //Re-Evaluate Newly Split Hand
 
             //If Player Decides to Split H11, and doesn't have a pair of Aces
             if(decision == player->P && !(playerHand->isPairAces())) {
                 
-                //Split there first Hand, H11 again      < H11, H12 >  ->   < H111, H112, H12 >       
+                //Split there first Hand, H11 again      < H11, H12 >  ->   < H111, H112, H12 >  
+                cout << "Splits Hand Twice" << endl;  
                 player->split(handIndex);
                 splits++;
             }
 
             if(splits > 1) {
+                playerHand = player->getHand(handIndex);    //Use H111
+                shoe->dealToPlayer(player, handIndex);  //Deal Second Card to H111
+                playerHand->printHand();
                 eval(player, handIndex, decision);   //Eval H111
                 handIndex++;
+
+                playerHand = player->getHand(handIndex);    //Use H112
+                shoe->dealToPlayer(player, handIndex);  //Deal Second Card to H112
+                playerHand->printHand();
                 eval(player, handIndex, decision);   //Eval H112
                 handIndex++;
             } else {
@@ -179,24 +191,37 @@ void Table::playRound() {
             }
             
 
-            //Evaluate Second/Third Split Hand, H12
+            //Deal Second Card to Second/Third Split Hand, H12
+            playerHand = player->getHand(handIndex);    //Use H12
             shoe->dealToPlayer(player, handIndex);
+            playerHand->printHand();
+            decision = player->makeDecision(playerHand, dealerCardVal);     //Re-Evaluate Newly Split Hand
 
             //If Player Decides to Split H12, and doesn't have a pair of Aces
             if(decision == player->P && !(playerHand->isPairAces())) {
                 
                 //Split there Second Hand, H12 again      < H111, H112, H12 >  ->   < H111, H112, H121, H122 >
+                cout << "Splits Hand Three Times" << endl;
                 player->split(handIndex);
                 splits++;
             }
 
             if(splits > 2) {
+                playerHand = player->getHand(handIndex);    //Use H121
+                shoe->dealToPlayer(player, handIndex); //Deal Second Card to H121
+                playerHand->printHand();
                 eval(player, handIndex, decision);   //Eval H121
                 handIndex++;
+
+
+                playerHand = player->getHand(handIndex);    //Use H122
+                shoe->dealToPlayer(player, handIndex); //Deal Second Card to H122
+                playerHand->printHand();
                 eval(player, handIndex, decision);   //Eval H122
             } else {
                 eval(player, handIndex, decision);   //Eval H12
             }
+
 
         } else {
 

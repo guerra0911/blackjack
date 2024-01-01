@@ -25,7 +25,7 @@ int main() {
     
     Table table1(5, shoe, &dealer);
     
-    Player player1(100, MINBET, Player::SOFT_17);
+    Player player1(100, MINBET, Player::OPTIMAL_CHART);
 
     table1.addPlayer(&player1, 1);
     

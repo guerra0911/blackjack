@@ -80,6 +80,10 @@ void Player::split(int handIndex) {
     (getHand(handIndex + 1))->addCardToHand((getHand(handIndex))->getCard(1));      //Move 2nd card in first hand to 1st card in 2nd split hand
     (getHand(handIndex))->removeCardFromHand(1);                                //Remove 2nd card in first hand
 
+    for(Hand* hand : getHands()) {
+        hand->printHand();
+    }
+
 }
 
 
