@@ -133,6 +133,8 @@ vector<vector<Player::Decision>> Player::optimalChart = {
 
     //Player                      Dealer's Card
     // Hand       A    2    3    4    5    6    7    8    9    10
+
+    //If Hand has More than 2 Cards OR (Has 2 Cards AND No Ace AND No Double)
     /* 8 */     { H,   H,   H,   H,   H,   H,   H,   H,   H,   H  },
     /* 9 */     { H,   H,   DH,  DH,  DH,  DH,  H,   H,   H,   H  },
     /* 10 */    { H,   DH,  DH,  DH,  DH,  DH,  DH,  DH,  DH,  H  },
@@ -143,6 +145,8 @@ vector<vector<Player::Decision>> Player::optimalChart = {
     /* 15 */    { H,   S,   S,   S,   S,   S,   H,   H,   H,   RH },
     /* 16 */    { RH,  S,   S,   S,   S,   S,   H,   H,   RH,  RH },
     /* 17 */    { S,   S,   S,   S,   S,   S,   S,   S,   S,   S  },
+
+    //If Player has an Ace, and it is not double Aces (Only 2 Cards in Hand)
     /* A,2 */   { H,   H,   H,   H,   DH,  DH,  H,   H,   H,   H  },
     /* A,3 */   { H,   H,   H,   H,   DH,  DH,  H,   H,   H,   H  },
     /* A,4 */   { H,   H,   H,   DH,  DH,  DH,  H,   H,   H,   H  },
@@ -152,6 +156,8 @@ vector<vector<Player::Decision>> Player::optimalChart = {
     /* A,8 */   { S,   S,   S,   S,   S,   S,   S,   S,   S,   S  },
     /* A,9 */   { S,   S,   S,   S,   S,   S,   S,   S,   S,   S  },
     /* A,10 */  { S,   S,   S,   S,   S,   S,   S,   S,   S,   S  },
+
+    //If Player has Double Cards (Only 2 Cards in Hand)
     /* A,A */   { P,   P,   P,   P,   P,   P,   P,   P,   P,   P  },
     /* 2,2 */   { H,   P,   P,   P,   P,   P,   P,   H,   H,   H  },
     /* 3,3 */   { H,   P,   P,   P,   P,   P,   P,   H,   H,   H  },
@@ -186,6 +192,7 @@ Player::Decision Player::opChart(Hand* playerHand, int dealerCardVal) {
         return optimalChart[playerHand->cardNotAce() + 8][dealerCardVal - 1];
     }
 
+    //If Player has Double Cards (Only 2 Cards in Hand)
     else if(playerHand->isDoubles()) {
         int doubledCardVal = (playerHand->getCard(0))->getFaceValue();
         return optimalChart[doubledCardVal + 18][dealerCardVal - 1];
