@@ -34,6 +34,10 @@ int Player::getBalance() {
     return balance;
 }
 
+void Player::setBalance(int newBal) {
+    balance = newBal;
+}
+
 void Player::increaseBalance(int amount) {
     balance += amount;
 }

@@ -213,7 +213,7 @@ void Table::eval(Player* player, int handIndex, int dealerCardVal) {
                 playerHand->printHand();
                 playerHand->setBetType(Hand::REGULAR);
             }
-            cout << "NO SURRENDER DECISION MADE -> ERROR" << endl;
+            //cout << "NO SURRENDER DECISION MADE -> ERROR" << endl;
         }
 
         //If Split, then Just Hit, b/c if you are in this eval function, you are not allowed to split anymore
@@ -254,7 +254,7 @@ void Table::eval(Player* player, int handIndex, int dealerCardVal) {
                 playerHand->printHand();
                 playerHand->setBetType(Hand::REGULAR);
             }
-            cout << "NO DOUBLE DECISION MADE -> ERROR" << endl;
+            //cout << "NO DOUBLE DECISION MADE -> ERROR" << endl;
         }
         
         //HIT

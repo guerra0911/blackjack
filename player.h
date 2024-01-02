@@ -34,6 +34,7 @@ class Player {
 
     //Balance
     int getBalance();
+    void setBalance(int newBal);
     void increaseBalance(int amount);
     void decreaseBalance(int amount);
 
