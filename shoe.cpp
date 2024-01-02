@@ -39,6 +39,10 @@ Card* Shoe::getTopCard() {
     return shoe[position];                      //Return card at current dealing position
 }
 
+int Shoe::getSize() {
+    return shoe.size();
+}
+
 
 //Actions
 void Shoe::shuffle() {
@@ -57,6 +61,19 @@ int Shoe::cardsLeft() {
 
 void Shoe::burnCard() {
     position++;
+}
+
+void Shoe::printShoe() {
+    int deck = 0;
+    for(Card* card : shoe) {
+        cout << card->toString() << ", ";
+        deck++;
+        if(deck == 13) {
+            cout << endl;
+            deck = 0;
+        }
+    }
+    cout << endl;
 }
 
 

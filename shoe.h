@@ -17,12 +17,14 @@ class Shoe {
 
     //Getters
     Card* getTopCard();         //Get FaceCard
+    int getSize();
     
     //Actions
     void shuffle();             //Shuffles current cards in Shoe
     void reinitialize();        //Adds all cards back to shoe, reshuffles
     int cardsLeft();            //Checks How many Cards Left in Shoe
     void burnCard();            //Burns Top Card
+    void printShoe();
 
     //Dealing
     void dealToPlayer(Player* player, int handIndex);    //Deal Card to Player's Specified Hand & Remove from Shoe

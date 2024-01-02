@@ -18,9 +18,9 @@ class Card {
         EIGHT = 8,
         NINE = 9,
         TEN = 10,
-        JACK = 10,
-        QUEEN = 10,
-        KING = 10
+        JACK = 11,
+        QUEEN = 12,
+        KING = 13
     };
 
     enum Suit {

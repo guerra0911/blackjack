@@ -21,7 +21,11 @@ Card::Suit Card::getSuit() {
 }
 
 int Card::getFaceValue() {
-    return static_cast<int>(rank); 
+    int faceValue = static_cast<int>(rank); 
+    if(faceValue > 10) {
+        faceValue = 10;
+    }
+    return faceValue;
 }
 
 

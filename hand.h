@@ -29,7 +29,7 @@ class Hand {
     int cardNotAce();
 
     //Status (Whether Hand is Split, Doubled, or Surrendered)
-    void setBetType(Hand::BetType status);
+    void setBetType(Hand::BetType newBetType);
     Hand::BetType getBetType();
 
     //Actions

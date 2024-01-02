@@ -61,8 +61,8 @@ Card* Hand::getCard(int cardIndex) {
 
 
 //Status
-void Hand::setBetType(Hand::BetType betType) {
-    betType = betType;
+void Hand::setBetType(Hand::BetType newBetType) {
+    betType = newBetType;
 }
 
 Hand::BetType Hand::getBetType() {
@@ -134,6 +134,9 @@ int Hand::cardNotAce() {
 //Print
 void Hand::printHand() {
     for(size_t i = 0; i < hand.size(); ++i) {
+        if(hand[i] == nullptr) {
+            cout << "CARD IS NULL POINTER ERROR!!!!!!!!!!!!!!!!!!" << endl;
+        }
         cout << hand[i]->toString();
         if(i != hand.size() - 1) {      // If it's not the last card
             cout << ", ";

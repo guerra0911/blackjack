@@ -36,9 +36,14 @@ Dealer::Decision Dealer::makeDecision() {
             break;
         
         case SOFT_17:
-            if(hand->getHandValue() >= 17 && !hand->hasAce()) {
+            if(hand->getHandValue() > 17) {
+                //cout << "STAND" << endl;
+                return Dealer::Decision::S;
+            } else if(hand->getHandValue() == 17 && !hand->hasAce()) {
+                //cout << "STAND" << endl;
                 return Dealer::Decision::S;
             } else {
+                //cout << "HIT" << endl;
                 return Dealer::Decision::H;
             }
             break;
