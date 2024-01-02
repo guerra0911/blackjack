@@ -36,7 +36,7 @@ Shoe::~Shoe() {
 
 //Getters
 Card* Shoe::getTopCard() {
-    return shoe[position];                      //Return card at current dealing position
+    return shoe[position];      //Return card at current dealing position
 }
 
 int Shoe::getSize() {
@@ -79,12 +79,12 @@ void Shoe::printShoe() {
 
 //Dealing
 void Shoe::dealToPlayer(Player* player, int handIndex) {
-    (player->getHand(handIndex))->addCardToHand(getTopCard());      //Add card to hand at specified index of player's hands vector.
+    (player->getHand(handIndex))->addCardToHand(getTopCard());  //Add card to hand at specified index of player's hands vector.
     position++;
 }
 
 void Shoe::dealToDealer(Dealer* dealer) {
-    (dealer->getHand())->addCardToHand(getTopCard());   //Deal Card to the only hand the dealer has
+    (dealer->getHand())->addCardToHand(getTopCard());           //Deal Card to the only hand the dealer has
     position++;
 }
 

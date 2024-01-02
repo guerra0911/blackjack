@@ -21,9 +21,9 @@ Card::Suit Card::getSuit() {
 }
 
 int Card::getFaceValue() {
-    int faceValue = static_cast<int>(rank); 
-    if(faceValue > 10) {
-        faceValue = 10;
+    int faceValue = static_cast<int>(rank);     //Number that Enum equals
+    if(faceValue > 10) {                        //J = 11, Q = 12, K = 13 in Enum Definition
+        faceValue = 10;                         //Set them back equal to 10
     }
     return faceValue;
 }

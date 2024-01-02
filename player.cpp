@@ -77,8 +77,8 @@ void Player::split(int handIndex) {
     Hand* splitHand = new Hand();
     hands.insert(hands.begin() + handIndex + 1, splitHand);
 
-    (getHand(handIndex + 1))->addCardToHand((getHand(handIndex))->getCard(1));      //Move 2nd card in first hand to 1st card in 2nd split hand
-    (getHand(handIndex))->removeCardFromHand(1);                                //Remove 2nd card in first hand
+    (getHand(handIndex + 1))->addCardToHand((getHand(handIndex))->getCard(1));      //Move 2nd card in first hand to 1st card in 2nd split hand     <1,2> -> <1,2> , <2,_>
+    (getHand(handIndex))->removeCardFromHand(1);                                    //Remove 2nd card in first hand      <1,2> , <2,_> -> <1,_> , <2,_>
 
     for(Hand* hand : getHands()) {
         hand->printHand();
@@ -92,7 +92,6 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
     switch(strategy) {
 
         case HARD_17:
-            cout << "HARD" << endl;
             if(hand->getHandValue() >= 17) {
                 return Player::Decision::S;
             } else {
@@ -101,24 +100,17 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             break;
 
         case SOFT_17:
-            cout << "SOFT" << endl;
-
             if(hand->getHandValue() > 17) {
-                //cout << "STAND" << endl;
                 return Player::Decision::S;
             } else if(hand->getHandValue() == 17 && !hand->hasAce()) {
-                //cout << "STAND" << endl;
                 return Player::Decision::S;
             } else {
-                //cout << "HIT" << endl;
                 return Player::Decision::H;
             }
             break;
         
         case OPTIMAL_CHART:
-            cout << "OP CHART" << endl;
             return opChart(hand, dealerCardVal);
-
             break;
     }   
 }
@@ -177,36 +169,29 @@ vector<vector<Player::Decision>> Player::optimalChart = {
 };
 
 Player::Decision Player::opChart(Hand* playerHand, int dealerCardVal) {
-    cout << "DEaler Card Val = " << dealerCardVal << endl;
-    cout << "Checking OP CHart for Hand Value = " << playerHand->getHandValue() << endl;
     //If Player over 17 without an Ace, STAND
     if(playerHand->getHandValue() >= 17 && !playerHand->hasAce()) {
-        cout << "STANDING" << endl;
         return Player::S;
     }
 
     //If Player Under 8, HIT
     if(playerHand->getHandValue() < 8) {
-        cout << "HITTING" << endl;
         return Player::H;
     }
 
     //If Hand has More than 2 Cards OR (Has 2 Cards AND No Ace AND No Double)
     if(playerHand->getSize() > 2 || !playerHand->hasAce() && !playerHand->isDoubles()) {
-        cout << "NO ACE, NO DOUBLE: RETURN DECISION AT CHART[" << playerHand->getHandValue() - 8 << "][" << dealerCardVal - 1 << "]" << endl;
-        return optimalChart[playerHand->getHandValue() - 8][dealerCardVal - 1];               //-8 B/c Chart Starts at 9
+        return optimalChart[playerHand->getHandValue() - 8][dealerCardVal - 1];               //-8: Chart Starts at Card Value 8
     }
 
     //If Player has an Ace, and it is not double Aces (Only 2 Cards in Hand)
     else if(playerHand->hasAce() && !playerHand->isDoubles()) {
-        cout << "HAS ACE, NO DOUBLE: RETURN DECISION AT CHART[" << playerHand->getHandValue() + 8 << "][" << dealerCardVal - 1 << "]" << endl;
         return optimalChart[playerHand->cardNotAce() + 8][dealerCardVal - 1];
     }
 
     //If Player has Double Cards (Only 2 Cards in Hand)
     else if(playerHand->isDoubles()) {
         int doubledCardVal = (playerHand->getCard(0))->getFaceValue();
-        cout << "HAS DOUBLE: RETURN DECISION AT CHART[" << doubledCardVal + 18 << "][" << dealerCardVal - 1 << "]" << endl;
         return optimalChart[doubledCardVal + 18][dealerCardVal - 1];
     }
 

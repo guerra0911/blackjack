@@ -14,16 +14,15 @@ using std::vector;
 using std::map;
 
 #define MINBET 25
-#define SHUFFLEPOINT 104
+#define RESHUFFLEPOINT 104
+#define NUMDECKS 8
 
 int main() {
     Dealer dealer(Dealer::SOFT_17);
 
-    Shoe* shoe = new Shoe(8);
-    //shoe->printShoe();
+    Shoe* shoe = new Shoe(NUMDECKS);
     shoe->shuffle();
     shoe->burnCard();
-    cout << "Shoe Size = " << shoe->getSize() << endl;
     
     Table table1(5, shoe, &dealer);
     
@@ -40,15 +39,6 @@ int main() {
     while(table1.numPlayersAtTable() > 0) {
         table1.playRound();
         table1.collectionsAndPayOuts();
-
-        for(Hand* hand : player1.getHands()) {
-            cardsDealt += hand->getSize();
-        }
-
-        cardsDealt += (player2.getHand(0))->getSize();
-        cardsDealt += (player3.getHand(0))->getSize();
-        cardsDealt += (dealer.getHand())->getSize();
-
         table1.clearAllHands();
 
         if(player1.getBalance() < MINBET) {
@@ -63,16 +53,13 @@ int main() {
 
         
 
-        if(shoe->cardsLeft() < SHUFFLEPOINT) {      //If Shoe is Depleted past Shuffle Point
+        if(shoe->cardsLeft() < RESHUFFLEPOINT) {      //If Shoe is Depleted past Shuffle Point
 
             shoe->reinitialize();
             shoe->shuffle();
             shoe->burnCard();
-            cardsDealt = 0;
             cout << endl << "Shoe Reinitialized" << endl;
         }
-        cout << "Cards Dealt = " << cardsDealt << endl;
-        cout << "Shoe Size = " << shoe->getSize() << endl;
         cout << endl;
     }
 
