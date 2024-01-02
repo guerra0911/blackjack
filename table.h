@@ -32,7 +32,7 @@ class Table {
     Player* playerAtPos(int position);
 
     //Play
-    void eval(Player* player, int handIndex, Player::Decision decision);
+    void eval(Player* player, int handIndex, int dealerCardVal);
     void playRound();
     void collectionsAndPayOuts(); 
     void clearAllHands();

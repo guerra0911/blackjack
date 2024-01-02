@@ -25,25 +25,39 @@ int main() {
     
     Table table1(5, shoe, &dealer);
     
-    Player player1(100, MINBET, Player::OPTIMAL_CHART);
+    //Player player1(100, MINBET, Player::OPTIMAL_CHART);
+    Player player2(100, MINBET, Player::SOFT_17);
+    //Player player3(100, MINBET, Player::HARD_17);
 
-    table1.addPlayer(&player1, 1);
+    //table1.addPlayer(&player1, 1);
+    table1.addPlayer(&player2, 2);
+    //table1.addPlayer(&player3, 3);
     
-    while(player1.getBalance() > MINBET) {
+    while(table1.numPlayersAtTable() > 0) {
         table1.playRound();
         table1.collectionsAndPayOuts();
         table1.clearAllHands();
+
+        // if(player1.getBalance() < MINBET) {
+        //     table1.removePlayer(1);
+        // }
+        if(player2.getBalance() < MINBET) {
+            table1.removePlayer(2);
+        }
+        // if(player3.getBalance() < MINBET) {
+        //     table1.removePlayer(3);
+        // }
 
         if(shoe->cardsLeft() < SHUFFLEPOINT) {      //If Shoe is Depleted past Shuffle Point
             shoe->reinitialize();
             shoe->shuffle();
             shoe->burnCard();
-
+            cout << endl << "Shoe Reinitialized" << endl;
         }
         cout << endl;
     }
 
-    table1.removePlayer(player1.getTablePos());
+    cout << table1.numPlayersAtTable() << endl;
     delete shoe;
 
 }

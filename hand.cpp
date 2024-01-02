@@ -124,7 +124,11 @@ int Hand::getSize() {
 }
 
 int Hand::cardNotAce() {
-    
+    for(Card* card : hand) {
+        if(card->getRank() != Card::ACE){
+            return card->getFaceValue();
+        }
+    }
 }
 
 //Print

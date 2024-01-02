@@ -92,6 +92,7 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
     switch(strategy) {
 
         case HARD_17:
+
             if(hand->getHandValue() >= 17) {
                 return Player::Decision::S;
             } else {
@@ -100,11 +101,15 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             break;
 
         case SOFT_17:
+
             if(hand->getHandValue() > 17) {
+                cout << "STAND" << endl;
                 return Player::Decision::S;
             } else if(hand->getHandValue() == 17 && !hand->hasAce()) {
+                cout << "STAND" << endl;
                 return Player::Decision::S;
             } else {
+                cout << "HIT" << endl;
                 return Player::Decision::H;
             }
             break;
