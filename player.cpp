@@ -5,12 +5,14 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
+#include <fstream>
 
 using namespace std;
 using std::string;
 using std::vector;
 using std::map;
 using std::unordered_map;
+using std::ofstream;
 
 //Constructors
 Player::Player(int initialBalance, int initialBet, Strategy initialStrategy, int cycles) {
@@ -212,7 +214,7 @@ void Player::addData(int round) {
 
 void Player::printData() {
     int totalRounds = data.size();
-
+    cout << "[ ";
     for(int round = 0; round < totalRounds; round++) {
         int totalTurns = data[round].size();
         cout << "[";
@@ -222,7 +224,27 @@ void Player::printData() {
                 cout << ", ";
             }
         }
-        cout << "]" << endl;
+        cout << "]";
+        if(round != totalRounds - 1) {
+            cout << ", " << endl;
+        }
     }
-    cout << endl;
+    cout << "]" << endl << endl;
+}
+
+void Player::writeDataToCSV(const string& filename) {
+    ofstream file("Plotting/" + filename);
+
+    int totalRounds = data.size();
+
+    for(int round = 0; round < totalRounds; round++) {
+        int totalTurns = data[round].size();
+        for(int turn = 0; turn < totalTurns; turn++) {
+            file << data[round][turn];
+            if(turn != totalTurns - 1) {
+                file << ", ";
+            }
+        }
+        file << "\n";
+    }
 }

@@ -5,8 +5,10 @@
 #include "hand.h"
 #include <vector>
 #include <string>
+#include <fstream>
 
 using std::vector;
+using std::ofstream;
 
 class Player {
     public:
@@ -62,6 +64,7 @@ class Player {
     //Data
     void addData(int round);
     void printData();
+    void writeDataToCSV(const string& filename);
     
 
     private:

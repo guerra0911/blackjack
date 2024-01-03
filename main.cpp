@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <fstream>
 
 #include "card.h"
 #include "shoe.h"
@@ -12,11 +13,12 @@
 using namespace std;
 using std::vector;
 using std::map;
+using std::ofstream;
 
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 1
+#define CYCLES 100
 
 int main() {
     Dealer dealer(Dealer::SOFT_17);
@@ -75,9 +77,14 @@ int main() {
         }
     }
 
-    player1.printData();
-    player2.printData();
-    player3.printData();
+    //player1.printData();
+    //player2.printData();
+    //player3.printData();
+
+    player1.writeDataToCSV("player1.csv");
+    player2.writeDataToCSV("player2.csv");
+    player3.writeDataToCSV("player3.csv");
+
 
     cout << table1.numPlayersAtTable() << endl;
     delete shoe;
