@@ -13,11 +13,13 @@ using std::map;
 using std::unordered_map;
 
 //Constructors
-Player::Player(int initialBalance, int initialBet, Strategy initialStrategy) {
+Player::Player(int initialBalance, int initialBet, Strategy initialStrategy, int cycles) {
     balance = initialBalance;
     bet = initialBet;
     strategy = initialStrategy;
-    
+
+    //Reserve Space in data and initialize it as empty
+    data.resize(cycles);
     //Initialize Empty Initial Hand
     hands.push_back(new Hand());
 }
@@ -201,4 +203,26 @@ Player::Decision Player::opChart(Hand* playerHand, int dealerCardVal) {
 
     cout << "NO DECISION RETURNED FROM CHART -> ERROR" << endl;
 
+}
+
+//Data
+void Player::addData(int round) {
+    data[round].push_back( getBalance() );
+}
+
+void Player::printData() {
+    int totalRounds = data.size();
+
+    for(int round = 0; round < totalRounds; round++) {
+        int totalTurns = data[round].size();
+        cout << "[";
+        for(int turn = 0; turn < totalTurns; turn++) {
+            cout << data[round][turn];
+            if(turn != totalTurns - 1) {
+                cout << ", ";
+            }
+        }
+        cout << "]" << endl;
+    }
+    cout << endl;
 }

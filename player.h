@@ -29,7 +29,7 @@ class Player {
     };
 
     //Constructors
-    Player(int initialBalance, int initialBet, Strategy strategy);
+    Player(int initialBalance, int initialBet, Strategy strategy, int cycles);
     ~Player();
 
     //Balance
@@ -48,7 +48,6 @@ class Player {
     void clearAllHands();
     void split(int handIndex);
     
-    
     //Decision
     Player::Decision makeDecision(Hand* hand, int dealerCardVal);
 
@@ -59,6 +58,10 @@ class Player {
     //Optimal Chart
     static vector<vector<Player::Decision>> optimalChart;  
     Player::Decision opChart(Hand* hand, int dealerCardVal);
+
+    //Data
+    void addData(int round);
+    void printData();
     
 
     private:
@@ -68,6 +71,7 @@ class Player {
 
     Strategy strategy;
     vector<Hand*> hands;
+    vector<vector<int>> data;
 
 };
 

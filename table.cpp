@@ -291,12 +291,12 @@ void Table::collectionsAndPayOuts() {
 
         for(auto& playerHand : player->getHands()) {  //For Each Hand Player Has
             //DETERMINE BET MULTIPLIER DEPENDING ON REGULAR OR HIT OR SURRENDER
-            int betFactor = 1;  
+            float betFactor = 1;  
 
             if(playerHand->getBetType() == Hand::HALF) {       ////IF PLAYER SURRENDERED HAND Halve Money
                 betFactor = 0.5;
-                cout << "Return Halved" << endl;
-                player->decreaseBalance(betFactor * player->getBet());
+                player->decreaseBalance(betFactor * (float)player->getBet());
+                cout << "Return Halved, Player" << player->getTablePos() << " Surrenders! Loses " << betFactor * player->getBet() <<  ", New Balance = " << player->getBalance() << endl;
                 continue;
             } else if(playerHand->getBetType() == Hand::DOUBLE) {   //Double Money
                 cout << "Return Doubled!" << endl;
@@ -333,5 +333,11 @@ void Table::clearAllHands() {
     (dealer->getHand())->clearHand();
     for(auto& pair : players) {                         //For Each Player
         (pair.second)->clearAllHands();               //Clear All their Hands
+    }
+}
+
+void Table::addAllData(int round) {
+    for(auto& pair : players) {
+        (pair.second)->addData(round);
     }
 }

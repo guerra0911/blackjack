@@ -36,6 +36,7 @@ class Table {
     void playRound();
     void collectionsAndPayOuts(); 
     void clearAllHands();
+    void addAllData(int round);
 
 
     private:
