@@ -6,6 +6,7 @@
 #include <map>
 #include <unordered_map>
 #include <fstream>
+#include <pqxx/pqxx>
 
 using namespace std;
 using std::string;
@@ -261,4 +262,3 @@ void Player::writeDataToCSV(const string& filename) {
         file << "\n";
     }
 }
-
