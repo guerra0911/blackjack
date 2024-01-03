@@ -19,7 +19,7 @@ using std::ofstream;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 1000000
+#define CYCLES 100000
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
