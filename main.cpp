@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <map>
 #include <fstream>
+#include <chrono>
 
 #include "card.h"
 #include "shoe.h"
@@ -18,9 +19,11 @@ using std::ofstream;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 1000
+#define CYCLES 10
 
 int main() {
+    auto start = chrono::high_resolution_clock::now();
+
     Dealer dealer(Dealer::SOFT_17);
 
     Shoe* shoe = new Shoe(NUMDECKS);
@@ -77,16 +80,21 @@ int main() {
         cout << endl << "CYCLE " << c + 1<< endl;
     }
 
-    //player1.printData();
-    //player2.printData();
-    //player3.printData();
-
     player1.writeDataToCSV("player1.csv");
     player2.writeDataToCSV("player2.csv");
     player3.writeDataToCSV("player3.csv");
 
-
-    //cout << table1.numPlayersAtTable() << endl;
     delete shoe;
+
+    auto stop = chrono::high_resolution_clock::now();
+
+    // Compute the duration
+    auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
+
+    // Convert to minutes and seconds
+    int minutes = duration.count() / 60;
+    int seconds = duration.count() % 60;
+
+    cout << "Time taken by function: " << minutes << " minutes and " << seconds << " seconds" << endl;
 
 }

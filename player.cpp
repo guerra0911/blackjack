@@ -237,14 +237,28 @@ void Player::writeDataToCSV(const string& filename) {
 
     int totalRounds = data.size();
 
+    // Determine the maximum number of turns
+    int maxTurns = 0;
+    for (const auto& round : data) {
+        if (round.size() > maxTurns) {
+            maxTurns = round.size();
+        }
+    }
+
     for(int round = 0; round < totalRounds; round++) {
-        int totalTurns = data[round].size();
-        for(int turn = 0; turn < totalTurns; turn++) {
-            file << data[round][turn];
-            if(turn != totalTurns - 1) {
+        for(int turn = 0; turn < maxTurns; turn++) {
+            if (turn < data[round].size()) {
+                // This round has this turn, write the balance
+                file << data[round][turn];
+            } else {
+                // This round does not have this turn, write a placeholder value
+                file << "NaN";
+            }
+            if(turn != maxTurns - 1) {
                 file << ", ";
             }
         }
         file << "\n";
     }
 }
+
