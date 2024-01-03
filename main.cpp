@@ -59,10 +59,10 @@ int main() {
             if(player1.getBalance() < MINBET || player1.getBalance() > 1000) {
                 table1.removePlayer(1);
             }
-            if(player2.getBalance() < MINBET || player1.getBalance() > 1000) {
+            if(player2.getBalance() < MINBET || player2.getBalance() > 1000) {
                 table1.removePlayer(2);
             }
-            if(player3.getBalance() < MINBET || player1.getBalance() > 1000) {
+            if(player3.getBalance() < MINBET || player3.getBalance() > 1000) {
                 table1.removePlayer(3);
             }
 
