@@ -3,6 +3,8 @@
 #include "card.h"
 #include <iostream>
 
+#define PRINT false
+
 using namespace std;
 
 //Constructors
@@ -72,14 +74,14 @@ void Table::playRound() {
     //Deal 2nd Card to Each Player
     for(auto& pair : players) {
         shoe->dealToPlayer(pair.second,0);      //Index 0 = First Initial Hand
-        (pair.second->getHand(0))->printHand();      
+        if(PRINT) {(pair.second->getHand(0))->printHand();}      
     }
 
     //Deal 2nd Card (VISIBLE) to Dealer
     shoe->dealToDealer(dealer);
     Card* dealerCard = (dealer->getVisibleCard());
     int dealerCardVal = dealerCard->getFaceValue();
-    dealer->printVisibleCard();
+    if(PRINT) {dealer->printVisibleCard();}
 
 
 
@@ -97,21 +99,21 @@ void Table::playRound() {
         if(decision == player->P) {
             
             //Split there First Hand    < H1 >  ->  < H11, H12>
-
-            cout << "Splits Hand " << splits + 1 << " time" << endl;
+            if(PRINT) cout << "Splits Hand " << splits + 1 << " time" << endl;
+            
             player->split(handIndex);
             splits++;
 
             //Deal Second Card to First Split Hand, H11
             shoe->dealToPlayer(player, handIndex);
-            playerHand->printHand();
+            if(PRINT) playerHand->printHand();
             decision = player->makeDecision(playerHand, dealerCardVal);     //Re-Evaluate Newly Split Hand
 
             //If Player Decides to Split H11, and doesn't have a pair of Aces
             if(decision == player->P && !(playerHand->isPairAces())) {
                 
                 //Split there first Hand, H11 again      < H11, H12 >  ->   < H111, H112, H12 >  
-                cout << "Splits Hand " << splits + 1 << " times" << endl; 
+                if(PRINT) cout << "Splits Hand " << splits + 1 << " times" << endl;
                 player->split(handIndex);
                 splits++;
             }
@@ -119,13 +121,13 @@ void Table::playRound() {
             if(splits > 1) {
                 playerHand = player->getHand(handIndex);    //Use H111
                 shoe->dealToPlayer(player, handIndex);  //Deal Second Card to H111
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 eval(player, handIndex, dealerCardVal);   //Eval H111
                 handIndex++;
 
                 playerHand = player->getHand(handIndex);    //Use H112
                 shoe->dealToPlayer(player, handIndex);  //Deal Second Card to H112
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 eval(player, handIndex, dealerCardVal);   //Eval H112
                 handIndex++;
             } else {
@@ -137,14 +139,14 @@ void Table::playRound() {
             //Deal Second Card to Second/Third Split Hand, H12
             playerHand = player->getHand(handIndex);    //Use H12
             shoe->dealToPlayer(player, handIndex);
-            playerHand->printHand();
+            if(PRINT) playerHand->printHand();
             decision = player->makeDecision(playerHand, dealerCardVal);     //Re-Evaluate Newly Split Hand
 
             //If Player Decides to Split H12, and doesn't have a pair of Aces
             if(decision == player->P && !(playerHand->isPairAces())) {
                 
                 //Split there Second Hand, H12 again      < H111, H112, H12 >  ->   < H111, H112, H121, H122 >
-                cout << "Splits Hand " << splits + 1 << "times" << endl;
+                if(PRINT) cout << "Splits Hand " << splits + 1 << "times" << endl;
                 player->split(handIndex);
                 splits++;
             }
@@ -152,14 +154,14 @@ void Table::playRound() {
             if(splits > 2) {
                 playerHand = player->getHand(handIndex);    //Use H121
                 shoe->dealToPlayer(player, handIndex); //Deal Second Card to H121
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 eval(player, handIndex, dealerCardVal);   //Eval H121
                 handIndex++;
 
 
                 playerHand = player->getHand(handIndex);    //Use H122
                 shoe->dealToPlayer(player, handIndex); //Deal Second Card to H122
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 eval(player, handIndex, dealerCardVal);   //Eval H122
             } else {
                 eval(player, handIndex, dealerCardVal);   //Eval H12
@@ -176,18 +178,18 @@ void Table::playRound() {
 
     //Deal the Dealer Until Bust, BlackJack or Stand
     Hand* dealerHand = dealer->getHand();
-    dealerHand->printHand();
+    if(PRINT) {dealerHand->printHand();}
     while(!(dealerHand->isBust()) && !(dealerHand->isBlackJack()) && !(dealer->makeDecision() == dealer->S)) {
         shoe->dealToDealer(dealer);
-        dealerHand->printHand();
+        if(PRINT) {dealerHand->printHand();}
     }
 
     if(dealerHand->isBust()) {
-        cout << "Dealer Busts!" << endl;                           
+        if(PRINT) cout << "Dealer Busts!" << endl;                         
     }
 
     if(dealerHand->isBlackJack()) {  
-        cout << "Dealer has BlackJack!" << endl;                                          
+        if(PRINT) cout << "Dealer has BlackJack!" << endl;                                         
     }
 }
 
@@ -201,16 +203,16 @@ void Table::eval(Player* player, int handIndex, int dealerCardVal) {
 
         //SURRENDER
         if(decision == player->RH) {
-            if(playerHand->getSize() < 3) {                 //If Doubling is Allowed then Double(Only After 2 Initial Cards Dealt)
-                cout << "PLAYER SURRENDERED" << endl;
-                playerHand->setBetType(Hand::HALF);   //Indicate 0.5x Payout
-                break;                                      //Only allowed one more card after doubling so break
+            if(playerHand->getSize() < 3) {                         //If Doubling is Allowed then Double(Only After 2 Initial Cards Dealt)
+                if(PRINT) cout << "PLAYER SURRENDERED" << endl;
+                playerHand->setBetType(Hand::HALF);                 //Indicate 0.5x Payout
+                break;                                              //Only allowed one more card after doubling so break
             } 
             
             else {  //If Surrender is not Allowed, bc it is not the first turn, then hit
-                cout << "SURRENDER NOT ALLOWED SO HIT" << endl;
+                if(PRINT) cout << "SURRENDER NOT ALLOWED SO HIT" << endl;
                 shoe->dealToPlayer(player, handIndex);
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 playerHand->setBetType(Hand::REGULAR);
             }
             //cout << "NO SURRENDER DECISION MADE -> ERROR" << endl;
@@ -218,15 +220,15 @@ void Table::eval(Player* player, int handIndex, int dealerCardVal) {
 
         //If Split, then Just Hit, b/c if you are in this eval function, you are not allowed to split anymore
         else if (decision == player->P) {
-            cout << "SPLIT NOT ALLOWED SO HIT" << endl;
+            if(PRINT) cout << "SPLIT NOT ALLOWED SO HIT" << endl;
             shoe->dealToPlayer(player, handIndex);
-            playerHand->printHand();
+            if(PRINT) playerHand->printHand();
             playerHand->setBetType(Hand::REGULAR);
         }
 
         //STAND
         else if (decision == player->S) {
-            cout << "STAND" << endl;
+            if(PRINT) cout << "STAND" << endl;
             playerHand->setBetType(Hand::REGULAR);
             break;
         }
@@ -235,23 +237,23 @@ void Table::eval(Player* player, int handIndex, int dealerCardVal) {
         else if(decision == player->DS || decision == player->DH) {
             
             if(playerHand->getSize() < 3) {                 //If Doubling is Allowed then Double(Only After 2 Initial Cards Dealt)
-                cout << "PLAYER DOUBLED" << endl;
+                if(PRINT) cout << "PLAYER DOUBLED" << endl;
                 playerHand->setBetType(Hand::DOUBLE);       //Indicate 2x Payout
                 shoe->dealToPlayer(player, handIndex);
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 break;                                      //Only allowed one more card after doubling so break
             }
             
             else if (decision == player->DS) {              //If double is not allowed, then otherwise stamd
-                cout << "DOUBLE NOT ALLOWED SO STAND" << endl;
+                if(PRINT) cout << "DOUBLE NOT ALLOWED SO STAND" << endl;
                 playerHand->setBetType(Hand::REGULAR);
                 break;                                      //Stand
             } 
             
             else {                                          //If double is not allowed, then otherwise hit
-                cout << "DOUBLE NOT ALLOWED SO HIT" << endl;
+                if(PRINT) cout << "DOUBLE NOT ALLOWED SO HIT" << endl;
                 shoe->dealToPlayer(player, handIndex);
-                playerHand->printHand();
+                if(PRINT) playerHand->printHand();
                 playerHand->setBetType(Hand::REGULAR);
             }
             //cout << "NO DOUBLE DECISION MADE -> ERROR" << endl;
@@ -259,20 +261,20 @@ void Table::eval(Player* player, int handIndex, int dealerCardVal) {
         
         //HIT
         else if(decision == player->H) {
-            //cout << "HIT" << endl;
+            if(PRINT) cout << "HIT" << endl;
             shoe->dealToPlayer(player, handIndex);
-            playerHand->printHand();
+            if(PRINT) playerHand->printHand();
             playerHand->setBetType(Hand::REGULAR);
         }
         
     }
 
     if(playerHand->isBust()) {
-        cout << "Player " << player->getTablePos() << " Busts!" << endl;                           
+        if(PRINT) cout << "Player " << player->getTablePos() << " Busts!" << endl;                           
     }
 
     if(playerHand->isBlackJack()) {  
-        cout << "Player " << player->getTablePos() << " has BlackJack!" << endl;                                          
+        if(PRINT) cout << "Player " << player->getTablePos() << " has BlackJack!" << endl;                                          
     }
 }
 
@@ -296,17 +298,17 @@ void Table::collectionsAndPayOuts() {
             if(playerHand->getBetType() == Hand::HALF) {       ////IF PLAYER SURRENDERED HAND Halve Money
                 betFactor = 0.5;
                 player->decreaseBalance(betFactor * (float)player->getBet());
-                cout << "Return Halved, Player" << player->getTablePos() << " Surrenders! Loses " << betFactor * player->getBet() <<  ", New Balance = " << player->getBalance() << endl;
+                if(PRINT) cout << "Return Halved, Player" << player->getTablePos() << " Surrenders! Loses " << betFactor * player->getBet() <<  ", New Balance = " << player->getBalance() << endl;
                 continue;
             } else if(playerHand->getBetType() == Hand::DOUBLE) {   //Double Money
-                cout << "Return Doubled!" << endl;
+                if(PRINT) cout << "Return Doubled!" << endl;
                 betFactor = 2;
             }
 
             // Player busts or has less points than dealer (who didn't bust) = LOSE
             if(playerHand->isBust() || ((playerHand->getHandValue() < dealerHand->getHandValue()) && !dealerHand->isBust())) {
                 player->decreaseBalance(betFactor * player->getBet());
-                cout << "Player " << player->getTablePos() << " Loses! New Balance = " << player->getBalance() << endl; 
+                if(PRINT) cout << "Player " << player->getTablePos() << " Loses! New Balance = " << player->getBalance() << endl; 
 
             // Player has more points than dealer OR Player has Less Points than Dealer AND Dealer Busted
             } else if((playerHand->getHandValue() > dealerHand->getHandValue()) || !playerHand->isBust() && dealerHand->isBust()) {
@@ -319,11 +321,11 @@ void Table::collectionsAndPayOuts() {
                 } else {
                     player->increaseBalance(betFactor * player->getBet());        
                 }
-                cout << "Player " << player->getTablePos() << " Wins! New Balance = " << player->getBalance() << endl;
+                if(PRINT) cout << "Player " << player->getTablePos() << " Wins! New Balance = " << player->getBalance() << endl;
 
             // Player and dealer have the same points
             } else {
-                cout << "Player " << player->getTablePos() << " Draws." << endl;
+                if(PRINT) cout << "Player " << player->getTablePos() << " Draws." << endl;
             }
         }
     }

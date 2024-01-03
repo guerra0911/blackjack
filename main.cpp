@@ -18,7 +18,7 @@ using std::ofstream;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 100
+#define CYCLES 1000
 
 int main() {
     Dealer dealer(Dealer::SOFT_17);
@@ -71,10 +71,10 @@ int main() {
                 shoe->reinitialize();
                 shoe->shuffle();
                 shoe->burnCard();
-                cout << endl << "Shoe Reinitialized" << endl;
+                //cout << endl << "Shoe Reinitialized" << endl;
             }
-            cout << endl;
         }
+        cout << endl << "CYCLE " << c + 1<< endl;
     }
 
     //player1.printData();
@@ -86,7 +86,7 @@ int main() {
     player3.writeDataToCSV("player3.csv");
 
 
-    cout << table1.numPlayersAtTable() << endl;
+    //cout << table1.numPlayersAtTable() << endl;
     delete shoe;
 
 }
