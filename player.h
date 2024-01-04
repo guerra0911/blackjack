@@ -63,6 +63,7 @@ class Player {
 
     //Data
     void addData(int round);
+    void averageData();
     void printData();
     void writeDataToCSV(const string& filename);
     

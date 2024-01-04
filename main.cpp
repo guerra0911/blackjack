@@ -74,27 +74,41 @@ int main() {
                 shoe->reinitialize();
                 shoe->shuffle();
                 shoe->burnCard();
-                //cout << endl << "Shoe Reinitialized" << endl;
             }
         }
         cout << endl << "CYCLE " << c + 1<< endl;
     }
 
+    auto stop1 = chrono::high_resolution_clock::now();
+    auto duration1 = chrono::duration_cast<chrono::seconds>(stop1 - start);
+    int minutes1 = duration1.count() / 60;
+    int seconds1 = duration1.count() % 60;
+    cout << "Simulation Time: " << minutes1 << " M :" << seconds1 << " S" << endl;
+
+    auto start2 = chrono::high_resolution_clock::now();
+
     player1.writeDataToCSV("player1.csv");
     player2.writeDataToCSV("player2.csv");
     player3.writeDataToCSV("player3.csv");
+    player1.averageData();
+    player2.averageData();
+    player3.averageData();
+    player1.writeDataToCSV("player1AVG.csv");
+    player2.writeDataToCSV("player2AVG.csv");
+    player3.writeDataToCSV("player3AVG.csv");
+
+    auto stop2 = chrono::high_resolution_clock::now();
+    auto duration2 = chrono::duration_cast<chrono::seconds>(stop2 - start2);
+    int minutes2 = duration2.count() / 60;
+    int seconds2 = duration2.count() % 60;
+    cout << "Data Averaging Time: " << minutes2 << " M : " << seconds2 << " S" << endl;
 
     delete shoe;
 
     auto stop = chrono::high_resolution_clock::now();
-
-    // Compute the duration
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
-
-    // Convert to minutes and seconds
     int minutes = duration.count() / 60;
     int seconds = duration.count() % 60;
-
-    cout << "Time taken by function: " << minutes << " minutes and " << seconds << " seconds" << endl;
+    cout << "Total Time: " << minutes << " M : " << seconds << " S" << endl;
 
 }
