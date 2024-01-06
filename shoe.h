@@ -32,10 +32,6 @@ class Shoe {
     //Print
     void printShoe();
 
-    //Dealing
-    void dealToPlayer(Player* player, int handIndex);    //Deal Card to Player's Specified Hand & Remove from Shoe
-    void dealToDealer(Dealer* dealer);
-
 
     private:
     int position;                       //Current Position in Deck to Deal

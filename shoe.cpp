@@ -87,17 +87,3 @@ void Shoe::printShoe() {
     }
     cout << endl;
 }
-
-
-//Dealing
-void Shoe::dealToPlayer(Player* player, int handIndex) {
-    Card* card = getTopCard();
-    (player->getHand(handIndex))->addCardToHand(card);  //Add card to hand at specified index of player's hands vector.
-    position++;                                         //Move Dealing Position Over one
-}
-
-void Shoe::dealToDealer(Dealer* dealer) {
-    (dealer->getHand())->addCardToHand(getTopCard());           //Deal Card to the only hand the dealer has 
-    position++;                                                 //Move Dealing Position Over one
-}
-
