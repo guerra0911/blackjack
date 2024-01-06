@@ -74,9 +74,9 @@ class Player {
     void reinitializeCardCount();           //Reset Card Count
     void decCardCount(Card* card);          //Decrease Card Count by 1
     void printCardCount();
-    float probGet(int desiredHandVal);
-    float probNotBust();
-    float probBlackJack();
+    float probGet(int desiredHandVal, Hand* hand);
+    float probNotBust(Hand* hand);
+    float probBlackJack(Hand* hand);
     
 
     private:

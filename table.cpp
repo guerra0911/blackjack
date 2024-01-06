@@ -117,7 +117,13 @@ void Table::playRound() {
     //Deal 2nd Card to Each Player
     for(auto& pair : players) {
         dealToPlayer(pair.second,0);      //Index 0 = First Initial Hand
-        if(PRINT) {(pair.second->getHand(0))->printHand();}      
+        if(PRINT) {(pair.second->getHand(0))->printHand();}
+        if(PRINT) {
+            pair.second->printCardCount();  
+            pair.second->probGet(20, pair.second->getHand(0));
+            pair.second->probNotBust(pair.second->getHand(0));
+            pair.second->probBlackJack(pair.second->getHand(0));
+        }    
     }
 
     //Deal 2nd Card (VISIBLE) to Dealer

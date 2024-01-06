@@ -16,6 +16,7 @@ using std::vector;
 using std::map;
 using std::unordered_map;
 using std::ofstream;
+using std::accumulate;
 using std::fixed;
 using std::setprecision;
 
@@ -330,16 +331,48 @@ void Player::printCardCount() {
     cout << endl;
 }
 
-float Player::probGet(int desiredHandVal) {
-    
+float Player::probGet(int desiredHandVal, Hand* hand) {
+    float totalCards = 0.0;
+    float numCardsThatGetDesiredVal = 0.0;
+    int playerHandVal = hand->getHandValue();
+
+    if(desiredHandVal <= playerHandVal) {       //Check if possible to get Desired Hand Val
+        return 0.0;
+    }
+
+    for(auto const& pair : cardCount) {
+
+        //If ace, check for +1 or +11 = Desired
+        if(pair.first == Card::ACE) {
+            if(playerHandVal + 1 == desiredHandVal || playerHandVal + 11 == desiredHandVal) {
+                numCardsThatGetDesiredVal += pair.second;
+            }
+
+        //Else just normally check if sum = Desired
+        } else if(playerHandVal + Card::rankIntMap[pair.first] == desiredHandVal) {    //i.e. if 15 + ACE = 16, add the # of aces left in shoe to sum
+            numCardsThatGetDesiredVal += pair.second;
+        }
+
+        totalCards += pair.second;       //Sum the frequencies of all cards left in count
+    }
+
+    if (PRINT) cout << "Prob of getting " << desiredHandVal << " = " << numCardsThatGetDesiredVal / totalCards << endl;
+    return (numCardsThatGetDesiredVal / totalCards);
 }
 
-float Player::probNotBust() {
-    
+float Player::probNotBust(Hand* hand) {
+    int playerHandVal = hand->getHandValue();
+    float probNoBust = 0.0;
+
+    for(int checkVal = playerHandVal + 1; checkVal < 22; checkVal++) {
+        probNoBust += probGet(checkVal, hand);
+    }
+
+    if(PRINT) cout << "Prob of Not Busting = " << probNoBust << endl;
+    return probNoBust;
 }
 
-float Player::probBlackJack() {
-
+float Player::probBlackJack(Hand* hand) {
+    if(PRINT) cout << "Prob of BlackJack = " << probGet(21, hand) << endl;
+    return probGet(21, hand);
 }
-
-
