@@ -237,6 +237,7 @@ void Player::averageData() {
 
     for (int i = 0; i < averages.size(); ++i) {             //For each turn index in Averages
         averages[i] /= numCycles;                           //Divide Sum of balances by numCycles to get average
+        counts[i] /= numCycles * 100.0;                     //% of Cycles that Reached this Turn                 
     }
 
     data.clear();                               //Clear the Data (If add vector<float> averages to Player, then this is OPTIONAL)
