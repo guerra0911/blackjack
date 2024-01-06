@@ -19,6 +19,9 @@ using std::ofstream;
 using std::fixed;
 using std::setprecision;
 
+#define NUM_DECKS 8
+#define PRINT true
+
 
 //Constructors
 Player::Player(float initialBalance, float initialBet, Strategy initialStrategy, int cycles) {
@@ -30,6 +33,8 @@ Player::Player(float initialBalance, float initialBet, Strategy initialStrategy,
     data.resize(cycles);
     //Initialize Empty Initial Hand
     hands.push_back(new Hand());
+
+    reinitializeCardCount();
 }
 
 Player::~Player() {
@@ -94,9 +99,11 @@ void Player::split(int handIndex) {
     (getHand(handIndex + 1))->addCardToHand((getHand(handIndex))->getCard(1));      //Move 2nd card in first hand to 1st card in 2nd split hand     <1,2> -> <1,2> , <2,_>
     (getHand(handIndex))->removeCardFromHand(1);                                    //Remove 2nd card in first hand      <1,2> , <2,_> -> <1,_> , <2,_>
 
-    // for(Hand* hand : getHands()) {
-    //     hand->printHand();
-    // }
+    if(PRINT) {
+        for(Hand* hand : getHands()) {
+            hand->printHand();
+        }
+    }
 
 }
 
@@ -297,4 +304,42 @@ void Player::writeDataToCSV(const string& filename) {
         file << "\n";
     }
 }
+
+//Card Counting
+int Player::getCardCount(Card::Rank rank) {
+    return cardCount[rank];
+}
+
+void Player::reinitializeCardCount() {
+    //Initialize cardCount
+    for(int c = Card::Rank::ACE; c <= Card::Rank::KING; c++) {
+        cardCount[static_cast<Card::Rank>(c)] = NUM_DECKS*4;                 //Count # of Each Rank in Shoe
+    }
+}
+
+void Player::decCardCount(Card* card) {
+    Card::Rank decRank = (card->getRank());         //Get Rank of Card that was just Burnt
+    cardCount[static_cast<Card::Rank>(decRank)]--;  //Decrement its balance in the Shoe
+}
+
+void Player::printCardCount() {
+    for (const auto& pair : cardCount) {
+        //pair.first = Rank, pair.second = Frequency
+        cout << Card::rankStringMap[pair.first] << ": " << pair.second << endl;
+    }
+    cout << endl;
+}
+
+float Player::probGet(int desiredHandVal) {
+    
+}
+
+float Player::probNotBust() {
+    
+}
+
+float Player::probBlackJack() {
+
+}
+
 

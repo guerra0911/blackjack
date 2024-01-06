@@ -1,14 +1,16 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-//#include "card.h"
+#include "card.h"
 #include "hand.h"
 #include <vector>
 #include <string>
 #include <fstream>
+#include <map>
 
 using std::vector;
 using std::ofstream;
+using std::map;
 
 class Player {
     public:
@@ -66,6 +68,15 @@ class Player {
     void averageData();
     void printData();
     void writeDataToCSV(const string& filename);
+
+    //Card Counting
+    int getCardCount(Card::Rank rank);      //Get Count of Rank
+    void reinitializeCardCount();           //Reset Card Count
+    void decCardCount(Card* card);          //Decrease Card Count by 1
+    void printCardCount();
+        float probGet(int desiredHandVal);
+    float probNotBust();
+    float probBlackJack();
     
 
     private:
@@ -74,8 +85,9 @@ class Player {
     int tablePos;
 
     Strategy strategy;
-    vector<Hand*> hands;
-    vector<vector<float>> data;
+    vector<Hand*> hands;                
+    vector<vector<float>> data;         //Average Value of Turn & Turn Freq
+    map<Card::Rank, int> cardCount;     //Keeps count of cards in shoe
 
 };
 

@@ -19,7 +19,7 @@ using std::ofstream;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 1000
+#define CYCLES 1
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
@@ -75,6 +75,8 @@ int main() {
                 shoe->shuffle();
                 shoe->burnCard();
             }
+
+            cout << endl;
         }
 
         //Reset Shoe after Full Cycle

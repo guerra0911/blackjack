@@ -27,11 +27,6 @@ Shoe::Shoe(int numDecks) : numDecks(numDecks), position(0) {
             }
         }
     }
-
-    //Initialize cardCount
-    for(int c = Card::Rank::ACE; c <= Card::Rank::KING; c++) {
-        cardCount[static_cast<Card::Rank>(c)] = numDecks*4;                 //Count # of Each Rank in Shoe
-    }
 }
 
 Shoe::~Shoe() {
@@ -50,11 +45,6 @@ int Shoe::getSize() {
     return shoe.size();
 }
 
-int Shoe::getCardCount(Card::Rank rank) {
-    return cardCount[rank];
-}
-
-
 
 //Actions
 void Shoe::shuffle() {
@@ -65,12 +55,6 @@ void Shoe::shuffle() {
 
 void Shoe::reinitialize() {
     position = 0;
-
-    //Re-initialize cardCount
-    for(int c = Card::Rank::ACE; c <= Card::Rank::KING; c++) {
-        cardCount[static_cast<Card::Rank>(c)] = numDecks*4;                 //Count # of Each Rank in Shoe
-    }
-
 }
 
 int Shoe::cardsLeft() {
@@ -78,13 +62,7 @@ int Shoe::cardsLeft() {
 }
 
 void Shoe::burnCard() {
-    decCardCount();
     position++;
-}
-
-void Shoe::decCardCount() {
-    Card::Rank decRank = (getTopCard()->getRank());       //Get Rank of Card that was just Burnt
-    cardCount[static_cast<Card::Rank>(decRank)]--;        //Decrement its balance in the Shoe
 }
 
 
@@ -102,28 +80,16 @@ void Shoe::printShoe() {
     cout << endl;
 }
 
-void Shoe::printCardCount() {
-    for (const auto& pair : cardCount) {
-        //pair.first = Rank, pair.second = Frequency
-        cout << Card::rankStringMap[pair.first] << ": " << pair.second << endl;
-    }
-    cout << endl;
-}
 
 //Dealing
 void Shoe::dealToPlayer(Player* player, int handIndex) {
-    (player->getHand(handIndex))->addCardToHand(getTopCard());  //Add card to hand at specified index of player's hands vector.
-
-    decCardCount();                                             //Decrement count of Card in Shoe
-
-    position++;                                                 //Move Dealing Position Over one
+    Card* card = getTopCard();
+    (player->getHand(handIndex))->addCardToHand(card);  //Add card to hand at specified index of player's hands vector.
+    position++;                                         //Move Dealing Position Over one
 }
 
 void Shoe::dealToDealer(Dealer* dealer) {
-    (dealer->getHand())->addCardToHand(getTopCard());           //Deal Card to the only hand the dealer has
-    
-    decCardCount();                                             //Decrement count of Card in Shoe
-
+    (dealer->getHand())->addCardToHand(getTopCard());           //Deal Card to the only hand the dealer has 
     position++;                                                 //Move Dealing Position Over one
 }
 

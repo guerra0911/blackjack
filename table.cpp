@@ -3,7 +3,7 @@
 #include "card.h"
 #include <iostream>
 
-#define PRINT false
+#define PRINT true
 
 using namespace std;
 
