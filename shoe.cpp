@@ -45,6 +45,9 @@ int Shoe::getSize() {
     return shoe.size();
 }
 
+int Shoe::getDeckPos() {
+    return position;
+}
 
 //Actions
 void Shoe::shuffle() {
@@ -63,6 +66,11 @@ int Shoe::cardsLeft() {
 
 void Shoe::burnCard() {
     position++;
+}
+
+Card* Shoe::dealCard() {
+    position++;
+    return getTopCard();
 }
 
 

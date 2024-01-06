@@ -60,8 +60,51 @@ Player* Table::playerAtPos(int position) {
     return players[position];
 }
 
+//Shoe
+void Table::reinitializeShoe() {
+    shoe->reinitialize();
+    shoe->shuffle();
+    shoe->burnCard();
+
+    cout << "Shoe Reinitialized" << endl;
+
+    for(auto& pair : players) {
+        (pair.second)->reinitializeCardCount();
+    }
+}
+
+int Table::cardsLeftAtTable() {
+    return shoe->cardsLeft();
+}
+
 
 //Play
+void Table::dealToPlayer(Player* player, int handIndex) {
+    Card* dealtCard = shoe->dealCard();
+    (player->getHand(handIndex))->addCardToHand(dealtCard);
+
+    for(auto& pair : players) {                     //For Each Player at Table
+        (pair.second)->decCardCount(dealtCard);     //Dec Card Count for All Players
+    }
+}
+
+void Table::dealToDealer() {
+    Card* dealtCard = shoe->dealCard();
+    (dealer->getHand())->addCardToHand(dealtCard);
+
+    if( (dealer->getHand())->getSize() >= 2) {          //If Not hidden card
+        for(auto& pair : players) {                     //For Each Player at Table
+            (pair.second)->decCardCount(dealtCard);     //Dec Card Count for that Visible Card
+        }
+    }    
+}
+
+void Table::revealHiddenDealerCard() {
+    for(auto& pair : players) {                                         //For Each Player at Table
+        (pair.second)->decCardCount((dealer->getHand())->getCard(0));   //Dec Card Count for Hidden Card
+    }
+}
+
 void Table::playRound() {
     //Deal 1st Card to Each Player
     for(auto& pair : players) {
@@ -179,6 +222,8 @@ void Table::playRound() {
     //Deal the Dealer Until Bust, BlackJack or Stand
     Hand* dealerHand = dealer->getHand();
     if(PRINT) {dealerHand->printHand();}
+    revealHiddenDealerCard();               //Reveal Card so Players can modify card Count
+
     while(!(dealerHand->isBust()) && !(dealerHand->isBlackJack()) && !(dealer->makeDecision() == dealer->S)) {
         shoe->dealToDealer(dealer);
         if(PRINT) {dealerHand->printHand();}

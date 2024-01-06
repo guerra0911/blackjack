@@ -31,12 +31,19 @@ class Table {
     void removePlayer(int position);
     Player* playerAtPos(int position);
 
+    //Shoe
+    void reinitializeShoe();
+    int cardsLeftAtTable();
+
     //Play
     void eval(Player* player, int handIndex, int dealerCardVal);
     void playRound();
     void collectionsAndPayOuts(); 
     void clearAllHands();
     void addAllData(int round);
+    void dealToPlayer(Player* player, int handIndex);
+    void dealToDealer();
+    void revealHiddenDealerCard();
 
 
     private:

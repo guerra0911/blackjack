@@ -70,19 +70,15 @@ int main() {
             }
 
             //table1.checkShoe();
-            if(shoe->cardsLeft() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
-                shoe->reinitialize();
-                shoe->shuffle();
-                shoe->burnCard();
+            if(table1.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
+                table1.reinitializeShoe();
             }
 
             cout << endl;
         }
 
         //Reset Shoe after Full Cycle
-        shoe->reinitialize();
-        shoe->shuffle();
-        shoe->burnCard();
+        table1.reinitializeShoe();
     }
 
     auto stop1 = chrono::high_resolution_clock::now();
