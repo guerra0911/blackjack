@@ -19,6 +19,7 @@ using std::ofstream;
 using std::fixed;
 using std::setprecision;
 
+
 //Constructors
 Player::Player(float initialBalance, float initialBet, Strategy initialStrategy, int cycles) {
     balance = initialBalance;

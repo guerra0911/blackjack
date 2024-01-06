@@ -2,7 +2,9 @@
 #define CARD_H
 
 #include <string>
+#include <map>
 using std::string;
+using std::map;
 
 class Card {
     public:
@@ -42,6 +44,12 @@ class Card {
     //To String & Int
     string toString();
     int rankToInt(Card::Rank rank);
+    string rankToString(Card::Rank rank);
+
+    //Static Maps
+    static map<Card::Rank, string> rankStringMap;
+    static map<Card::Rank, int> rankIntMap;
+    static map<Card::Suit, string> suitStringMap;
 
     private:
     Rank rank;

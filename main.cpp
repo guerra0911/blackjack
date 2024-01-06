@@ -19,11 +19,10 @@ using std::ofstream;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 250000
+#define CYCLES 1000
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
-
     Dealer dealer(Dealer::SOFT_17);
 
     Shoe* shoe = new Shoe(NUMDECKS);
@@ -37,7 +36,8 @@ int main() {
     Player player3(100, MINBET, Player::HARD_17, CYCLES);
 
     for(int c = 0; c < CYCLES; c++) {
-        
+        cout << endl << "CYCLE " << c + 1 << endl;
+
         //Reset Balance to 100
         player1.setBalance(100);
         player2.setBalance(100);
@@ -76,7 +76,11 @@ int main() {
                 shoe->burnCard();
             }
         }
-        cout << endl << "CYCLE " << c + 1<< endl;
+
+        //Reset Shoe after Full Cycle
+        shoe->reinitialize();
+        shoe->shuffle();
+        shoe->burnCard();
     }
 
     auto stop1 = chrono::high_resolution_clock::now();
