@@ -76,6 +76,7 @@ class Player {
     void printCardCount();
     float probGet(int desiredHandVal, Hand* hand);
     float probNotBust(Hand* hand);
+    float probBust(Hand* hand);
     float probBlackJack(Hand* hand);
     
 

@@ -140,23 +140,23 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             Player::Decision chartDecision = opChart(hand, dealerCardVal);
 
             //If chart tells us to hit, use card count strategy to see if it safe
-            if(chartDecision == Player::Decision::H || chartDecision == Player::Decision::DH || chartDecision == Player::Decision::DS) {
+            if(chartDecision == Player::Decision::H) {
                 
                 //If Not Safe
-                if(probNotBust(hand) < thresholds[0]) {
+                if(probBust(hand) >= thresholds[0]) {
                     //Then Stand
                     return Player::Decision::S;
                 }
-
-             //If Chart Says Stand, see if there is still a good prob to not bust by hitting
-            } else if (chartDecision == Player::Decision::S) {
-                
-                //If hitting has good prob to NOT bust
-                if(probNotBust(hand) > thresholds[1]) {
-                    //Then Hit
-                    return Player::Decision::H;
-                }
             }
+             //If Chart Says Stand, see if there is still a good prob to not bust by hitting
+            // } else if (chartDecision == Player::Decision::S) {
+                
+            //     //If hitting has good prob to NOT bust
+            //     if(probNotBust(hand) > thresholds[1]) {
+            //         //Then Hit
+            //         return Player::Decision::H;
+            //     }
+            // }
 
             //Otherwise, just follow chart (Just follow normally if split)
             return chartDecision; 
@@ -397,6 +397,10 @@ float Player::probNotBust(Hand* hand) {
 
     if(PRINT) cout << "Prob of Not Busting = " << probNoBust << endl;
     return probNoBust;
+}
+
+float Player::probBust(Hand* hand) {
+    return (1 - probNotBust(hand));
 }
 
 float Player::probBlackJack(Hand* hand) {
