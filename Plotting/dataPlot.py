@@ -2,17 +2,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # List of CSV files
-csv_files = ['player1AVG.csv', 'player2AVG.csv', 'player3AVG.csv']
+csv_files = ['player1Data.csv', 'player2Data.csv', 'player3Data.csv', 'player4Data.csv']
 
 # Initialize lists to store dataframes
 dfs_avg = []
 dfs_turn = []
 
 # Define colors for each player
-colors = ['red', 'green', 'blue']
+colors = ['red', 'green', 'blue', 'purple']
 
 # Define labels for each player
-labels = ['Optimal Chart', 'Soft 17', 'Hard 17']
+labels = ['Optimal Chart', 'Soft 17', 'Hard 17', 'Card Count']
 
 # Read each CSV file
 for csv_file in csv_files:
