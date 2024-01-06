@@ -3,7 +3,7 @@
 #include "card.h"
 #include <iostream>
 
-#define PRINT true
+#define PRINT false
 
 using namespace std;
 
@@ -66,7 +66,7 @@ void Table::reinitializeShoe() {
     shoe->shuffle();
     shoe->burnCard();
 
-    cout << "Shoe Reinitialized" << endl;
+    //cout << "Shoe Reinitialized" << endl;
 
     for(auto& pair : players) {
         (pair.second)->reinitializeCardCount();

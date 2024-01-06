@@ -28,12 +28,12 @@ class Player {
     enum Strategy {
         SOFT_17,
         HARD_17,
-        OPTIMAL_CHART
-        //CARD_COUNT   
+        OPTIMAL_CHART,
+        CARD_COUNT   
     };
 
     //Constructors
-    Player(float initialBalance, float initialBet, Strategy strategy, int cycles);
+    Player(float initialBalance, float initialBet, Strategy strategy, int cycles, vector<float> thresh);
     ~Player();
 
     //Balance
@@ -83,6 +83,7 @@ class Player {
     float balance;
     float bet;
     int tablePos;
+    vector<float> thresholds;           //{Hit Thresh, Stand Thresh}
 
     Strategy strategy;
     vector<Hand*> hands;                

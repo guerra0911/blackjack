@@ -21,14 +21,15 @@ using std::fixed;
 using std::setprecision;
 
 #define NUM_DECKS 8
-#define PRINT true
+#define PRINT false
 
 
 //Constructors
-Player::Player(float initialBalance, float initialBet, Strategy initialStrategy, int cycles) {
+Player::Player(float initialBalance, float initialBet, Strategy initialStrategy, int cycles, vector<float> threshVals) {
     balance = initialBalance;
     bet = initialBet;
     strategy = initialStrategy;
+    thresholds = threshVals;
 
     //Reserve Space in data and initialize it as empty
     data.resize(cycles);
@@ -133,6 +134,32 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
         
         case OPTIMAL_CHART:
             return opChart(hand, dealerCardVal);
+            break;
+        
+        case CARD_COUNT:
+            Player::Decision chartDecision = opChart(hand, dealerCardVal);
+
+            //If chart tells us to hit, use card count strategy to see if it safe
+            if(chartDecision == Player::Decision::H || chartDecision == Player::Decision::DH || chartDecision == Player::Decision::DS) {
+                
+                //If Not Safe
+                if(probNotBust(hand) < thresholds[0]) {
+                    //Then Stand
+                    return Player::Decision::S;
+                }
+
+             //If Chart Says Stand, see if there is still a good prob to not bust by hitting
+            } else if (chartDecision == Player::Decision::S) {
+                
+                //If hitting has good prob to NOT bust
+                if(probNotBust(hand) > thresholds[1]) {
+                    //Then Hit
+                    return Player::Decision::H;
+                }
+            }
+
+            //Otherwise, just follow chart (Just follow normally if split)
+            return chartDecision; 
             break;
     }   
 }
@@ -246,7 +273,7 @@ void Player::averageData() {
 
     for (int i = 0; i < averages.size(); ++i) {             //For each turn index in Averages
         averages[i] /= numCycles;                           //Divide Sum of balances by numCycles to get average
-        counts[i] /= numCycles * 100.0;                     //% of Cycles that Reached this Turn                 
+        counts[i] = (counts[i] / numCycles) * 100.0;                     //% of Cycles that Reached this Turn                 
     }
 
     data.clear();                               //Clear the Data (If add vector<float> averages to Player, then this is OPTIONAL)

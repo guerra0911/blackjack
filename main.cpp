@@ -12,14 +12,14 @@
 #include "table.h"
 
 using namespace std;
-using std::vector;
-using std::map;
-using std::ofstream;
+// using std::vector;
+// using std::map;
+// using std::ofstream;
 
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 1
+#define CYCLES 10000
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
@@ -31,9 +31,10 @@ int main() {
     
     Table table1(5, shoe, &dealer);
     
-    Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES);
-    Player player2(100, MINBET, Player::SOFT_17, CYCLES);
-    Player player3(100, MINBET, Player::HARD_17, CYCLES);
+    Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.0, 0.0});
+    Player player2(100, MINBET, Player::SOFT_17, CYCLES, {0.0, 0.0});
+    Player player3(100, MINBET, Player::HARD_17, CYCLES, {0.0, 0.0});
+    Player player4(100, MINBET, Player::CARD_COUNT, CYCLES, {0.6,0.2});
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;
@@ -42,11 +43,13 @@ int main() {
         player1.setBalance(100);
         player2.setBalance(100);
         player3.setBalance(100);
+        player4.setBalance(100);
 
         //Re-Add Players to Table
         table1.addPlayer(&player1, 1);
         table1.addPlayer(&player2, 2);
         table1.addPlayer(&player3, 3);
+        table1.addPlayer(&player4, 4);
         
         //Add initial 100 Balance to Data
         table1.addAllData(c);
@@ -68,13 +71,14 @@ int main() {
             if(player3.getBalance() < MINBET || player3.getBalance() > 1000) {
                 table1.removePlayer(3);
             }
+            if(player4.getBalance() < MINBET || player4.getBalance() > 1000) {
+                table1.removePlayer(4);
+            }
 
             //table1.checkShoe();
             if(table1.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
                 table1.reinitializeShoe();
             }
-
-            cout << endl;
         }
 
         //Reset Shoe after Full Cycle
@@ -95,9 +99,11 @@ int main() {
     player1.averageData();
     player2.averageData();
     player3.averageData();
-    player1.writeDataToCSV("player1AVG.csv");
-    player2.writeDataToCSV("player2AVG.csv");
-    player3.writeDataToCSV("player3AVG.csv");
+    player4.averageData();
+    player1.writeDataToCSV("player1Data.csv");
+    player2.writeDataToCSV("player2Data.csv");
+    player3.writeDataToCSV("player3Data.csv");
+    player4.writeDataToCSV("player4Data.csv");
 
     auto stop2 = chrono::high_resolution_clock::now();
     auto duration2 = chrono::duration_cast<chrono::seconds>(stop2 - start2);
