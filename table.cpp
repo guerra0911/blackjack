@@ -293,7 +293,7 @@ void Table::collectionsAndPayOuts() {
 
         for(auto& playerHand : player->getHands()) {  //For Each Hand Player Has
             //DETERMINE BET MULTIPLIER DEPENDING ON REGULAR OR HIT OR SURRENDER
-            float betFactor = 1;  
+            float betFactor = 1.0;  
 
             if(playerHand->getBetType() == Hand::HALF) {       ////IF PLAYER SURRENDERED HAND Halve Money
                 betFactor = 0.5;
@@ -302,7 +302,7 @@ void Table::collectionsAndPayOuts() {
                 continue;
             } else if(playerHand->getBetType() == Hand::DOUBLE) {   //Double Money
                 if(PRINT) cout << "Return Doubled!" << endl;
-                betFactor = 2;
+                betFactor = 2.0;
             }
 
             // Player busts or has less points than dealer (who didn't bust) = LOSE

@@ -8,6 +8,7 @@
 #include <fstream>
 #include <numeric>
 #include <math.h>
+#include <iomanip>  //Floating Point Precision
 
 using namespace std;
 using std::string;
@@ -15,9 +16,11 @@ using std::vector;
 using std::map;
 using std::unordered_map;
 using std::ofstream;
+using std::fixed;
+using std::setprecision;
 
 //Constructors
-Player::Player(int initialBalance, int initialBet, Strategy initialStrategy, int cycles) {
+Player::Player(float initialBalance, float initialBet, Strategy initialStrategy, int cycles) {
     balance = initialBalance;
     bet = initialBet;
     strategy = initialStrategy;
@@ -36,29 +39,29 @@ Player::~Player() {
 
 
 //Balance
-int Player::getBalance() {
+float Player::getBalance() {
     return balance;
 }
 
-void Player::setBalance(int newBal) {
+void Player::setBalance(float newBal) {
     balance = newBal;
 }
 
-void Player::increaseBalance(int amount) {
+void Player::increaseBalance(float amount) {
     balance += amount;
 }
 
-void Player::decreaseBalance(int amount) {
+void Player::decreaseBalance(float amount) {
     balance -= amount;
 }
 
 
 //Bet
-int Player::getBet() {
+float Player::getBet() {
     return bet;
 }
 
-void Player::placeBet(int amount) {
+void Player::placeBet(float amount) {
     bet = amount;
 }
 
@@ -215,53 +218,31 @@ void Player::addData(int round) {
 }
 
 void Player::averageData() {
+
+    int numCycles = data.size();
     int maxLength = 0;
     for (const auto& vector : data) {
         maxLength = max(maxLength, static_cast<int>(vector.size()));    //Cycle with the Most Turns
     }
 
-    vector<int> averages(maxLength, 0.0);  
-    vector<int> counts(maxLength, 0);
-
-    for (const auto& vector : data) {                               //For Each Cycle (Vector/Row in Data)
-        for (int turn = 0; turn < maxLength; ++turn) {              //For Each Turn
-            if (turn < vector.size()) {                             //If balance does not exist at turn, Count it as a zero, as a player has not made it to that round
-                averages[turn] += vector[turn];                     //Add the balance at respective turn to Averages Vector
-            }
-            counts[turn]++;                                         //Keep Track of how many balance added to each Turn Index in Averages
-        }
-    }
-
-    for (int i = 0; i < maxLength; ++i) {       //For each turn index in Averages
-        averages[i] /= counts[i];               //Divide by amount of balances considered for that respective turn
-    }
-
-    data.clear();                               //Clear the Data (If add vector<float> averages to Player, then this is OPTIONAL)
-    data.push_back(averages);                   //Push back the averages
-
-    /* Don't Count Non-Existent Turn as Zero
-    int maxLength = 0;
-    for (const auto& vector : data) {
-        maxLength = max(maxLength, static_cast<int>(vector.size()));    //Cycle with the Most Turns
-    }
-
-    vector<int> averages(maxLength, 0.0);  
-    vector<int> counts(maxLength, 0);
+    vector<float> averages(maxLength, 0.0);  
+    vector<float> counts(maxLength, 0.0);
 
     for (const auto& vector : data) {                               //For Each Cycle (Vector/Row in Data)
         for (int turn = 0; turn < vector.size(); ++turn) {          //For Each Turn
             averages[turn] += vector[turn];                         //Add the balance at respective turn to Averages Vector
-            counts[turn]++;                                         //Keep Track of how many balance added to each Turn Index in Averages
+            counts[turn]++;                                         //Keep Track of how # of times, this turn is reached
         }
     }
 
-    for (int i = 0; i < maxLength; ++i) {       //For each turn index in Averages
-        averages[i] /= counts[i];               //Divide by amount of balances considered for that respective turn
+    for (int i = 0; i < averages.size(); ++i) {             //For each turn index in Averages
+        averages[i] /= numCycles;                           //Divide Sum of balances by numCycles to get average
     }
 
     data.clear();                               //Clear the Data (If add vector<float> averages to Player, then this is OPTIONAL)
     data.push_back(averages);                   //Push back the averages
-    */
+    data.push_back(counts);
+    
 }
 
 
@@ -272,7 +253,7 @@ void Player::printData() {
         int totalTurns = data[round].size();
         cout << "[";
         for(int turn = 0; turn < totalTurns; turn++) {
-            cout << data[round][turn];
+            cout << fixed << setprecision(2) << data[round][turn];  //Print only 2 Decimal Places
             if(turn != totalTurns - 1) {
                 cout << ", ";
             }
@@ -301,10 +282,10 @@ void Player::writeDataToCSV(const string& filename) {
     for(int round = 0; round < totalRounds; round++) {
         for(int turn = 0; turn < maxTurns; turn++) {
             if (turn < data[round].size()) {
-                // This round has this turn, write the balance
-                file << data[round][turn];
+                //This round has this turn, write the balance
+                file << fixed << setprecision(2) << data[round][turn];  //Write Only 2 Decimal Places
             } else {
-                // This round does not have this turn, write a placeholder value
+                //This round does not have this turn, write a placeholder value
                 file << "NaN";
             }
             if(turn != maxTurns - 1) {
@@ -314,3 +295,4 @@ void Player::writeDataToCSV(const string& filename) {
         file << "\n";
     }
 }
+

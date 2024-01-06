@@ -19,7 +19,7 @@ using std::ofstream;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 100000
+#define CYCLES 250000
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
@@ -87,9 +87,9 @@ int main() {
 
     auto start2 = chrono::high_resolution_clock::now();
 
-    player1.writeDataToCSV("player1.csv");
-    player2.writeDataToCSV("player2.csv");
-    player3.writeDataToCSV("player3.csv");
+    // player1.writeDataToCSV("player1.csv");
+    // player2.writeDataToCSV("player2.csv");
+    // player3.writeDataToCSV("player3.csv");
     player1.averageData();
     player2.averageData();
     player3.averageData();

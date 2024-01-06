@@ -31,18 +31,18 @@ class Player {
     };
 
     //Constructors
-    Player(int initialBalance, int initialBet, Strategy strategy, int cycles);
+    Player(float initialBalance, float initialBet, Strategy strategy, int cycles);
     ~Player();
 
     //Balance
-    int getBalance();
-    void setBalance(int newBal);
-    void increaseBalance(int amount);
-    void decreaseBalance(int amount);
+    float getBalance();
+    void setBalance(float newBal);
+    void increaseBalance(float amount);
+    void decreaseBalance(float amount);
 
     //Bet
-    int getBet();
-    void placeBet(int amount);
+    float getBet();
+    void placeBet(float amount);
 
     //Hand
     Hand* getHand(int handIndex);
@@ -69,13 +69,13 @@ class Player {
     
 
     private:
-    int balance;
-    int bet;
+    float balance;
+    float bet;
     int tablePos;
 
     Strategy strategy;
     vector<Hand*> hands;
-    vector<vector<int>> data;
+    vector<vector<float>> data;
 
 };
 
