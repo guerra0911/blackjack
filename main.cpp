@@ -19,7 +19,7 @@ using namespace std;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 20000
+#define CYCLES 100
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
@@ -105,14 +105,18 @@ int main() {
 
     auto start2 = chrono::high_resolution_clock::now();
 
-    // player1.writeDataToCSV("player1.csv");
-    // player2.writeDataToCSV("player2.csv");
-    // player3.writeDataToCSV("player3.csv");
+    player1.writeDataToCSV("player1Games.csv");
+    player2.writeDataToCSV("player2Games.csv");
+    player3.writeDataToCSV("player3Games.csv");
+    player4.writeDataToCSV("player4Games.csv");
+    player5.writeDataToCSV("player5Games.csv");
+
     player1.averageData();
     player2.averageData();
     player3.averageData();
     player4.averageData();
     player5.averageData();
+
     player1.writeDataToCSV("player1Data.csv");
     player2.writeDataToCSV("player2Data.csv");
     player3.writeDataToCSV("player3Data.csv");
