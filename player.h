@@ -29,6 +29,7 @@ class Player {
         SOFT_17,
         HARD_17,
         OPTIMAL_CHART,
+        CARD_COUNT,
         CARD_COUNT_HIT,
         CARD_COUNT_STAND   
     };

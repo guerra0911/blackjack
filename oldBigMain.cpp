@@ -19,7 +19,7 @@ using namespace std;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 10000
+#define CYCLES 1000
 #define NUM_TABLES 1
 
 int main() {
@@ -52,35 +52,35 @@ int main() {
     Table table4(5, shoe4, &dealer4);
     Table table5(5, shoe5, &dealer5);
 
-    Player player1(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.570});
-    Player player2(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.572});
-    Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.574});
-    Player player4(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.576});
-    Player player5(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.578});
+    Player player1(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.604});
+    Player player2(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.608});
+    Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.612});
+    Player player4(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.616});
+    Player player5(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.620});
 
-    Player player6(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.580});
-    Player player7(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.582});
-    Player player8(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.584});
-    Player player9(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.586});
-    Player player10(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.588});
+    Player player6(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.624});
+    Player player7(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.628});
+    Player player8(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.632});
+    Player player9(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.636});
+    Player player10(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.640});
 
-    Player player11(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.590});
-    Player player12(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.592});
-    Player player13(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.594});
-    Player player14(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.596});
-    Player player15(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.598});
+    Player player11(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.644});
+    Player player12(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.648});
+    Player player13(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.652});
+    Player player14(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.656});
+    Player player15(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.660});
 
-    Player player16(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.600});
-    Player player17(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.602});
-    Player player18(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.604});
-    Player player19(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.606});
-    Player player20(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.608});
+    Player player16(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.664});
+    Player player17(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.668});
+    Player player18(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.672});
+    Player player19(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.676});
+    Player player20(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.680});
 
-    Player player21(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.670});
-    Player player22(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.675});
-    Player player23(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.680});
-    Player player24(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.685});
-    Player player25(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.690});
+    Player player21(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.684});
+    Player player22(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.688});
+    Player player23(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.692});
+    Player player24(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.696});
+    Player player25(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.7});
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;
@@ -148,13 +148,12 @@ int main() {
         table5.addAllData(c);
 
 
-        while(table1.numPlayersAtTable() > 0) {             //Until Table is Empty
+        while(table1.numPlayersAtTable() > 0) {  
             table1.playRound();
             table1.collectionsAndPayOuts();
             table1.addAllData(c);
             table1.clearAllHands();
 
-            //table1.checkPlayers();
             if(player1.getBalance() < MINBET || player1.getBalance() > 1000) {
                 table1.removePlayer(1);
             }
@@ -171,19 +170,17 @@ int main() {
                 table1.removePlayer(5);
             }
 
-            //table1.checkShoe();
-            if(table1.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
+            if(table1.cardsLeftAtTable() < RESHUFFLEPOINT) {        
                 table1.reinitializeShoe();
             }
         }
 
-        while(table2.numPlayersAtTable() > 0) {             //Until Table is Empty
+        while(table2.numPlayersAtTable() > 0) {             
             table2.playRound();
             table2.collectionsAndPayOuts();
             table2.addAllData(c);
             table2.clearAllHands();
 
-            //table1.checkPlayers();
             if(player6.getBalance() < MINBET || player6.getBalance() > 1000) {
                 table2.removePlayer(1);
             }
@@ -200,19 +197,17 @@ int main() {
                 table2.removePlayer(5);
             }
 
-            //table1.checkShoe();
-            if(table2.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
+            if(table2.cardsLeftAtTable() < RESHUFFLEPOINT) {        
                 table2.reinitializeShoe();
             }
         }
 
-        while(table3.numPlayersAtTable() > 0) {             //Until Table is Empty
+        while(table3.numPlayersAtTable() > 0) {   
             table3.playRound();
             table3.collectionsAndPayOuts();
             table3.addAllData(c);
             table3.clearAllHands();
 
-            //table1.checkPlayers();
             if(player11.getBalance() < MINBET || player11.getBalance() > 1000) {
                 table3.removePlayer(1);
             }
@@ -229,19 +224,17 @@ int main() {
                 table3.removePlayer(5);
             }
 
-            //table1.checkShoe();
-            if(table3.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
+            if(table3.cardsLeftAtTable() < RESHUFFLEPOINT) {       
                 table3.reinitializeShoe();
             }
         }
 
-        while(table4.numPlayersAtTable() > 0) {             //Until Table is Empty
+        while(table4.numPlayersAtTable() > 0) {
             table4.playRound();
             table4.collectionsAndPayOuts();
             table4.addAllData(c);
             table4.clearAllHands();
 
-            //table1.checkPlayers();
             if(player16.getBalance() < MINBET || player16.getBalance() > 1000) {
                 table4.removePlayer(1);
             }
@@ -258,19 +251,17 @@ int main() {
                 table4.removePlayer(5);
             }
 
-            //table1.checkShoe();
-            if(table4.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
+            if(table4.cardsLeftAtTable() < RESHUFFLEPOINT) {        
                 table4.reinitializeShoe();
             }
         }
 
-        while(table5.numPlayersAtTable() > 0) {             //Until Table is Empty
+        while(table5.numPlayersAtTable() > 0) {   
             table5.playRound();
             table5.collectionsAndPayOuts();
             table5.addAllData(c);
             table5.clearAllHands();
 
-            //table1.checkPlayers();
             if(player21.getBalance() < MINBET || player21.getBalance() > 1000) {
                 table5.removePlayer(1);
             }
@@ -287,8 +278,7 @@ int main() {
                 table5.removePlayer(5);
             }
 
-            //table1.checkShoe();
-            if(table5.cardsLeftAtTable() < RESHUFFLEPOINT) {        //If Shoe is Depleted past Shuffle Point
+            if(table5.cardsLeftAtTable() < RESHUFFLEPOINT) {      
                 table5.reinitializeShoe();
             }
         }
@@ -380,5 +370,3 @@ int main() {
     cout << "Total Time: " << minutes << " M : " << seconds << " S" << endl;
 
 }
-
-    

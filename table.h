@@ -30,6 +30,7 @@ class Table {
     void addPlayer(Player* player, int position);
     void removePlayer(int position);
     Player* playerAtPos(int position);
+    map<int, Player*> getPlayers();
 
     //Shoe
     void reinitializeShoe();

@@ -60,6 +60,11 @@ Player* Table::playerAtPos(int position) {
     return players[position];
 }
 
+map<int, Player*> Table::getPlayers() {
+    return players;
+}
+
+
 //Shoe
 void Table::reinitializeShoe() {
     shoe->reinitialize();

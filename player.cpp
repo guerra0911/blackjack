@@ -114,10 +114,11 @@ void Player::split(int handIndex) {
 //Decision
 Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
     Player::Decision chartDecision = opChart(hand, dealerCardVal);
+    int handVal = hand->getHandValue();
     switch(strategy) {
 
         case HARD_17:
-            if(hand->getHandValue() >= 17) {
+            if(handVal >= 17) {
                 return Player::Decision::S;
             } else {
                 return Player::Decision::H;
@@ -125,9 +126,9 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             break;
 
         case SOFT_17:
-            if(hand->getHandValue() > 17) {
+            if(handVal > 17) {
                 return Player::Decision::S;
-            } else if(hand->getHandValue() == 17 && !hand->hasAce()) {
+            } else if(handVal == 17 && !hand->hasAce()) {
                 return Player::Decision::S;
             } else {
                 return Player::Decision::H;
@@ -138,7 +139,7 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             return chartDecision;
             break;
         
-        case CARD_COUNT_HIT:
+        case CARD_COUNT:
     
             //If chart tells us to hit, use card count strategy to see if it safe
             if(chartDecision == Player::Decision::H) {
@@ -152,6 +153,32 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
 
             return chartDecision; 
             break;
+        
+        case CARD_COUNT_HIT: 
+            //If chart tells us to hit, use card count strategy to see if it safe
+            if(chartDecision == Player::Decision::H) {
+                
+                //If Not Safe
+                // if(handVal  <= 12 && probBust(hand) >= thresholds[0]) {
+                //     return Player::Decision::S;
+                // }
+                // if (handVal  == 13 && probBust(hand) >= thresholds[0]) {
+                //     return Player::Decision::S;
+                // }
+                // if (handVal  == 14 && probBust(hand) >= thresholds[0]) {
+                //     return Player::Decision::S;
+                // }
+                if (handVal  == 15 && probBust(hand) >= thresholds[0]) {
+                    return Player::Decision::S;
+                }
+                // if (handVal  == 16 && probBust(hand) >= thresholds[0]) {
+                //     return Player::Decision::S;
+                // }  
+            }
+
+            return chartDecision; 
+            break;
+
 
         case CARD_COUNT_STAND:
 
@@ -159,14 +186,22 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             if (chartDecision == Player::Decision::S) {
                 
                 //If hitting has good prob to NOT bust
-                if(probBust(hand) <= thresholds[0]) {
-                    //Then Hit
+                if(handVal  <= 13 && probBust(hand) <= thresholds[0]) {
                     return Player::Decision::H;
-                }
+                } else if (handVal  == 14 && probBust(hand) <= thresholds[1]) {
+                    return Player::Decision::H;
+                } else if (handVal  == 15 && probBust(hand) <= thresholds[2]) {
+                    return Player::Decision::H;
+                } else if (handVal  == 16 && probBust(hand) <= thresholds[3]) {
+                    return Player::Decision::H;
+                } else if (handVal  == 17 && probBust(hand) <= thresholds[4]) {
+                    return Player::Decision::H;
+                }  
             }
 
             //Otherwise, just follow chart (Just follow normally if split)
             return chartDecision;
+            break;
     }   
 }
 
