@@ -19,7 +19,7 @@ using namespace std;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 100
+#define CYCLES 10000
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
@@ -34,14 +34,20 @@ int main() {
     Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.0});
     Player player2(100, MINBET, Player::SOFT_17, CYCLES, {0.0});
     Player player3(100, MINBET, Player::HARD_17, CYCLES, {0.0});
-    Player player4(100, MINBET, Player::CARD_COUNT, CYCLES, {0.6775});
-    Player player5(100, MINBET, Player::CARD_COUNT, CYCLES, {0.685});
+    Player player4(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.6775});
+    Player player5(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.685});
 
-    // Player player1(100, MINBET, Player::CARD_COUNT, CYCLES, {0.675});
-    // Player player2(100, MINBET, Player::CARD_COUNT, CYCLES, {0.6775});
-    // Player player3(100, MINBET, Player::CARD_COUNT, CYCLES, {0.680});
-    // Player player4(100, MINBET, Player::CARD_COUNT, CYCLES, {0.6825});
-    // Player player5(100, MINBET, Player::CARD_COUNT, CYCLES, {0.685});
+    // Player player1(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.675});
+    // Player player2(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.6775});
+    // Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.680});
+    // Player player4(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.6825});
+    // Player player5(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.685});
+
+    // Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.0});
+    // Player player2(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.6});
+    // Player player3(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.7});
+    // Player player4(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.8});
+    // Player player5(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.9});
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;
@@ -105,11 +111,11 @@ int main() {
 
     auto start2 = chrono::high_resolution_clock::now();
 
-    player1.writeDataToCSV("player1Games.csv");
-    player2.writeDataToCSV("player2Games.csv");
-    player3.writeDataToCSV("player3Games.csv");
-    player4.writeDataToCSV("player4Games.csv");
-    player5.writeDataToCSV("player5Games.csv");
+    // player1.writeDataToCSV("player1Games.csv");
+    // player2.writeDataToCSV("player2Games.csv");
+    // player3.writeDataToCSV("player3Games.csv");
+    // player4.writeDataToCSV("player4Games.csv");
+    // player5.writeDataToCSV("player5Games.csv");
 
     player1.averageData();
     player2.averageData();

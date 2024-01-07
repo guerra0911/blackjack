@@ -12,7 +12,7 @@ dfs_turn = []
 colors = ['red', 'green', 'blue', 'purple', 'orange']
 
 # Define labels for each player
-labels = ['Optimal Chart', 'Soft 17', 'Hard 17', 'Card Count @ thresh = 0.6775', 'Card Count @ thresh = 0.685']
+labels = ['Optimal Chart', 'Card Count @ thresh = 0.1', 'Card Count @ thresh = 0.4', 'Card Count @ thresh = 0.7', 'Card Count @ thresh = 0.9']
 
 # Read each CSV file
 for csv_file in csv_files:

@@ -30,6 +30,7 @@ Player::Player(float initialBalance, float initialBet, Strategy initialStrategy,
     bet = initialBet;
     strategy = initialStrategy;
     thresholds = threshVals;
+    totalCardsCounted = NUM_DECKS*52;
 
     //Reserve Space in data and initialize it as empty
     data.resize(cycles);
@@ -112,6 +113,7 @@ void Player::split(int handIndex) {
 
 //Decision
 Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
+    Player::Decision chartDecision = opChart(hand, dealerCardVal);
     switch(strategy) {
 
         case HARD_17:
@@ -133,12 +135,11 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             break;
         
         case OPTIMAL_CHART:
-            return opChart(hand, dealerCardVal);
+            return chartDecision;
             break;
         
-        case CARD_COUNT:
-            Player::Decision chartDecision = opChart(hand, dealerCardVal);
-
+        case CARD_COUNT_HIT:
+    
             //If chart tells us to hit, use card count strategy to see if it safe
             if(chartDecision == Player::Decision::H) {
                 
@@ -148,19 +149,24 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
                     return Player::Decision::S;
                 }
             }
-             //If Chart Says Stand, see if there is still a good prob to not bust by hitting
-            // } else if (chartDecision == Player::Decision::S) {
-                
-            //     //If hitting has good prob to NOT bust
-            //     if(probNotBust(hand) > thresholds[1]) {
-            //         //Then Hit
-            //         return Player::Decision::H;
-            //     }
-            // }
 
-            //Otherwise, just follow chart (Just follow normally if split)
             return chartDecision; 
             break;
+
+        case CARD_COUNT_STAND:
+
+            //If Chart Says Stand, see if there is still a good prob to not bust by hitting
+            if (chartDecision == Player::Decision::S) {
+                
+                //If hitting has good prob to NOT bust
+                if(probBust(hand) <= thresholds[0]) {
+                    //Then Hit
+                    return Player::Decision::H;
+                }
+            }
+
+            //Otherwise, just follow chart (Just follow normally if split)
+            return chartDecision;
     }   
 }
 
@@ -343,11 +349,13 @@ void Player::reinitializeCardCount() {
     for(int c = Card::Rank::ACE; c <= Card::Rank::KING; c++) {
         cardCount[static_cast<Card::Rank>(c)] = NUM_DECKS*4;                 //Count # of Each Rank in Shoe
     }
+    totalCardsCounted = (float)NUM_DECKS*52;
 }
 
 void Player::decCardCount(Card* card) {
     Card::Rank decRank = (card->getRank());         //Get Rank of Card that was just Burnt
     cardCount[static_cast<Card::Rank>(decRank)]--;  //Decrement its balance in the Shoe
+    totalCardsCounted--;
 }
 
 void Player::printCardCount() {
@@ -359,32 +367,36 @@ void Player::printCardCount() {
 }
 
 float Player::probGet(int desiredHandVal, Hand* hand) {
-    float totalCards = 0.0;
-    float numCardsThatGetDesiredVal = 0.0;
-    int playerHandVal = hand->getHandValue();
+    float playerHandVal = (float)hand->getHandValue();
 
     if(desiredHandVal <= playerHandVal) {       //Check if possible to get Desired Hand Val
         return 0.0;
     }
 
-    for(auto const& pair : cardCount) {
+    float neededCardVal = desiredHandVal - playerHandVal;
+    float numCardsThatGetDesiredVal = 0.0;
 
-        //If ace, check for +1 or +11 = Desired
-        if(pair.first == Card::ACE) {
-            if(playerHandVal + 1 == desiredHandVal || playerHandVal + 11 == desiredHandVal) {
-                numCardsThatGetDesiredVal += pair.second;
-            }
-
-        //Else just normally check if sum = Desired
-        } else if(playerHandVal + Card::rankIntMap[pair.first] == desiredHandVal) {    //i.e. if 15 + ACE = 16, add the # of aces left in shoe to sum
-            numCardsThatGetDesiredVal += pair.second;
-        }
-
-        totalCards += pair.second;       //Sum the frequencies of all cards left in count
+    // Check for Ace
+    if(neededCardVal == 1.0 || neededCardVal == 11.0) {
+        numCardsThatGetDesiredVal += cardCount[Card::ACE];
+        return numCardsThatGetDesiredVal / totalCardsCounted;
     }
 
-    if (PRINT) cout << "Prob of getting " << desiredHandVal << " = " << numCardsThatGetDesiredVal / totalCards << endl;
-    return (numCardsThatGetDesiredVal / totalCards);
+    // Check for other cards
+    
+    if(neededCardVal > 1.0 && neededCardVal < 10.0) {
+        auto it = cardCount.find(static_cast<Card::Rank>(neededCardVal));
+        if (it != cardCount.end()) {
+            numCardsThatGetDesiredVal += it->second;
+        }
+    } else if(neededCardVal == 10) {
+        numCardsThatGetDesiredVal += cardCount[Card::TEN];
+        numCardsThatGetDesiredVal += cardCount[Card::JACK];
+        numCardsThatGetDesiredVal += cardCount[Card::QUEEN];
+        numCardsThatGetDesiredVal += cardCount[Card::KING];
+    }
+    if(PRINT) cout << "Prob of Getting " << desiredHandVal << " = " << numCardsThatGetDesiredVal << " / " << totalCardsCounted << " = " << numCardsThatGetDesiredVal / totalCardsCounted << endl;
+    return numCardsThatGetDesiredVal / totalCardsCounted;
 }
 
 float Player::probNotBust(Hand* hand) {
