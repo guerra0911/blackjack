@@ -159,21 +159,24 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             if(chartDecision == Player::Decision::H) {
                 
                 //If Not Safe
-                // if(handVal  <= 12 && probBust(hand) >= thresholds[0]) {
-                //     return Player::Decision::S;
-                // }
-                // if (handVal  == 13 && probBust(hand) >= thresholds[0]) {
-                //     return Player::Decision::S;
-                // }
-                // if (handVal  == 14 && probBust(hand) >= thresholds[0]) {
-                //     return Player::Decision::S;
-                // }
-                if (handVal  == 15 && probBust(hand) >= thresholds[0]) {
+                if(handVal  <= 12 && probBust(hand) >= thresholds[0]) {
                     return Player::Decision::S;
                 }
-                // if (handVal  == 16 && probBust(hand) >= thresholds[0]) {
-                //     return Player::Decision::S;
-                // }  
+                else if (handVal  == 13 && probBust(hand) >= thresholds[1]) {
+                    return Player::Decision::S;
+                }
+                else if (handVal  == 14 && probBust(hand) >= thresholds[2]) {
+                    return Player::Decision::S;
+                }
+                else if (handVal  == 15 && probBust(hand) >= thresholds[3]) {
+                    return Player::Decision::S;
+                }
+                else if (handVal  == 16 && probBust(hand) >= thresholds[4]) {
+                    return Player::Decision::S;
+                } 
+                else if (probBust(hand) >= 0.695) {
+                    return Player::Decision::S;
+                }
             }
 
             return chartDecision; 
@@ -186,17 +189,24 @@ Player::Decision Player::makeDecision(Hand* hand, int dealerCardVal) {
             if (chartDecision == Player::Decision::S) {
                 
                 //If hitting has good prob to NOT bust
-                if(handVal  <= 13 && probBust(hand) <= thresholds[0]) {
+                if(handVal  <= 12 && probBust(hand) <= thresholds[0]) {
                     return Player::Decision::H;
-                } else if (handVal  == 14 && probBust(hand) <= thresholds[1]) {
-                    return Player::Decision::H;
-                } else if (handVal  == 15 && probBust(hand) <= thresholds[2]) {
-                    return Player::Decision::H;
-                } else if (handVal  == 16 && probBust(hand) <= thresholds[3]) {
-                    return Player::Decision::H;
-                } else if (handVal  == 17 && probBust(hand) <= thresholds[4]) {
-                    return Player::Decision::H;
-                }  
+                } 
+                // else if (handVal  == 13 && probBust(hand) <= thresholds[1]) {
+                //     return Player::Decision::H;
+                // } 
+                // else if (handVal  == 14 && probBust(hand) <= thresholds[2]) {
+                //     return Player::Decision::H;
+                // } 
+                // else if (handVal  == 15 && probBust(hand) <= thresholds[3]) {
+                //     return Player::Decision::H;
+                // } 
+                // else if (handVal  == 16 && probBust(hand) <= thresholds[4]) {
+                //     return Player::Decision::H;
+                // }  
+                // else if (handVal  == 16 && probBust(hand) <= thresholds[5]) {
+                //     return Player::Decision::H;
+                // }  
             }
 
             //Otherwise, just follow chart (Just follow normally if split)

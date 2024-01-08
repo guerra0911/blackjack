@@ -52,35 +52,35 @@ int main() {
     Table table4(5, shoe4, &dealer4);
     Table table5(5, shoe5, &dealer5);
 
-    Player player1(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.604});
-    Player player2(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.608});
-    Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.612});
-    Player player4(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.616});
-    Player player5(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.620});
+    Player player1(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.1});
+    Player player2(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.13});
+    Player player3(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.16});
+    Player player4(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.19});
+    Player player5(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.22});
 
-    Player player6(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.624});
-    Player player7(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.628});
-    Player player8(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.632});
-    Player player9(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.636});
-    Player player10(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.640});
+    Player player6(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.25});
+    Player player7(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.28});
+    Player player8(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.31});
+    Player player9(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.34});
+    Player player10(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.37});
 
-    Player player11(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.644});
-    Player player12(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.648});
-    Player player13(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.652});
-    Player player14(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.656});
-    Player player15(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.660});
+    Player player11(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.4});
+    Player player12(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.43});
+    Player player13(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.46});
+    Player player14(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.49});
+    Player player15(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.52});
 
-    Player player16(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.664});
-    Player player17(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.668});
-    Player player18(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.672});
-    Player player19(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.676});
-    Player player20(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.680});
+    Player player16(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.55});
+    Player player17(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.58});
+    Player player18(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.62});
+    Player player19(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.65});
+    Player player20(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.68});
 
-    Player player21(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.684});
-    Player player22(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.688});
-    Player player23(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.692});
-    Player player24(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.696});
-    Player player25(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.7});
+    Player player21(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.71});
+    Player player22(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.74});
+    Player player23(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.78});
+    Player player24(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.82});
+    Player player25(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.85});
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;

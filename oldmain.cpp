@@ -19,36 +19,24 @@ using namespace std;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 50000
+#define CYCLES 250000
 #define NUM_TABLES 1
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
-    Dealer dealer(Dealer::SOFT_17);
+    Dealer dealer1(Dealer::SOFT_17);
 
-    Shoe* shoe = new Shoe(NUMDECKS);
-    shoe->shuffle();
-    shoe->burnCard();
+    Shoe* shoe1 = new Shoe(NUMDECKS);
+    shoe1->shuffle();
+    shoe1->burnCard();
     
-    Table table1(5, shoe, &dealer);
-    
-    // Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.0});
-    // Player player2(100, MINBET, Player::SOFT_17, CYCLES, {0.0});
-    // Player player3(100, MINBET, Player::HARD_17, CYCLES, {0.0});
-    // Player player4(100, MINBET, Player::CARD_COUNT, CYCLES, {0.6775});
-    // Player player5(100, MINBET, Player::CARD_COUNT, CYCLES, {0.685});
+    Table table1(5, shoe1, &dealer1);
 
-    Player player1(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.645});
-    Player player2(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.655});
-    Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.675});
-    Player player4(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.685});
-    Player player5(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.694});
-
-    // Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.0});
-    // Player player2(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.6});
-    // Player player3(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.7});
-    // Player player4(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.8});
-    // Player player5(100, MINBET, Player::CARD_COUNT_STAND, CYCLES, {0.9});
+    Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.84});
+    Player player2(100, MINBET, Player::CARD_COUNT, CYCLES, {0.685});
+    Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.84,0.72,0.79,0.72,0.695});
+    Player player4(100, MINBET, Player::SOFT_17, CYCLES, {0.82});
+    Player player5(100, MINBET, Player::HARD_17, CYCLES, {0.735});
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;
@@ -66,10 +54,9 @@ int main() {
         table1.addPlayer(&player3, 3);
         table1.addPlayer(&player4, 4);
         table1.addPlayer(&player5, 5);
-        
+    
         //Add initial 100 Balance to Data
         table1.addAllData(c);
-
 
         while(table1.numPlayersAtTable() > 0) {             //Until Table is Empty
             table1.playRound();
@@ -112,12 +99,6 @@ int main() {
 
     auto start2 = chrono::high_resolution_clock::now();
 
-    // player1.writeDataToCSV("player1Games.csv");
-    // player2.writeDataToCSV("player2Games.csv");
-    // player3.writeDataToCSV("player3Games.csv");
-    // player4.writeDataToCSV("player4Games.csv");
-    // player5.writeDataToCSV("player5Games.csv");
-
     player1.averageData();
     player2.averageData();
     player3.averageData();
@@ -136,7 +117,7 @@ int main() {
     int seconds2 = duration2.count() % 60;
     cout << "Data Averaging Time: " << minutes2 << " M : " << seconds2 << " S" << endl;
 
-    delete shoe;
+    delete shoe1;
 
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
@@ -145,5 +126,3 @@ int main() {
     cout << "Total Time: " << minutes << " M : " << seconds << " S" << endl;
 
 }
-
-    
