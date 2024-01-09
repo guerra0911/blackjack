@@ -56,17 +56,13 @@ Each combination of threshold and hand value is simulated and analyzed separatel
 After all simulations are completed, the average balance of a player at each turn over the 250,000 games is calculated for each threshold. The threshold that results in the highest average earnings over time is selected as the optimal threshold. This approach aims to maximize the player’s earnings in the long run.
 
 ## Analysis & Metrics
-### Average Balance for a Specific Turn
-On this graph, the horizontal axis (x-axis) represents the turn number in a game, and the vertical axis (y-axis) represents the average balance of a player at that turn.
-![Average Balance for a Specific Turn](Pics/AverageBalancePlot.png)
+### Final Balance as Way of Exit
+Recall that a player begins with an initial balance of `$100` and stops playing when they have either have a balance of `$1,000` or not enough to afford the minimum `$25` bet.
 
-For example, if you see a point at (40, 500) on the graph, it means that on average, players had a balance of $500 at turn 40. This average is calculated from all games that reached turn 40. If a game did not reach turn 40, it is counted as zero in the average.
+For 1,000,000 simulations for each strategy, this is how many games ended with a balance of `$1,000` and how many ended without being able to afford the minimum `$25` bet.
+![# of Wins & Losses for Each Strategy](Pics/WinsLossesPlot.png)
 
-As you move along the x-axis from left to right (from earlier turns to later turns), you might see the average balance increase or decrease, depending on the strategies used by the players.
-
-A strategy that results in a higher average balance at each turn is generally better, as it means the player is more likely to have more money at that point in the game. So, if one strategy results in a higher line on the graph than another strategy, it means that the first strategy is typically more successful in terms of the player’s balance
-
-Evidently, the **Card Counting Strategy** is the ony strategy that has a ***positive average balance after the first turn***. This means that on average, players won money on their first turn (***Very Minimal Winnings***) while players of other strategies lost money on average. Regardless, Card Counting is undoubetdly the best strategy of the four.
+Clearly, Card Counting had more players reach $1,000 (12.1%) than any other strategy, proving that it is the best of the four strategies.
 
 ### % of Games that Reached Specific Turn
 On this graph, the horizontal axis (x-axis) represents the number of turns in a game, and the vertical axis (y-axis) represents the percentage of games that reached that number of turns.
@@ -78,13 +74,17 @@ As you move along the x-axis from left to right (from fewer turns to more turns)
 
 In this case, **Card Counting Strategy** has the ***highest % of Games in the later turns***, meaning the strategy lasted more rounds than the other four.
 
-### Final Balance as Way of Exit
-Recall that a player begins with an initial balance of `$100` and stops playing when they have either have a balance of `$1,000` or not enough to afford the minimum `$25` bet.
+### Average Balance for a Specific Turn
+On this graph, the horizontal axis (x-axis) represents the turn number in a game, and the vertical axis (y-axis) represents the average balance of a player at that turn.
+![Average Balance for a Specific Turn](Pics/AverageBalancePlot.png)
 
-For 1,000,000 simulations for each strategy, this is how many games ended with a balance of `$1,000` and how many ended without being able to afford the minimum `$25` bet.
-![# of Wins & Losses for Each Strategy](Pics/WinsLossesPlot.png)
+For example, if you see a point at (40, 500) on the graph, it means that on average, players had a balance of $500 at turn 40. This average is calculated from all games that reached turn 40. If a game did not reach turn 40, it is counted as zero in the average.
 
-Clearly, Card Counting had more players reach $1,000 (12.1%) than any other strategy, proving that it is the best of the four strategies.
+As you move along the x-axis from left to right (from earlier turns to later turns), you might see the average balance increase or decrease, depending on the strategies used by the players.
+
+A strategy that results in a higher average balance at each turn is generally better, as it means the player is more likely to have more money at that point in the game. So, if one strategy results in a higher line on the graph than another strategy, it means that the first strategy is typically more successful in terms of the player’s balance
+
+Evidently, the **Card Counting Strategy** is the ony strategy that has a ***positive average balance after the first turn***. This means that on average, players won money on their first turn (***Very Minimal Winnings***) while players of other strategies lost money on average. Regardless, Card Counting is undoubetdly the best strategy of the four.
 
 ## Future Improvements
 - Add more Player Strategies.
