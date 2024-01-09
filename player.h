@@ -29,15 +29,11 @@ class Player {
         SOFT_17,
         HARD_17,
         OPTIMAL_CHART,
-        CARD_COUNT,
-        CARD_COUNT_HIT,
-        CARD_COUNT_STAND,
-        CARD_COUNT_DOUBLE_HIT,
-        CARD_COUNT_BOTH   
+        CARD_COUNT
     };
 
     //Constructors
-    Player(float initialBalance, float initialBet, Strategy strategy, int cycles, vector<float> thresh);
+    Player(float initialBalance, float initialBet, Strategy strategy, int cycles);
     ~Player();
 
     //Balance
@@ -89,7 +85,6 @@ class Player {
     float bet;
     int tablePos;
     float totalCardsCounted;
-    vector<float> thresholds;           //{Hit Thresh, Stand Thresh}
 
     Strategy strategy;
     vector<Hand*> hands;                

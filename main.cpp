@@ -12,9 +12,6 @@
 #include "table.h"
 
 using namespace std;
-// using std::vector;
-// using std::map;
-// using std::ofstream;
 
 #define MINBET 25
 #define RESHUFFLEPOINT 104
@@ -32,11 +29,10 @@ int main() {
     
     Table table1(5, shoe1, &dealer1);
 
-    Player player1(100, MINBET, Player::OPTIMAL_CHART, CYCLES, {0.0});
-    Player player2(100, MINBET, Player::CARD_COUNT, CYCLES, {0.685});
-    Player player3(100, MINBET, Player::CARD_COUNT_HIT, CYCLES, {0.81,0.72,0.79,0.72,0.695});
-    Player player4(100, MINBET, Player::CARD_COUNT_BOTH, CYCLES, {0.81, 0.72, 0.79, 0.72, 0.695, 0.243, 0.323, 0.21, 0.274, 0.24});
-    Player player5(100, MINBET, Player::SOFT_17, CYCLES, {0.0});
+    Player player1(100, MINBET, Player::CARD_COUNT, CYCLES);
+    Player player2(100, MINBET, Player::OPTIMAL_CHART, CYCLES);
+    Player player3(100, MINBET, Player::HARD_17, CYCLES);
+    Player player4(100, MINBET, Player::SOFT_17, CYCLES);
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;
@@ -46,14 +42,12 @@ int main() {
         player2.setBalance(100);
         player3.setBalance(100);
         player4.setBalance(100);
-        player5.setBalance(100);
 
         //Re-Add Players to Table
         table1.addPlayer(&player1, 1);
         table1.addPlayer(&player2, 2);
         table1.addPlayer(&player3, 3);
         table1.addPlayer(&player4, 4);
-        table1.addPlayer(&player5, 5);
     
         //Add initial 100 Balance to Data
         table1.addAllData(c);
@@ -76,9 +70,6 @@ int main() {
             }
             if(player4.getBalance() < MINBET || player4.getBalance() > 1000) {
                 table1.removePlayer(4);
-            }
-            if(player5.getBalance() < MINBET || player5.getBalance() > 1000) {
-                table1.removePlayer(5);
             }
 
             //table1.checkShoe();
@@ -103,13 +94,11 @@ int main() {
     player2.averageData();
     player3.averageData();
     player4.averageData();
-    player5.averageData();
 
     player1.writeDataToCSV("player1Data.csv");
     player2.writeDataToCSV("player2Data.csv");
     player3.writeDataToCSV("player3Data.csv");
     player4.writeDataToCSV("player4Data.csv");
-    player5.writeDataToCSV("player5Data.csv");
 
     auto stop2 = chrono::high_resolution_clock::now();
     auto duration2 = chrono::duration_cast<chrono::seconds>(stop2 - start2);
@@ -124,5 +113,4 @@ int main() {
     int minutes = duration.count() / 60;
     int seconds = duration.count() % 60;
     cout << "Total Time: " << minutes << " M : " << seconds << " S" << endl;
-
 }
