@@ -33,9 +33,9 @@ plt.legend()
 plt.figure(len(csv_files)*2 + 1)  # Create a new figure for frequency of turn of all players
 for i, df_turn in enumerate(dfs_turn):
     plt.scatter(range(len(df_turn)), df_turn, color=colors[i], label=labels[i], s=10)  # Reduced dot size
-plt.title('% Games that Reached a Specific Turn')
+plt.title('% of Games that Reached a Specific Turn')
 plt.xlabel('Turn')
-plt.ylabel('% Games')
+plt.ylabel('% of Games')
 plt.legend()
 
 # Display all plots

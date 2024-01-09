@@ -56,9 +56,9 @@ Each combination of threshold and hand value is simulated and analyzed separatel
 After all simulations are completed, the average balance of a player at each turn over the 250,000 games is calculated for each threshold. The threshold that results in the highest average earnings over time is selected as the optimal threshold. This approach aims to maximize the player’s earnings in the long run.
 
 ## Analysis & Metrics
-### Average Balance for Each Turn
+### Average Balance for a Specific Turn
 On this graph, the horizontal axis (x-axis) represents the turn number in a game, and the vertical axis (y-axis) represents the average balance of a player at that turn.
-![Average Balance vs. Turns](Pics/AverageBalancePlot.png)
+![Average Balance for a Specific Turn](Pics/AverageBalancePlot.png)
 
 For example, if you see a point at (40, 500) on the graph, it means that on average, players had a balance of $500 at turn 40. This average is calculated from all games that reached turn 40. If a game did not reach turn 40, it is counted as zero in the average.
 
@@ -78,7 +78,7 @@ As you move along the x-axis from left to right (from fewer turns to more turns)
 
 In this case, **Card Counting Strategy** has the ***highest % of Games in the later turns***, meaning the strategy lasted more rounds than the other four.
 
-### Ways of Exit
+### Final Balance as Way of Exit
 Recall that a player begins with an initial balance of `$100` and stops playing when they have either have a balance of `$1,000` or not enough to afford the minimum `$25` bet.
 
 For 1,000,000 simulations for each strategy, this is how many games ended with a balance of `$1,000` and how many ended without being able to afford the minimum `$25` bet.
