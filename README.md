@@ -31,11 +31,15 @@ Each `player` starts the game with a balance of `$100`, betting `$25` each round
 - `HARD_17`: Player stands on a hand value of 17+, otherwise the player hits.
 - `SOFT_17`: Player stands on a hand value of 17+. However, if their hand has a value of 17 with an Ace in it, they hit. For all hand values less than 17, the player hits.
 - `OPTIMAL_CHART`: Renowned Chart derived by mathematicians, often provided by casino’s themselves that maps any combination of player cards and/or hand value, with the dealer’s visible card, to an Optimal Decision. 
-![Optimal Chart](Pics/Optimal_Chart.png)
+<p align="center">
+  <img src="Pics/Optimal_Chart.png" alt="Optimal Chart">
+</p>
 
 - `CARD_COUNTING`: Player keeps track of all the possible cards left in the shoe, and decides on whether to Hit, Stand, Double or Surrender, based on the probability of their next dealt card causing them to bust.
-![Simulation](Pics/CardCount_Explanation1.png)
-![Probability](Pics/Probability_Equation.png)
+<p align="center">
+  <img src="Pics/CardCount_Explanation1.png" alt="Simulation" width="500">
+  <img src="Pics/Probability_Equation.png" alt="Probability" width="500">
+</p>
 
 Now, what does a player do with this probability? They will use it, along with a threshold to make a final decision on what action to do next. 
 In simpler terms, if a player thinks their probability to bust in their next dealt card is too high, then they will `STAND`. This means you’re choosing safety over the chart’s suggestion because the risk of busting is too high. Vice versa, if a player thinks their probability to bust in their next dealt card is low enough, then they will `HIT`. This means you’re choosing to take a risk over the chart’s suggestion because the chance of improving your hand is good.
