@@ -65,7 +65,7 @@ class Player {
 
     //Data
     void addData(int round);
-    void calcWinsLosses();
+    void calcWinsLosses(int minBet, int maxOut);
     void averageData();
     void printData();
     void writeWinsLosses(const string& filename);

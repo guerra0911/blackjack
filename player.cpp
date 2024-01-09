@@ -274,7 +274,7 @@ void Player::addData(int round) {
     data[round].push_back( getBalance() );
 }
 
-void Player::calcWinsLosses() {
+void Player::calcWinsLosses(int minBet, int maxOut) {
     // Reset wins and losses
     wins = 0;
     losses = 0;
@@ -287,12 +287,12 @@ void Player::calcWinsLosses() {
             float lastValue = subvector.back();
 
             //Check if the last value is less than or equal to 25
-            if (lastValue <= 25) {
+            if (lastValue <= minBet) {
                 //Increment losses
                 losses++;
             }
             //Check if the last value is greater than or equal to 1000
-            else if (lastValue >= 1000) {
+            else if (lastValue >= maxOut) {
                 // Increment wins
                 wins++;
             }

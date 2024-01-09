@@ -13,11 +13,13 @@
 
 using namespace std;
 
-#define MINBET 25
+#define MINBET 50
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 900000
+#define CYCLES 250000
 #define NUM_TABLES 1
+#define MAX_OUT 10000
+#define INIT_BAL 1000
 
 int main() {
     auto start = chrono::high_resolution_clock::now();
@@ -29,19 +31,19 @@ int main() {
     
     Table table1(5, shoe1, &dealer1);
 
-    Player player1(100, MINBET, Player::CARD_COUNT, CYCLES);
-    Player player2(100, MINBET, Player::OPTIMAL_CHART, CYCLES);
-    Player player3(100, MINBET, Player::HARD_17, CYCLES);
-    Player player4(100, MINBET, Player::SOFT_17, CYCLES);
+    Player player1(INIT_BAL, MINBET, Player::CARD_COUNT, CYCLES);
+    Player player2(INIT_BAL, MINBET, Player::OPTIMAL_CHART, CYCLES);
+    Player player3(INIT_BAL, MINBET, Player::HARD_17, CYCLES);
+    Player player4(INIT_BAL, MINBET, Player::SOFT_17, CYCLES);
 
     for(int c = 0; c < CYCLES; c++) {
         cout << endl << "CYCLE " << c + 1 << endl;
 
         //Reset Balance to 100
-        player1.setBalance(100);
-        player2.setBalance(100);
-        player3.setBalance(100);
-        player4.setBalance(100);
+        player1.setBalance(INIT_BAL);
+        player2.setBalance(INIT_BAL);
+        player3.setBalance(INIT_BAL);
+        player4.setBalance(INIT_BAL);
 
         //Re-Add Players to Table
         table1.addPlayer(&player1, 1);
@@ -59,16 +61,16 @@ int main() {
             table1.clearAllHands();
 
             //table1.checkPlayers();
-            if(player1.getBalance() < MINBET || player1.getBalance() > 1000) {
+            if(player1.getBalance() < MINBET || player1.getBalance() > MAX_OUT) {
                 table1.removePlayer(1);
             }
-            if(player2.getBalance() < MINBET || player2.getBalance() > 1000) {
+            if(player2.getBalance() < MINBET || player2.getBalance() > MAX_OUT) {
                 table1.removePlayer(2);
             }
-            if(player3.getBalance() < MINBET || player3.getBalance() > 1000) {
+            if(player3.getBalance() < MINBET || player3.getBalance() > MAX_OUT) {
                 table1.removePlayer(3);
             }
-            if(player4.getBalance() < MINBET || player4.getBalance() > 1000) {
+            if(player4.getBalance() < MINBET || player4.getBalance() > MAX_OUT) {
                 table1.removePlayer(4);
             }
 
@@ -90,10 +92,10 @@ int main() {
 
     auto start2 = chrono::high_resolution_clock::now();
 
-    player1.calcWinsLosses();
-    player2.calcWinsLosses();
-    player3.calcWinsLosses();
-    player4.calcWinsLosses();
+    player1.calcWinsLosses(MINBET, MAX_OUT);
+    player2.calcWinsLosses(MINBET, MAX_OUT);
+    player3.calcWinsLosses(MINBET, MAX_OUT);
+    player4.calcWinsLosses(MINBET, MAX_OUT);
 
     player1.writeWinsLosses("player1Results.csv");
     player2.writeWinsLosses("player2Results.csv");
