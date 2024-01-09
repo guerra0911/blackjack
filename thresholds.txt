@@ -1,8 +1,0 @@
-CARD_COUNT_HIT
-
-  handVal         optimalThresh
-    12                0.81
-    13                0.72*
-    14                0.79*
-    15                0.72*
-    16                0.695*

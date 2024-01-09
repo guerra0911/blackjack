@@ -31,7 +31,9 @@ class Player {
         OPTIMAL_CHART,
         CARD_COUNT,
         CARD_COUNT_HIT,
-        CARD_COUNT_STAND   
+        CARD_COUNT_STAND,
+        CARD_COUNT_DOUBLE_HIT,
+        CARD_COUNT_BOTH   
     };
 
     //Constructors

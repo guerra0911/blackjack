@@ -56,4 +56,4 @@ class Card {
     Suit suit;
 };
 
-#endif //CARD_H
+#endif //CARD_H 

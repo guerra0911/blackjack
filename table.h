@@ -21,7 +21,7 @@ class Table {
     //Seats
     int numAvailableSeats();
     int getNumSeats();
-    int numPlayersAtTable();
+    int numPlayersAtTable(); 
 
     //Dealer
     void setDealer(Dealer* tableDealer);

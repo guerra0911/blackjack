@@ -20,7 +20,7 @@ class Dealer {
     enum Strategy {
         SOFT_17,
         HARD_17,
-    };
+    }; 
 
     //Constructors
     Dealer(Strategy strategy);

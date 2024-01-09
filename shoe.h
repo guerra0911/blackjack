@@ -2,8 +2,6 @@
 #define SHOE_H
 
 #include "card.h"
-#include "player.h"
-#include "dealer.h"
 #include <vector>
 #include <map>
 
@@ -40,4 +38,4 @@ class Shoe {
     
 };
 
-#endif //SHOE_H
+#endif //SHOE_H 
