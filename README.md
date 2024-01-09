@@ -37,8 +37,8 @@ Each `player` starts the game with a balance of `$100`, betting `$25` each round
 
 - `CARD_COUNTING`: Player keeps track of all the possible cards left in the shoe, and decides on whether to Hit, Stand, Double or Surrender, based on the probability of their next dealt card causing them to bust.
 <p align="center">
-  <img src="Pics/CardCount_Explanation1.png" alt="Simulation" width="500">
-  <img src="Pics/Probability_Equation.png" alt="Probability" width="500">
+  <img src="Pics/CardCount_Explanation1.png" alt="Simulation" width="1000">
+  <img src="Pics/Probability_Equation.png" alt="Probability" width="1000">
 </p>
 
 Now, what does a player do with this probability? They will use it, along with a threshold to make a final decision on what action to do next. 
