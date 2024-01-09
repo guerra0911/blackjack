@@ -90,6 +90,16 @@ int main() {
 
     auto start2 = chrono::high_resolution_clock::now();
 
+    player1.calcWinsLosses();
+    player2.calcWinsLosses();
+    player3.calcWinsLosses();
+    player4.calcWinsLosses();
+
+    player1.writeWinsLosses("player1Results.csv");
+    player2.writeWinsLosses("player2Results.csv");
+    player3.writeWinsLosses("player3Results.csv");
+    player4.writeWinsLosses("player4Results.csv");
+
     player1.averageData();
     player2.averageData();
     player3.averageData();

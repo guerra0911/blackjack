@@ -65,8 +65,10 @@ class Player {
 
     //Data
     void addData(int round);
+    void calcWinsLosses();
     void averageData();
     void printData();
+    void writeWinsLosses(const string& filename);
     void writeDataToCSV(const string& filename);
 
     //Card Counting
@@ -85,6 +87,8 @@ class Player {
     float bet;
     int tablePos;
     float totalCardsCounted;
+    int wins;
+    int losses;
 
     Strategy strategy;
     vector<Hand*> hands;                

@@ -30,6 +30,8 @@ Player::Player(float initialBalance, float initialBet, Strategy initialStrategy,
     bet = initialBet;
     strategy = initialStrategy;
     totalCardsCounted = NUM_DECKS*52;
+    wins = 0;
+    losses = 0;
 
     //Reserve Space in data and initialize it as empty
     data.resize(cycles);
@@ -272,6 +274,35 @@ void Player::addData(int round) {
     data[round].push_back( getBalance() );
 }
 
+void Player::calcWinsLosses() {
+    // Reset wins and losses
+    wins = 0;
+    losses = 0;
+
+    //Iterate over each subvector in data
+    for (const auto& subvector : data) {
+        //Check if the subvector is not empty
+        if (!subvector.empty()) {
+            //Get the last value in the subvector
+            float lastValue = subvector.back();
+
+            //Check if the last value is less than or equal to 25
+            if (lastValue <= 25) {
+                //Increment losses
+                losses++;
+            }
+            //Check if the last value is greater than or equal to 1000
+            else if (lastValue >= 1000) {
+                // Increment wins
+                wins++;
+            }
+        }
+    }
+
+    cout << "Player " << tablePos << ":" << endl << "Wins = " << wins << endl << "Losses = " << losses << endl;
+}
+
+
 void Player::averageData() {
 
     int numCycles = data.size();
@@ -320,6 +351,14 @@ void Player::printData() {
         }
     }
     cout << "]" << endl << endl;
+}
+
+void Player::writeWinsLosses(const string& filename) {
+    ofstream file("Plotting/" + filename);
+
+    file << "Player " << tablePos << ":\n";
+    file << "Wins = " << wins << "\n";
+    file << "Losses = " << losses << "\n";
 }
 
 void Player::writeDataToCSV(const string& filename) {
