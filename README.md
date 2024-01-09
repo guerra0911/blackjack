@@ -72,7 +72,7 @@ After all simulations are completed, the average balance of a player at each tur
 ### Final Balance as Way of Exit
 Recall that a player begins with an initial balance of `$100` and stops playing when they have either have a balance of `$1,000` or not enough to afford the minimum `$25` bet.
 
-For 1,000,000 simulations for each strategy, this is how many games ended with a balance of `$1,000` and how many ended without being able to afford the minimum `$25` bet.
+For 900,000 simulations for each strategy, this is how many games ended with a balance of `$1,000` and how many ended without being able to afford the minimum `$25` bet.
 ![# of Wins & Losses for Each Strategy](Pics/WinsLossesPlot.png)
 
 Clearly, Card Counting had more players reach $1,000 (12.1%) than any other strategy, proving that it is the best of the four strategies.
@@ -81,7 +81,7 @@ Clearly, Card Counting had more players reach $1,000 (12.1%) than any other stra
 On this graph, the horizontal axis (x-axis) represents the number of turns in a game, and the vertical axis (y-axis) represents the percentage of games that reached that number of turns.
 ![% of Games that Reached Specific Turn](Pics/TurnsReachedPlot.png)
 
-For example, if you see a point at (50, 60%) on the graph, it means that in 60% of the games, or 600,000 out of 1,000,000 simulations, the game reached at least 50 turns.
+For example, if you see a point at (50, 60%) on the graph, it means that in 60% of the games, or 540,000 out of 900,000 simulations, the game reached at least 50 turns.
 
 As you move along the x-axis from left to right (from fewer turns to more turns), the percentage on the y-axis typically decreases. This is because fewer games reach a high number of turns.
 
