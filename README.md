@@ -4,6 +4,18 @@ This project is a simulation of the popular casino card game, Blackjack. It’s 
 
 Each `player` starts the game with a balance of `$100`, betting `$25` each round, and leaves the table if they *either* reach a balance of `$1,000` or can no longer afford the minimum bet of `$25`.
 
+# Executive Summary
+The analysis of the blackjack strategies reveals that the **Card Counting Strategy** outperforms the other strategies in several key metrics, demonstrating its effectiveness.
+
+## Key Achievements
+1. **Highest Winning Rate**: The Card Counting Strategy resulted in more players reaching a balance of $1,000 (12.1% of games) than any other strategy. This is a clear indication of its superiority over the other strategies.
+
+2. **Longevity in the Game**: The Card Counting Strategy has the highest percentage of games reaching later turns. This means that players using this strategy were able to stay in the game longer, increasing their chances of reaching the winning balance of $1,000.
+
+3. **Positive Average Balance**: The Card Counting Strategy is the only strategy that has a positive average balance after the first turn. Although the winnings are minimal, it's noteworthy that on average, players won money on their first turn while players of other strategies lost money on average.
+
+The analysis clearly shows that the Card Counting Strategy is the most effective among the four strategies tested. It not only increases the player's chances of winning but also allows them to stay in the game longer. These findings highlight the potential of card counting as a viable strategy for blackjack, outperforming even the renowned Optimal Chart derived by mathematicians. However, it's important to note that success in blackjack is also influenced by other factors such as luck and the specific rules of the game. Therefore, while the Card Counting Strategy shows promise, it is banned by casinos, and there is no intent to replicate this in a real-life setting.
+
 ## Features
 - Simulates a game of Blackjack with up to 5 players and a dealer.
 - Tracks each player's balance and bet amount.
@@ -24,6 +36,7 @@ Each `player` starts the game with a balance of `$100`, betting `$25` each round
 - `Player`: Represents a player in the game, with methods for making decisions based on a strategy.
 - `Dealer`: Represents the dealer in the game.
 - `Table`: Represents the blackjack table, with methods for playing rounds, handling bets, and managing players.
+
 ## UML Diagram
 ![UML Class Diagram](Pics/BlackJack_UML_Diagram.png)
 
