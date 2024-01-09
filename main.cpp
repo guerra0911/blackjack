@@ -16,7 +16,7 @@ using namespace std;
 #define MINBET 25
 #define RESHUFFLEPOINT 104
 #define NUMDECKS 8
-#define CYCLES 250000
+#define CYCLES 1000000
 #define NUM_TABLES 1
 
 int main() {
