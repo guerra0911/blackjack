@@ -46,7 +46,7 @@ add_labels(bars2, loss_percentages)
 plt.xlabel('Strategies', fontweight='bold')
 plt.ylabel('# of Games', fontweight='bold')
 plt.xticks([r + bar_width/2 for r in range(len(wins))], players)
-plt.title('Comparison of Players that Reached Balance of $$1,000 vs Reaching a Balance below Minimum Bet of $25')
+plt.title('Comparison of Players that Reached Balance of \$1,000 vs Reaching a Balance below Minimum Bet of \$25')
 
 # Create legend & Show graphic
 plt.legend()

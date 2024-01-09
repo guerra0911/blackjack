@@ -57,8 +57,8 @@ After all simulations are completed, the average balance of a player at each tur
 
 ## Analysis & Metrics
 ### Average Balance for Each Turn
-![Average Balance vs. Turns](Pics/AverageBalancePlot.png)
 On this graph, the horizontal axis (x-axis) represents the turn number in a game, and the vertical axis (y-axis) represents the average balance of a player at that turn.
+![Average Balance vs. Turns](Pics/AverageBalancePlot.png)
 
 For example, if you see a point at (40, 500) on the graph, it means that on average, players had a balance of $500 at turn 40. This average is calculated from all games that reached turn 40. If a game did not reach turn 40, it is counted as zero in the average.
 
@@ -69,8 +69,8 @@ A strategy that results in a higher average balance at each turn is generally be
 Evidently, the **Card Counting Strategy** is the ony strategy that has a ***positive average balance after the first turn***. This means that on average, players won money on their first turn (***Very Minimal Winnings***) while players of other strategies lost money on average. Regardless, Card Counting is undoubetdly the best strategy of the four.
 
 ### % of Games that Reached Specific Turn
-![% of Games that Reached Specific Turn](Pics/TurnsReachedPlot.png)
 On this graph, the horizontal axis (x-axis) represents the number of turns in a game, and the vertical axis (y-axis) represents the percentage of games that reached that number of turns.
+![% of Games that Reached Specific Turn](Pics/TurnsReachedPlot.png)
 
 For example, if you see a point at (50, 60%) on the graph, it means that in 60% of the games, or 600,000 out of 1,000,000 simulations, the game reached at least 50 turns.
 

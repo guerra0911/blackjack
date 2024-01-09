@@ -24,7 +24,7 @@ for csv_file in csv_files:
 plt.figure(len(csv_files)*2)  # Create a new figure for average balance of all players
 for i, df_avg in enumerate(dfs_avg):
     plt.plot(df_avg, color=colors[i], label=labels[i])
-plt.title('Average Balance for All Players')
+plt.title('Average Balance for a Specific Turn')
 plt.xlabel('Turn')
 plt.ylabel('Average Balance')
 plt.legend()
@@ -33,9 +33,9 @@ plt.legend()
 plt.figure(len(csv_files)*2 + 1)  # Create a new figure for frequency of turn of all players
 for i, df_turn in enumerate(dfs_turn):
     plt.scatter(range(len(df_turn)), df_turn, color=colors[i], label=labels[i], s=10)  # Reduced dot size
-plt.title('% Cycles that Reach Turn for All Players')
+plt.title('% Games that Reached a Specific Turn')
 plt.xlabel('Turn')
-plt.ylabel('% Cycles')
+plt.ylabel('% Games')
 plt.legend()
 
 # Display all plots
