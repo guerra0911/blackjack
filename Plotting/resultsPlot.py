@@ -28,8 +28,8 @@ r1 = range(len(wins))
 r2 = [x + bar_width for x in r1]
 
 # Create the bars
-bars1 = plt.bar(r1, wins, width=bar_width, color='limegreen', edgecolor='grey', label='Players that Left Table After Exceeding a $1000 Balance')
-bars2 = plt.bar(r2, losses, width=bar_width, color='red', edgecolor='grey', label='Players that Left Table After not Being Able to Afford Minimum $25 Bet')
+bars1 = plt.bar(r1, wins, width=bar_width, color='limegreen', edgecolor='grey', label='Players that Left Table After Exceeding a $2,500 Balance')
+bars2 = plt.bar(r2, losses, width=bar_width, color='red', edgecolor='grey', label='Players that Left Table After not Being Able to Afford Minimum $50 Bet')
 
 # Function to add labels on top of the bars
 def add_labels(bars, percentages):
@@ -46,7 +46,7 @@ add_labels(bars2, loss_percentages)
 plt.xlabel('Strategies', fontweight='bold')
 plt.ylabel('# of Games', fontweight='bold')
 plt.xticks([r + bar_width/2 for r in range(len(wins))], players)
-plt.title('Comparison of Players that Reached Balance of \$1,000 vs Reaching a Balance below Minimum Bet of \$25')
+plt.title('Comparison of Players that Reached Balance of \$2,500 vs Reaching a Balance below Minimum Bet of \$50')
 
 # Create legend & Show graphic
 plt.legend()

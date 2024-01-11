@@ -2,15 +2,15 @@
 ## Overview
 This project is a simulation of the popular casino card game, Blackjack. It’s purpose is to simulate players using different strategies, including my own card counting probability technique, and compare the player performance. 
 
-Each `player` starts the game with a balance of `$100`, betting `$25` each round, and leaves the table if they *either* reach a balance of `$1,000` or can no longer afford the minimum bet of `$25`.
+Each `player` starts the game with a balance of `$1,000`, betting `$50` each round, and leaves the table if they *either* reach a balance of `$2,500` or can no longer afford the minimum bet of `$50`.
 
 # Executive Summary
 The analysis of the blackjack strategies reveals that the **Card Counting Strategy** outperforms the other strategies in several key metrics, demonstrating its effectiveness.
 
 ## Key Achievements
-1. **Highest Winning Rate**: The Card Counting Strategy resulted in more players reaching a balance of $1,000 (12.1% of games) than any other strategy. This is a clear indication of its superiority over the other strategies.
+1. **Highest Winning Rate**: The Card Counting Strategy resulted in more players reaching a balance of $2,500 (48.8% of games) than any other strategy. This is a clear indication of its superiority over the other strategies.
 
-2. **Longevity in the Game**: The Card Counting Strategy has the highest percentage of games reaching later turns. This means that players using this strategy were able to stay in the game longer, increasing their chances of reaching the winning balance of $1,000.
+2. **Longevity in the Game**: The Card Counting Strategy has the highest percentage of games reaching later turns. This means that players using this strategy were able to stay in the game longer, increasing their chances of reaching the winning balance of $2,500.
 
 3. **Positive Average Balance**: The Card Counting Strategy is the only strategy that has a positive average balance after the first turn. Although the winnings are minimal, it's noteworthy that on average, players won money on their first turn while players of other strategies lost money on average.
 
@@ -60,28 +60,28 @@ In simpler terms, if a player thinks their probability to bust in their next dea
 **In simple terms, these thresholds help you balance the risk and reward of each decision, allowing you to make the most statistically advantageous move in each situation.**
 
 ### How do we find these Thresholds? 
-In each simulation, a player goes through 250,000 games, making decisions based on a fixed threshold. This process is repeated with various thresholds ranging from 0.01 to 0.99 in increments of 0.01.
+In each simulation, a player goes through 150,000 games, making decisions based on a fixed threshold. This process is repeated with various thresholds ranging from 0.01 to 0.99 in increments of 0.01.
 
 For every possible hand value a player can have (from 2 to 21), a unique threshold is used for decision-making. For instance, a player with a hand value of 12 has a lower chance of busting than a player with a hand value of 19, so they use different thresholds to evaluate their situation.
 
 Each combination of threshold and hand value is simulated and analyzed separately to prevent any interference between different thresholds.
 
-After all simulations are completed, the average balance of a player at each turn over the 250,000 games is calculated for each threshold. The threshold that results in the highest average earnings over time is selected as the optimal threshold. This approach aims to maximize the player’s earnings in the long run.
+After all simulations are completed, the average balance of a player at each turn over the 150,000 games is calculated for each threshold. The threshold that results in the highest average earnings over time is selected as the optimal threshold. This approach aims to maximize the player’s earnings in the long run.
 
 ## Analysis & Metrics
 ### Final Balance as Way of Exit
-Recall that a player begins with an initial balance of `$100` and stops playing when they have either have a balance of `$1,000` or not enough to afford the minimum `$25` bet.
+Recall that a player begins with an initial balance of `$1,000` and stops playing when they have either have a balance of `$2,500` or not enough to afford the minimum `$50` bet.
 
-For 900,000 simulations for each strategy, this is how many games ended with a balance of `$1,000` and how many ended without being able to afford the minimum `$25` bet.
+For 150,000 simulations for each strategy, this is how many games ended with a balance of `$2,500` and how many ended without being able to afford the minimum `$50` bet.
 ![# of Wins & Losses for Each Strategy](Pics/WinsLossesPlot.png)
 
-Clearly, Card Counting had more players reach $1,000 (12.1%) than any other strategy, proving that it is the best of the four strategies.
+Clearly, Card Counting had more players reach $2,500 (48.8%) than any other strategy, proving that it is the best of the four strategies.
 
 ### % of Games that Reached Specific Turn
 On this graph, the horizontal axis (x-axis) represents the number of turns in a game, and the vertical axis (y-axis) represents the percentage of games that reached that number of turns.
 ![% of Games that Reached Specific Turn](Pics/TurnsReachedPlot.png)
 
-For example, if you see a point at (50, 60%) on the graph, it means that in 60% of the games, or 540,000 out of 900,000 simulations, the game reached at least 50 turns.
+For example, if you see a point at (50, 60%) on the graph, it means that in 60% of the games, or 90,000 out of 150,000 simulations, the game reached at least 50 turns.
 
 As you move along the x-axis from left to right (from fewer turns to more turns), the percentage on the y-axis typically decreases. This is because fewer games reach a high number of turns.
 
